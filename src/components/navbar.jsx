@@ -1,5 +1,8 @@
 import React from "react";
-import $ from "jquery";
+import * as bootstrap from 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import $ from 'jquery';
 
 import logo1 from "../img/male1.png";
 import logo2 from "../img/male.png";
@@ -22,9 +25,9 @@ class Navbar extends React.Component {
       }
     });
 
-    $("body").scrollspy({
-      target: "#mainNav",
-      offset: navHeight
+    new bootstrap.ScrollSpy(document.body, {
+      target: '#mainNav',
+      offset: navHeight,
     });
 
     $(".js-scroll").on("click", function() {
