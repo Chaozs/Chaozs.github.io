@@ -4,29 +4,26 @@ import imageOverlay from "../img/earth.jpg";
 class Contact extends React.Component {
   render() {
     return (
-      <section
-        className="paralax-mf footer-paralax bg-image sect-mt4 route"
-        style={{ backgroundImage: "url(" + imageOverlay + ")" }}
-      >
-        <div className="overlay-mf"></div>
-        <div className="container">
+      <section id="work" className="portfolio-mf sect-pt4 route" style={{ backgroundColor: "#202124" }}>
+
+        <div className="container" style={{backgroundColor: "#181818", borderRadius: "1%", padding: "35px"}}>
           <div className="row">
-            <div className="col-sm-12">
+            <div className="col-sm-12" style={{ backgroundColor: "#1E1E1E", padding: "15px", borderRadius: "2%"}}>
               <div className="contact-mf">
-                <div id="contact" className="box-shadow-full">
+                <div id="contact">
                   <div className="row">
                     <div className="col-md-6">
                       <div className="title-box-2">
-                        <h5 className="title-left">Send A Message</h5>
+                        <h5 className="title-left" style={{color: "#E4E4E4"}}>Send A Message</h5>
                       </div>
                       <div>
                         <form
-                          action="https://formspree.io/xdoeonlo"
+                          action="https://formspree.io/f/myzyanen"
                           method="POST"
                           className="contactForm"
                         >
                           <div id="sendmessage">
-                            Your message has been sent. Thank you!
+                            Thanks for reaching out! I'll try my best to reply within 2 business days.
                           </div>
                           <div id="errormessage"></div>
                           <div className="row">
@@ -46,7 +43,7 @@ class Contact extends React.Component {
                             </div>
                             <div className="col-md-12 mb-3">
                               <div className="form-group">
-                                <input
+                                <input 
                                   type="email"
                                   className="form-control"
                                   name="email"
@@ -99,15 +96,13 @@ class Contact extends React.Component {
                     </div>
                     <div className="col-md-6">
                       <div className="title-box-2 pt-4 pt-md-0">
-                        <h5 className="title-left">Get in Touch</h5>
+                        <h5 className="title-left" style={{color: "#E4E4E4"}}>Get in Touch</h5>
                       </div>
                       <div className="more-info">
-                        <p className="lead">
-                          Whether you want to get in touch, talk about a project
-                          collaboration, or just say hi, I'd love to hear from
-                          you.
+                        <p className="lead" style={{color: "#E4E4E4"}}>
+                          Interested in my expertise? Have a question? Or just wanted to chat?
                           <br />
-                          Simply fill the from and send me an email.
+                          Send me a message!
                         </p>
                         {/* <!-- <ul class="list-ico">
                                 <li><span class="ion-ios-location"></span> 329 WASHINGTON ST BOSTON, MA 02108</li>
@@ -117,7 +112,7 @@ class Contact extends React.Component {
                       </div>
                       <div className="socials">
                         <ul>
-                          <li>
+                          {/* <li>
                             <a
                               href=""
                               target="_blank"
@@ -127,8 +122,8 @@ class Contact extends React.Component {
                                 <i className="ion-social-codepen"></i>
                               </span>
                             </a>
-                          </li>
-                          <li>
+                          </li> */}
+                          {/* <li>
                             <a
                               href=""
                               target="_blank"
@@ -138,10 +133,10 @@ class Contact extends React.Component {
                                 <i className="ion-social-github"></i>
                               </span>
                             </a>
-                          </li>
+                          </li> */}
                           <li>
                             <a
-                              href=""
+                              href="https://www.linkedin.com/in/thien-trandinh/"
                               target="_blank"
                               rel="noopener noreferrer"
                             >

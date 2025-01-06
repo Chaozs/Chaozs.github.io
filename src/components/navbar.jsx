@@ -4,111 +4,84 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import $ from 'jquery';
 
-import logo1 from "../img/male1.png";
-import logo2 from "../img/male.png";
+import logo1 from "../img/ProfilePic3.png";
 
 class Navbar extends React.Component {
   constructor() {
     super();
-    this.state = {
-      logo: logo1
-    };
+    // this.state = {
+    //   logo: logo1
+    // };
   }
 
   componentDidMount() {
-    const nav = $("nav");
-    let navHeight = nav.outerHeight();
-
-    $(".navbar-toggler").on("click", function() {
-      if (!$("#mainNav").hasClass("navbar-reduce")) {
-        $("#mainNav").addClass("navbar-reduce");
-      }
-    });
-
+    const nav = document.querySelector("nav");
+    const navHeight = nav.offsetHeight;
+  
+    // ScrollSpy initialization
     new bootstrap.ScrollSpy(document.body, {
       target: '#mainNav',
       offset: navHeight,
     });
-
-    $(".js-scroll").on("click", function() {
-      $(".navbar-collapse").collapse("hide");
-    });
-
-    window.addEventListener("scroll", () => {
-      if (window.pageYOffset > 50) {
-        document
-          .querySelector(".navbar-expand-md")
-          .classList.add("navbar-reduce");
-        document
-          .querySelector(".navbar-expand-md")
-          .classList.remove("navbar-trans");
-        this.setState({ logo: logo2 });
-      } else {
-        document
-          .querySelector(".navbar-expand-md")
-          .classList.add("navbar-trans");
-        document
-          .querySelector(".navbar-expand-md")
-          .classList.remove("navbar-reduce");
-        this.setState({ logo: logo1 });
-      }
-    });
-
-    $('a.js-scroll[href*="#"]:not([href="#"])').on("click", function() {
-      if (
-        window.location.pathname.replace(/^\//, "") ===
-          this.pathname.replace(/^\//, "") &&
-        window.location.hostname === this.hostname
-      ) {
-        var target = $(this.hash);
-        target = target.length
-          ? target
-          : $("[name=" + this.hash.slice(1) + "]");
-        if (target.length) {
-          $("html, body").animate(
-            {
-              scrollTop: target.offset().top - navHeight + 5
-            },
-            1000,
-            "easeInExpo"
-          );
-          return false;
+  
+    // Collapse the navbar when a scroll link is clicked
+    document.querySelectorAll(".js-scroll").forEach((link) => {
+      link.addEventListener("click", () => {
+        const navbarCollapse = document.querySelector(".navbar-collapse");
+        if (navbarCollapse) {
+          const collapseInstance = bootstrap.Collapse.getInstance(navbarCollapse) || new bootstrap.Collapse(navbarCollapse, { toggle: false });
+          collapseInstance.hide();
         }
+      });
+    });
+  
+    // Navbar reduce effect on scroll
+    window.addEventListener("scroll", () => {
+      const navbar = document.querySelector(".navbar-expand-md");
+      if (window.pageYOffset > 50) {
+        navbar.classList.add("navbar-reduce");
+        navbar.classList.remove("navbar-trans");
+        //this.setState({ logo: logo2 });
+      } else {
+        navbar.classList.add("navbar-trans");
+        navbar.classList.remove("navbar-reduce");
+        //this.setState({ logo: logo1 });
       }
     });
-
-    $(".js-scroll").on("click", function() {
-      $(".navbar-collapse").collapse("hide");
+  
+    // Smooth scrolling
+    document.querySelectorAll('a.js-scroll[href*="#"]:not([href="#"])').forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute("href").slice(1);
+        const target = document.getElementById(targetId);
+        if (target) {
+          window.scrollTo({
+            top: target.offsetTop - navHeight + 5,
+            behavior: "smooth",
+          });
+        }
+      });
     });
   }
+  
 
   render() {
     return (
       <nav
         className="navbar navbar-b navbar-trans navbar-expand-md fixed-top"
         id="mainNav"
+        style={{backgroundColor: "#181818", borderRadius: "1%"}}
       >
         <div className="container">
-          <a className="navbar-brand js-scroll" href="#page-top">
+          {/* <a className="navbar-brand js-scroll" href="#page-top">
             <img
               src={this.state.logo}
               alt="logo"
               style={{ maxWidth: "100px" }}
             />
-          </a>
-          <button
-            className="navbar-toggler collapsed"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarDefault"
-            aria-controls="navbarDefault"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
+          </a> */}
+
           <div
             className="navbar-collapse collapse justify-content-end"
             id="navbarDefault"
@@ -121,7 +94,7 @@ class Navbar extends React.Component {
               </li>
               <li className="nav-item">
                 <a className="nav-link js-scroll" href="#about">
-                  About
+                  Skills
                 </a>
               </li>
               <li className="nav-item">
