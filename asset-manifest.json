@@ -1,0 +1,31 @@
+{
+  "files": {
+    "main.css": "/static/css/main.369e7c9e.css",
+    "main.js": "/static/js/main.18c045bf.js",
+    "static/media/image6.jpg": "/static/media/image6.d815fbd7656922980117.jpg",
+    "static/media/image1.jpg": "/static/media/image1.e5cc538181c31600f0ed.jpg",
+    "static/media/image2.jpg": "/static/media/image2.918e02fdfb4b98994a41.jpg",
+    "static/media/image5.jpg": "/static/media/image5.064bdceb43980a252529.jpg",
+    "static/media/image4.jpg": "/static/media/image4.0208209b2b8700cd8699.jpg",
+    "static/media/earth.jpg": "/static/media/earth.a08c82a61f5bf923991e.jpg",
+    "static/media/image3.jpg": "/static/media/image3.dab09f293ac8980aaa0d.jpg",
+    "static/media/fontawesome-webfont.svg?v=4.7.0": "/static/media/fontawesome-webfont.6878d55e3615ccf40c38.svg",
+    "static/media/ionicons.svg?v=2.0.0": "/static/media/ionicons.ee5b17dfd3f2d12ff4e2.svg",
+    "static/media/ionicons.ttf?v=2.0.0": "/static/media/ionicons.1fa6a1e8581aaedf7344.ttf",
+    "static/media/ProfilePic3.png": "/static/media/ProfilePic3.11108289ab2aa3f2df9c.png",
+    "static/media/fontawesome-webfont.eot": "/static/media/fontawesome-webfont.8b43027f47b20503057d.eot",
+    "static/media/fontawesome-webfont.ttf?v=4.7.0": "/static/media/fontawesome-webfont.1e59d2330b4c6deb84b3.ttf",
+    "static/media/ProfilePic.jpg": "/static/media/ProfilePic.a94d6a29bac63821bff6.jpg",
+    "static/media/ionicons.eot?v=2.0.0": "/static/media/ionicons.68e3a4f9a8d8c679b4ae.eot",
+    "static/media/fontawesome-webfont.woff?v=4.7.0": "/static/media/fontawesome-webfont.f691f37e57f04c152e23.woff",
+    "static/media/fontawesome-webfont.woff2?v=4.7.0": "/static/media/fontawesome-webfont.20fd1704ea223900efa9.woff2",
+    "static/media/ionicons.woff?v=2.0.0": "/static/media/ionicons.0b4ad6170d93c4aa91ee.woff",
+    "index.html": "/index.html",
+    "main.369e7c9e.css.map": "/static/css/main.369e7c9e.css.map",
+    "main.18c045bf.js.map": "/static/js/main.18c045bf.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.369e7c9e.css",
+    "static/js/main.18c045bf.js"
+  ]
+}
