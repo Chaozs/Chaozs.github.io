@@ -95,56 +95,38 @@ class Contact extends React.Component {
                     </div>
                     <div className="col-md-6">
                       <div className="title-box-2 pt-4 pt-md-0">
-                        <h5 className="title-left" style={{color: "#E4E4E4"}}>Get in Touch</h5>
+                        <h5 className="title-left" style={{color: "#E4E4E4"}}>
+                            <div className="socials">
+                                <ul>
+                                <span style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+            <a
+              href="https://www.linkedin.com/in/thien-trandinh/"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+                                      <span className="ico-circle">
+                                        <i className="ion-social-linkedin"></i>
+                                      </span>
+                                    </a>
+                                  </span>
+                                </ul>
+                            </div>
+                          </h5>
                       </div>
                       <div className="more-info">
                         <p className="lead" style={{color: "#E4E4E4"}}>
-                          Interested in my expertise? Have a question? Or just wanted to chat?
-                          <br />
-                          Send me a message!
+                          Interested in my expertise? Have a question? Or just wanted to chat? Send me a message here on or linkedin!
                         </p>
                         {/* <!-- <ul class="list-ico">
                                 <li><span class="ion-ios-location"></span> 329 WASHINGTON ST BOSTON, MA 02108</li>
                                 <li><span class="ion-ios-telephone"></span> (617) 557-0089</li>
                                 <li><span class="ion-email"></span> contact@example.com</li>
                                 </ul> --> */}
-                      </div>
-                      <div className="socials">
-                        <ul>
-                          {/* <li>
-                            <a
-                              href=""
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              <span className="ico-circle">
-                                <i className="ion-social-codepen"></i>
-                              </span>
-                            </a>
-                          </li> */}
-                          {/* <li>
-                            <a
-                              href=""
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              <span className="ico-circle">
-                                <i className="ion-social-github"></i>
-                              </span>
-                            </a>
-                          </li> */}
-                          <li>
-                            <a
-                              href="https://www.linkedin.com/in/thien-trandinh/"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              <span className="ico-circle">
-                                <i className="ion-social-linkedin"></i>
-                              </span>
-                            </a>
-                          </li>
-                        </ul>
                       </div>
                     </div>
                   </div>

@@ -22,8 +22,8 @@ const WorkBox = ({ title, date, role, skills, details }) => {
                 {showMore && (
                 <div className="extra-text" style={{ marginTop: "1rem", color: "#E4E4E4" }}>
                     {details.map((item, index) => (
-                        <li key={index} style={{ marginBottom: "0.5rem" }}>
-                            {item}
+                        <li key={index} style={{ marginBottom: "0.5rem", marginLeft: /^\s{3}/.test(item) ? "20px" : "0px" }}>
+                            <p dangerouslySetInnerHTML={{ __html: item.replace('-', '') }} style={{ display: "inline"}}></p>
                         </li>
                     ))}
                 </div>
