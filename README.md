@@ -1,3 +1,3 @@
 # React-portfolio
 
-Portfolio link -> https://chaozs.github.io/Chaozs.github.io/
+Portfolio link -> https://Chaozs.github.io/Chaozs.github.io/

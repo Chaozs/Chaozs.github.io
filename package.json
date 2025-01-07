@@ -2,7 +2,6 @@
   "name": "portfolio",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://chaozs.github.io/Chaozs.github.io",
   "dependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.16.7",
     "bootstrap": "^5.3.3",
@@ -10,16 +9,16 @@
     "lightbox2": "^2.11.0",
     "normalize.css": "^8.0.1",
     "popper.js": "^1.15.0",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
     "react-scripts": "^5.0.1",
     "react-typed": "^1.1.2",
     "sass": "^1.82.0",
     "typed.js": "^2.0.10"
   },
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "predeploy" : "npm run build",
+    "deploy" : "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

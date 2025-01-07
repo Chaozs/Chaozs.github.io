@@ -2,10 +2,6 @@ import React from "react";
 import * as bootstrap from 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import $ from 'jquery';
-
-import logo1 from "../img/ProfilePic3.png";
-
 class Navbar extends React.Component {
   constructor() {
     super();
@@ -48,7 +44,6 @@ class Navbar extends React.Component {
         //this.setState({ logo: logo1 });
       }
     });
-  
     // Smooth scrolling
     document.querySelectorAll('a.js-scroll[href*="#"]:not([href="#"])').forEach((link) => {
       link.addEventListener("click", (e) => {
@@ -64,7 +59,6 @@ class Navbar extends React.Component {
       });
     });
   }
-  
 
   render() {
     return (
