@@ -58,7 +58,7 @@ class About extends React.Component {
             'Outside of my professional experience, I completed my thesis, <a href="https://macsphere.mcmaster.ca/handle/11375/29773" target="_blank" rel="noopener noreferrer">Generating Player-Traversable Paths for Cyclescape From Real World Data</a> as part of my MASc in Software Engineering.'
         },
         {
-          id: "third-p-about",
+          id: "fourth-p-about",
           content:
             'In my free time, I enjoy playing piano (I used to perform part-time before starting my tech career), experimenting with new recipes, and playing video games.'
         }
@@ -93,30 +93,10 @@ class About extends React.Component {
                     <div className="skill-mf" style={{ backgroundColor: "#1E1E1E", padding: "15px", borderRadius: "2%", marginLeft: "-5px"}}>
                           <p className="title-s" style={{color: "#9A9A9A"}}>Languages:</p>
                           <p className="lead" style={{color: "#E4E4E4"}}>C#, Typescript, Javascript, Java, SQL </p>
-                          <p className="title-s" style={{color: "#9A9A9A"}}>Framework:</p>
+                          <p className="title-s" style={{color: "#9A9A9A"}}>Frameworks:</p>
                           <p className="lead" style={{color: "#E4E4E4"}}> .NET, Unity, VUE, Playcanvas</p>
                           <p className="title-s" style={{color: "#9A9A9A"}}>Other:</p>
                           <p className="lead" style={{color: "#E4E4E4"}}> Git, REST, Linux, Jira, Jenkins, Agile, Scrum</p>
-                        {/* {this.state.skills.map(skill => {
-                          return (
-                            <React.Fragment key={skill.id}>
-                              <span>{skill.content}</span>{" "}
-                              <span className="pull-right">
-                                {skill.porcentage}
-                              </span>
-                              <div className="progress">
-                                <div
-                                  className="progress-bar"
-                                  role="progressbar"
-                                  style={{ width: skill.porcentage }}
-                                  aria-valuenow={skill.value}
-                                  aria-valuemin="0"
-                                  aria-valuemax="100"
-                                ></div>
-                              </div>
-                            </React.Fragment>
-                          );
-                        })} */}
                       </div>
                   </div>
                 </div>

@@ -1,11 +1,17 @@
 import React from "react";
 import WorkBox from "./WorkExperience";
+import gatarnLogo from "../img/gglogo.png";
+import imagineLogo from "../img/ImagineLogo.png";
+import ViralStagingLogo from "../img/ViralStagingLogo.png";
+import McmasterLogo from "../img/mcmasterChildrenHospitalLogo.jpg";
+import EvertzLogo from "../img/Evertz_Microsystems_logo.svg.png"
 
 class Portfolio extends React.Component {
   render() {
     const workExperiences = [
       {
         title: "Gatarn Games Ltd",
+        logo: gatarnLogo,
         date: "Dec 2022 – Dec 2024",
         role: "Fullstack Software Engineer",
         skills: "C# .NET, Typescript, SQL, REST API, Scrum",
@@ -20,14 +26,15 @@ class Portfolio extends React.Component {
           "    Implementing an ECS (entity component system) for reusability and extensibility of game features.",
           "    Developing an object pooling system that improved CPU and memory performance by 80%.",
           "Developed a Typescript web client for handling user input and interactions.",
-          "Designed reusable interfaces for supporting multiple SDK integrations for ad monetization.",
-          "Fabricated abstract generic UI classes to streamline UI/UX development.",
+          "    Designed reusable interfaces for supporting multiple SDK integrations for ad monetization.",
+          "    Fabricated abstract generic UI classes to streamline UI/UX development.",
           "Led product standups, biweekly sprint planning, sprint reports, and retro reports using Jira.",
           "Created and conducted technical interview processes for hiring new developers.",
         ],
       },
       {
         title: "Imagine Communications",
+        logo: imagineLogo,
         date: "Nov 2021 – Dec 2022",
         role: "Software Engineer",
         skills: "Typescript, C# .NET, VUE",
@@ -40,6 +47,7 @@ class Portfolio extends React.Component {
       },
       {
         title: "Viral Staging",
+        logo: ViralStagingLogo,
         date: "May 2022 – Aug 2022",
         role: "Freelancer Software Engineer",
         skills: "JavaScript",
@@ -49,6 +57,7 @@ class Portfolio extends React.Component {
       },
       {
         title: "McMaster Children's Hospital",
+        logo: McmasterLogo,
         date: "Sept 2019 – Nov 2021",
         role: "Software Engineer",
         skills: "C#, Unity",
@@ -61,6 +70,7 @@ class Portfolio extends React.Component {
       },
       {
         title: "Evertz",
+        logo: EvertzLogo,
         date: "May 2017 – Aug 2018",
         role: "Software Design Engineer Intern",
         skills: "JavaScript",
@@ -86,6 +96,7 @@ class Portfolio extends React.Component {
             <WorkBox
               key={index}
               title={experience.title}
+              logo={experience.logo}
               date={experience.date}
               role={experience.role}
               skills={experience.skills}
