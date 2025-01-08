@@ -5,15 +5,15 @@ class Contact extends React.Component {
     return (
       <section id="work" className="portfolio-mf sect-pt4 route" style={{ backgroundColor: "#202124" }}>
 
-        <div className="container" style={{backgroundColor: "#181818", borderRadius: "1%", padding: "35px"}}>
+        <div className="container" style={{ backgroundColor: "#181818", borderRadius: "1%", padding: "35px" }}>
           <div className="row">
-            <div className="col-sm-12" style={{ backgroundColor: "#1E1E1E", padding: "15px", borderRadius: "2%"}}>
+            <div className="col-sm-12" style={{ backgroundColor: "#1E1E1E", padding: "15px", borderRadius: "2%" }}>
               <div className="contact-mf">
                 <div id="contact">
                   <div className="row">
                     <div className="col-md-6">
                       <div className="title-box-2">
-                        <h5 className="title-left" style={{color: "#E4E4E4"}}>Send A Message</h5>
+                        <h5 className="title-left" style={{ color: "#E4E4E4" }}>Send A Message</h5>
                       </div>
                       <div>
                         <form
@@ -42,7 +42,7 @@ class Contact extends React.Component {
                             </div>
                             <div className="col-md-12 mb-3">
                               <div className="form-group">
-                                <input 
+                                <input
                                   type="email"
                                   className="form-control"
                                   name="email"
@@ -95,31 +95,31 @@ class Contact extends React.Component {
                     </div>
                     <div className="col-md-6">
                       <div className="title-box-2 pt-4 pt-md-0">
-                        <h5 className="title-left" style={{color: "#E4E4E4"}}>
-                            <div className="socials">
-                                <ul>
-                                <span style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-            <a
-              href="https://www.linkedin.com/in/thien-trandinh/"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-                                      <span className="ico-circle">
-                                        <i className="ion-social-linkedin"></i>
-                                      </span>
-                                    </a>
+                        <h5 className="title-left" style={{ color: "#E4E4E4" }}>
+                          <div className="socials">
+                            <ul>
+                              <span style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                <a
+                                  href="https://www.linkedin.com/in/thien-trandinh/"
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                  }}
+                                >
+                                  <span className="ico-circle">
+                                    <i className="ion-social-linkedin"></i>
                                   </span>
-                                </ul>
-                            </div>
-                          </h5>
+                                </a>
+                              </span>
+                            </ul>
+                          </div>
+                        </h5>
                       </div>
                       <div className="more-info">
-                        <p className="lead" style={{color: "#E4E4E4"}}>
+                        <p className="lead" style={{ color: "#E4E4E4" }}>
                           Interested in my expertise? Have a question? Or just wanted to chat? Send me a message here on or linkedin!
                         </p>
                         {/* <!-- <ul class="list-ico">
