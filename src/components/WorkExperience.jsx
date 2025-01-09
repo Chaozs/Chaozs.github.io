@@ -13,7 +13,7 @@ const WorkBox = ({ title, logo, date, role, skills, details }) => {
         <div className="work-content" style={{ backgroundColor: "#1E1E1E", marginTop: "15px"}}>
             <div className="row">
             <div className="col-sm-10">
-                <div style={{ display: "flex", justifyContent: "left" }}>
+                <div style={{ display: "flex", justifyContent: "left", marginLeft: "15px" }}>
                 <img
                     src={logo}
                     alt="logo"
@@ -22,7 +22,7 @@ const WorkBox = ({ title, logo, date, role, skills, details }) => {
                         height: "auto", // Maintain aspect ratio
                         marginBottom: "20px",
                         borderRadius: "2%",
-                        marginLeft: "-15px",
+                        marginLeft: "10px",
                     }}
                 />
                 </div>

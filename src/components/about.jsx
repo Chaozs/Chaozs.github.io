@@ -100,20 +100,28 @@ class About extends React.Component {
                         <div className="skill-category">
                           <p className="title-s" style={{ color: "#9A9A9A" }}>Skills:</p>
                           <div className="icons">
-                            {skills.map((lang, index) => (
+                          {skills.map((lang, index) => {
+                            // Define breakpoints and height values
+                            const getDynamicHeight = () => {
+                              const width = window.innerWidth;
+                              if (width <= 600) return "50px"; // For small screens
+                              if (width >= 1200) return "120px"; // For large screens
+                              return "120px"; // Default height
+                            };
+
+                            return (
                               <img
                                 key={index}
                                 src={lang.icon}
                                 alt={lang.alt}
                                 style={{
-                                  height: "120px",
-                                  maxHeight: "200px",
-                                  minHeight: "20px",
+                                  height: getDynamicHeight(),
                                   objectFit: "contain",
                                   margin: "5px",
                                 }}
                               />
-                            ))}
+                            );
+                          })}
                           </div>
                         </div>
 
