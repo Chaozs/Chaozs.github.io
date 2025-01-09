@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.c597e510.css",
-    "main.js": "/static/js/main.2e6ea1c5.js",
+    "main.js": "/static/js/main.6c6b625c.js",
     "static/media/fontawesome-webfont.svg?v=4.7.0": "/static/media/fontawesome-webfont.6878d55e3615ccf40c38.svg",
     "static/media/ionicons.svg?v=2.0.0": "/static/media/ionicons.ee5b17dfd3f2d12ff4e2.svg",
     "static/media/linuxLogo.png": "/static/media/linuxLogo.ad6e4b06906b0633e222.png",
@@ -31,10 +31,10 @@
     "static/media/TypeScript.svg": "/static/media/TypeScript.9ad81d2e09b9cd2265cdb1e55d83a709.svg",
     "index.html": "/index.html",
     "main.c597e510.css.map": "/static/css/main.c597e510.css.map",
-    "main.2e6ea1c5.js.map": "/static/js/main.2e6ea1c5.js.map"
+    "main.6c6b625c.js.map": "/static/js/main.6c6b625c.js.map"
   },
   "entrypoints": [
     "static/css/main.c597e510.css",
-    "static/js/main.2e6ea1c5.js"
+    "static/js/main.6c6b625c.js"
   ]
 }
