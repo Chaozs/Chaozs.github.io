@@ -19,7 +19,7 @@ class Intro extends React.Component {
                     strings={[
                       "Front End Engineer",
                       "Back End Engineer",
-                      "Full Stack Software Engineer"
+                      "Full Stack Engineer"
                     ]}
                     typeSpeed={30}
                     backDelay={1100}

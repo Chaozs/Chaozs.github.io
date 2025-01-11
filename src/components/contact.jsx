@@ -109,7 +109,11 @@ class Contact extends React.Component {
                                     alignItems: "center",
                                   }}
                                 >
-                                  <span className="ico-circle">
+                                    <span className="ico-circle"   style={{
+                                      display: "flex",
+                                      justifyContent: "center",
+                                      alignItems: "center",
+                                    }}>
                                     <i className="ion-social-linkedin"></i>
                                   </span>
                                 </a>

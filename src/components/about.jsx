@@ -1,7 +1,7 @@
 import React from "react";
 import logo1 from "../img/ProfilePic.jpg";
 import cat from "../img/Kiwi.png"
-import cSharp from "../img/skillIcons/CSharp.svg";
+import cSharp from "../img/skillIcons/cSharp.svg";
 import gitLogo from "../img/skillIcons/gitLogo.webp";
 import javaLogo from "../img/skillIcons/javaLogo.svg";
 import jiraLogo from "../img/skillIcons/jiraLogo.webp";
@@ -14,7 +14,7 @@ import sqlLogo from "../img/skillIcons/sqlLogo.png";
 import typeScriptLogo from "../img/skillIcons/TypeScript.svg";
 import unityLogo from "../img/skillIcons/unityLogo.png";
 import vueJsLogo from "../img/skillIcons/vueJSLogo.png";
-import dotNetLogo from "../img/skillIcons/.netLogo.png";
+import dotNetLogo from "../img/skillIcons/netLogo.png";
 
 
 const SkillIcon = ({ src, alt }) => (
@@ -87,7 +87,7 @@ class About extends React.Component {
                   <div className="row">
                     <div className="col-md-6">
                       <div className="about-me pt-4 pt-md-0">
-                        <a className="navbar-brand js-scroll" href="#page-top">
+                        <a>
                           <div style={{ display: "flex", justifyContent: "center" }}>
                             <img
                               src={this.state.logo}
@@ -185,7 +185,11 @@ class About extends React.Component {
                                 alignItems: "center",
                               }}
                             >
-                              <span className="ico-circle">
+                              <span className="ico-circle"   style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                              }}>
                                 <i className="ion-social-youtube"></i>
                               </span>
                             </a>
