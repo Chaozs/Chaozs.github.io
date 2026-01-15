@@ -28,13 +28,11 @@ const SkillIcon = ({ src, alt }) => (
 const skills = [
   { icon: cSharp, alt: "C#" },
   { icon: typeScriptLogo, alt: "TypeScript" },
-  { icon: jsLogo, alt: "JavaScript" },
-  { icon: javaLogo, alt: "Java" },
-  { icon: sqlLogo, alt: "SQL" },
-  { icon: dotNetLogo, alt: ".NET" },
   { icon: unityLogo, alt: "Unity" },
+  { icon: dotNetLogo, alt: ".NET" },
   { icon: vueJsLogo, alt: "Vue.js" },
   { icon: playcanvasLogo, alt: "PlayCanvas" },
+  { icon: javaLogo, alt: "Java" },
   { icon: reactLogo, alt: "React" },
   { icon: gitLogo, alt: "Git" },
   { icon: linuxLogo, alt: "Linux" },
@@ -56,17 +54,22 @@ class About extends React.Component {
         {
           id: "second-p-about",
           content:
-            'Most recently, I served as the lead full-stack developer at Gatarn Games Ltd., where I worked on <a href="https://www.crazygames.com/game/skillfite-io" target="_blank" rel="noopener noreferrer">Skillfite.io</a>, a popular web game with over 1,000 daily players and more than 1 million accounts created.'
+            'Most recently, I was an intermediate developer at Prodigy Education, where I worked on <a href="https://www.prodigygame.com/main-en" target="_blank" rel="noopener noreferrer">Prodigy Math</a>, north america\'s #1 Education Game for kids.'
         },
         {
           id: "third-p-about",
           content:
-            'Outside of my professional experience, I completed my thesis, <a href="https://macsphere.mcmaster.ca/handle/11375/29773" target="_blank" rel="noopener noreferrer">Generating Player-Traversable Paths for Cyclescape From Real World Data</a> as part of my MASc in Software Engineering.'
+            'Prior to that, I served as the lead full-stack developer at a Startup: Gatarn Games Ltd., where I worked on <a href="https://www.crazygames.com/game/skillfite-io" target="_blank" rel="noopener noreferrer">Skillfite.io</a>, a popular web game with over 1,000 daily players and more than 1 million accounts created.'
         },
         {
           id: "fourth-p-about",
           content:
-            'In my free time, I like finding and experimenting new cooking recipes, playing video games, and failing to entertain my two silly cats (See proof below!)'
+            'Outside of my professional experience, I completed my thesis, <a href="https://macsphere.mcmaster.ca/handle/11375/29773" target="_blank" rel="noopener noreferrer">Generating Player-Traversable Paths for Cyclescape From Real World Data</a> as part of my MASc in Software Engineering.'
+        },
+        {
+          id: "fifth-p-about",
+          content:
+            'In my free time, I like finding and experimenting new cooking recipes, playing video games, and failing to entertain permanently bored cats (See proof below!)'
         }
       ]
     };

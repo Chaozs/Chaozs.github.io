@@ -1,6 +1,7 @@
 import React from "react";
 import WorkBox from "./WorkExperience";
 import gatarnLogo from "../img/gglogo.png";
+import prodigyLogo from "../img/ProdigyLogo.png"
 import imagineLogo from "../img/ImagineLogo.png";
 import ViralStagingLogo from "../img/ViralStagingLogo.png";
 import McmasterLogo from "../img/mcmasterChildrenHospitalLogo.jpg";
@@ -10,26 +11,67 @@ class Portfolio extends React.Component {
   render() {
     const workExperiences = [
       {
+        title: "Prodigy Education",
+        logo: prodigyLogo,
+        date: "Jan 2024 – Present",
+        role: "Software Engineer",
+        skills: "Typescript, C#, Unity, Live Ops, A/B Testing (Growthbook), Git, Jira, AI-assisted Development, scrum",
+        details: [
+          "Main contributor to Prodigy Math’s Replay Campaign (New Game+), a scalable post-completion progression system.",
+          "    Increased subscription conversion by 8.6% and monthly revenue by 11%.",
+          "    Increased free-to-play premium currency spend by 7.9%, driving OTPs and upgrades.",
+          "    Built modular level pipelines that reduced content iteration time by 50%+ and enabled designer-owned updates.",
+
+          "Designed and delivered the Linear Campaign onboarding system, reducing new-player churn by 15%.",
+          "    Improved subscription conversion by 5%.",
+          "    Set up A/B testing to initially validate the feature with new players.",
+          "        Designed staged rollouts for different cohorts and eventual legacy-player inclusion.",
+
+          "Core engineer on Prodigy’s rapid-prototyping Game Island initiative, delivering monetized Unity minigames at production scale across web and Chromebook platforms.",
+          "    Built and standardized AI-assisted development workflows for large Unity codebases, improving onboarding speed, refactoring safety, and test coverage.",
+          "    Built A/B-tested monetization systems, including CDN video ads optimized for low-end Chromebooks.",
+          "    Led development of Neek’s Bubble Rescue and Academy Defense, integrating education, progression, and monetization frameworks.",
+          "        Shipped games that contributed to an 8% increase in player retention.",
+
+          "Built internal designer and QA tooling.",
+          "    Spreadsheet-to-JSON pipelines reduced data iteration time by 90%.",
+          "    Debug commands and cheat tools significantly improved QA throughput and regression testing.",
+
+          "Regular production release owner and incident responder.",
+          "    Shipped hotfixes for live issues and drove permanent solutions to production problems.",
+        ],
+      },
+      {
         title: "Gatarn Games Ltd",
         logo: gatarnLogo,
         date: "Dec 2022 – Dec 2024",
-        role: "Fullstack Software Engineer",
-        skills: "C# .NET, Typescript, SQL, REST API, Scrum",
+        role: "Lead Software Engineer",
+        skills: "C# .NET, TypeScript, SQL, REST APIs, Live Ops, SaaS, AI-assisted Development, Scrum",
         details: [
-          'Led development of <a href="https://www.crazygames.com/game/skillfite-io" target="_blank" rel="noopener noreferrer">Skillfite</a>, a live-service web-based MMORPG with 1000+ daily users.',
-          "Implemented live-ops strategies that enhanced monthly revenue by 80%.",
-          "Investigated performance issues using VS profiling tools yielding an improvement of 50%.",
-          "Designed API endpoints to facilitate authentication, login, and connecting clients to servers.",
-          "Created a SQL database to store user data, then integrated it into a .NET server using Entity Framework.",
-          "Architected and implemented core features for a C# .NET server, including:",
-          "    Reducing network traffic load between server and client by 90%.",
-          "    Implementing an ECS (entity component system) for reusability and extensibility of game features.",
-          "    Developing an object pooling system that improved CPU and memory performance by 80%.",
-          "Developed a Typescript web client for handling user input and interactions.",
-          "    Designed reusable interfaces for supporting multiple SDK integrations for ad monetization.",
-          "    Fabricated abstract generic UI classes to streamline UI/UX development.",
-          "Led product standups, biweekly sprint planning, sprint reports, and retro reports using Jira.",
-          "Created and conducted technical interview processes for hiring new developers.",
+          'Led development and operation of <a href="https://www.crazygames.com/game/skillfite-io" target="_blank" rel="noopener noreferrer">Skillfite</a>, a live-service web-based MMORPG SaaS with 1,000+ daily active users.',
+          "Built and ran live-ops systems and content pipelines driving an 80% increase in monthly revenue.",
+          "Owned production stability, uptime, and player experience for a continuously running live service.",
+
+          "Built the scalable backend platform powering player progression, monetization, and real-time gameplay.",
+          "Designed authentication, login, and session services connecting web clients to game servers.",
+          "Implemented a SQL-backed player data platform using Entity Framework to support accounts, inventory, and progression.",
+
+          "Architected and optimized the game’s core runtime systems, including:",
+          "    Reducing client-server network traffic by ~90%, improving latency and lowering server costs.",
+          "    Building a reusable ECS (Entity-Component-System) enabling rapid feature iteration and content expansion.",
+          "    Implementing an object-pooling framework improving CPU and memory performance by ~80%.",
+
+          "Built the TypeScript web client powering gameplay, UI, and monetization.",
+          "    Designed reusable, SDK-agnostic ad-integration layers supporting multiple monetization providers.",
+          "    Built extensible UI frameworks enabling rapid feature and UX development.",
+
+          "Drove performance, reliability, and developer velocity across the live service.",
+          "    Used Visual Studio and runtime profiling to identify bottlenecks, improving performance by ~50%.",
+          "    Integrated AI-assisted development workflows (OpenAI Codex in VS Code) to accelerate refactoring, test generation, and large-scale system changes while maintaining production-grade code quality.",
+
+          "Led engineering delivery and team growth.",
+          "    Ran standups, sprint planning, sprint reviews, and retrospectives using Jira.",
+          "    Designed and ran the technical hiring process, interviewing and onboarding new engineers.",
         ],
       },
       {
@@ -52,7 +94,8 @@ class Portfolio extends React.Component {
         role: "Freelancer Software Engineer",
         skills: "JavaScript",
         details: [
-          "Integrated Google Maps API and Google Drive API into customer websites to enable users to locate nearby businesses efficiently.",
+          "Implemented an embeddable HTML/JavaScript geolocation widget that resolved user postal codes to the nearest of 700+ vendors",
+          "Built Google Maps and Google Drive API integrations to dynamically surface location data on customer-facing websites",
         ],
       },
       {
@@ -79,7 +122,7 @@ class Portfolio extends React.Component {
           "Implemented third-party hardware integration.",
         ],
       },
-    ];    
+    ];
     return (
       <section id="work" className="portfolio-mf sect-pt4 route" style={{ backgroundColor: "#202124" }}>
         <div className="container" style={{backgroundColor: "#181818", borderRadius: "1%", padding: "20px"}}>
