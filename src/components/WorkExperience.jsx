@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const WorkBox = ({ title, logo, date, role, skills, details }) => {
+const WorkBox = ({ title, logo, date, role, skills, details, logoStyle }) => {
   const [showMore, setShowMore] = useState(false);
 
   const handleIconClick = () => {
@@ -24,7 +24,8 @@ const WorkBox = ({ title, logo, date, role, skills, details }) => {
                         marginBottom: "20px",
                         borderRadius: "2%",
                         marginLeft: "10px",
-                        pointerEvents: "none"
+                        pointerEvents: "none",
+                        ...logoStyle,
                     }}
                 />
                 </div>

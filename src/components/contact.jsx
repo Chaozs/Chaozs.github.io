@@ -3,9 +3,9 @@ import React from "react";
 class Contact extends React.Component {
   render() {
     return (
-      <section id="work" className="portfolio-mf sect-pt4 route" style={{ backgroundColor: "#202124" }}>
+      <section id="work" className="portfolio-mf sect-pt4 route" style={{ backgroundColor: "rgba(32, 33, 36, 0.6)" }}>
 
-        <div className="container" style={{ backgroundColor: "#181818", borderRadius: "1%", padding: "35px" }}>
+        <div className="container" style={{ backgroundColor: "#2a2a2a", borderRadius: "1%", padding: "35px" }}>
           <div className="row">
             <div className="col-sm-12" style={{ backgroundColor: "#1E1E1E", padding: "15px", borderRadius: "2%" }}>
               <div className="contact-mf">

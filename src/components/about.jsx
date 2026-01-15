@@ -1,7 +1,7 @@
 import React from "react";
 import logo1 from "../img/ProfilePic.jpg";
 import cat from "../img/Kiwi.png"
-import cSharp from "../img/skillIcons/cSharp.svg";
+import cSharp from "../img/skillIcons/CSharp.svg";
 import gitLogo from "../img/skillIcons/gitLogo.webp";
 import javaLogo from "../img/skillIcons/javaLogo.svg";
 import jiraLogo from "../img/skillIcons/jiraLogo.webp";
@@ -77,8 +77,8 @@ class About extends React.Component {
 
   render() {
     return (
-      <section id="about" className="about-mf sect-pt4 route" style={{ backgroundColor: "#202124" }}>
-        <div className="container" style={{ backgroundColor: "#181818", borderRadius: "1%", padding: "20px" }}>
+      <section id="about" className="about-mf sect-pt4 route" style={{ backgroundColor: "rgba(32, 33, 36, 0.6)" }}>
+        <div className="container" style={{ backgroundColor: "#2a2a2a", borderRadius: "1%", padding: "20px" }}>
           <div className="title-box text-center" style={{ padding: "20px" }}>
             <h3 className="title-a" style={{ color: "#E4E4E4" }}> About</h3>
             <div className="line-mf"></div>
@@ -102,29 +102,31 @@ class About extends React.Component {
                         <div className="skill-mf" style={{ backgroundColor: "#1E1E1E", padding: "15px", borderRadius: "2%", marginLeft: "-5px" }}>
                         <div className="skill-category">
                           <p className="title-s" style={{ color: "#9A9A9A" }}>Skills:</p>
-                          <div className="icons">
-                          {skills.map((lang, index) => {
-                            // Define breakpoints and height values
-                            const getDynamicHeight = () => {
-                              const width = window.innerWidth;
-                              if (width <= 600) return "50px"; // For small screens
-                              if (width >= 1200) return "120px"; // For large screens
-                              return "120px"; // Default height
-                            };
-
-                            return (
-                              <img
-                                key={index}
-                                src={lang.icon}
-                                alt={lang.alt}
-                                style={{
-                                  height: getDynamicHeight(),
-                                  objectFit: "contain",
-                                  margin: "5px",
-                                }}
-                              />
-                            );
-                          })}
+                          <div
+                            className="icons"
+                            style={{
+                              display: "grid",
+                              gridTemplateColumns: "repeat(3, minmax(70px, 1fr))",
+                              gap: "12px",
+                              alignItems: "center",
+                              justifyItems: "stretch",
+                              width: "100%",
+                            }}
+                          >
+                          {skills.map((lang, index) => (
+                            <img
+                              key={index}
+                              src={lang.icon}
+                              alt={lang.alt}
+                              style={{
+                                width: "100%",
+                                maxWidth: "130px",
+                                height: "110px",
+                                objectFit: "contain",
+                                justifySelf: "center",
+                              }}
+                            />
+                          ))}
                           </div>
                         </div>
 

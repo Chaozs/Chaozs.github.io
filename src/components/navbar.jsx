@@ -65,7 +65,7 @@ class Navbar extends React.Component {
       <nav
         className="navbar navbar-b navbar-trans navbar-expand-md fixed-top"
         id="mainNav"
-        style={{backgroundColor: "#181818", borderRadius: "1%"}}
+        style={{backgroundColor: "#2a2a2a", borderRadius: "1%"}}
       >
         <div className="container">
           {/* <a className="navbar-brand js-scroll" href="#page-top">

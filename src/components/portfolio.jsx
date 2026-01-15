@@ -13,7 +13,8 @@ class Portfolio extends React.Component {
       {
         title: "Prodigy Education",
         logo: prodigyLogo,
-        date: "Jan 2024 – Present",
+        logoStyle: { width: "300px", maxWidth: "300px", marginLeft: "-60px" },
+        date: "February 2025 – Jan 2026",
         role: "Software Engineer",
         skills: "Typescript, C#, Unity, Live Ops, A/B Testing (Growthbook), Git, Jira, AI-assisted Development, scrum",
         details: [
@@ -44,6 +45,7 @@ class Portfolio extends React.Component {
       {
         title: "Gatarn Games Ltd",
         logo: gatarnLogo,
+        logoStyle: { width: "300px", maxWidth: "300px", marginLeft: "-25px" },
         date: "Dec 2022 – Dec 2024",
         role: "Lead Software Engineer",
         skills: "C# .NET, TypeScript, SQL, REST APIs, Live Ops, SaaS, AI-assisted Development, Scrum",
@@ -77,6 +79,7 @@ class Portfolio extends React.Component {
       {
         title: "Imagine Communications",
         logo: imagineLogo,
+        logoStyle: { width: "300px", maxWidth: "300px", marginLeft: "-25px" },
         date: "Nov 2021 – Dec 2022",
         role: "Software Engineer",
         skills: "Typescript, C# .NET, VUE",
@@ -90,6 +93,7 @@ class Portfolio extends React.Component {
       {
         title: "Viral Staging",
         logo: ViralStagingLogo,
+        logoStyle: { marginLeft: "-25px" },
         date: "May 2022 – Aug 2022",
         role: "Freelancer Software Engineer",
         skills: "JavaScript",
@@ -101,6 +105,7 @@ class Portfolio extends React.Component {
       {
         title: "McMaster Children's Hospital",
         logo: McmasterLogo,
+        logoStyle: { width: "300px", maxWidth: "300px", marginLeft: "-25px" },
         date: "Sept 2019 – Nov 2021",
         role: "Software Engineer",
         skills: "C#, Unity",
@@ -114,6 +119,7 @@ class Portfolio extends React.Component {
       {
         title: "Evertz",
         logo: EvertzLogo,
+        logoStyle: { width: "300px", maxWidth: "300px", marginLeft: "-25px" },
         date: "May 2017 – Aug 2018",
         role: "Software Design Engineer Intern",
         skills: "JavaScript",
@@ -124,8 +130,8 @@ class Portfolio extends React.Component {
       },
     ];
     return (
-      <section id="work" className="portfolio-mf sect-pt4 route" style={{ backgroundColor: "#202124" }}>
-        <div className="container" style={{backgroundColor: "#181818", borderRadius: "1%", padding: "20px"}}>
+      <section id="work" className="portfolio-mf sect-pt4 route" style={{ backgroundColor: "rgba(32, 33, 36, 0.6)" }}>
+        <div className="container" style={{backgroundColor: "#2a2a2a", borderRadius: "1%", padding: "20px"}}>
           <div className="row">
             <div className="col-sm-12">
               <div className="title-box text-center">
@@ -140,6 +146,7 @@ class Portfolio extends React.Component {
               key={index}
               title={experience.title}
               logo={experience.logo}
+              logoStyle={experience.logoStyle}
               date={experience.date}
               role={experience.role}
               skills={experience.skills}

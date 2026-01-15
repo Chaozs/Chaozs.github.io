@@ -21,6 +21,7 @@ import * as serviceWorker from './serviceWorker';
 
 //import components
 import Navbar from './components/navbar.jsx';
+import MatrixBackground from './components/matrix-background.jsx';
 import Intro from './components/intro.jsx';
 import About from './components/about.jsx';
 import Portfolio from './components/portfolio.jsx';
@@ -32,13 +33,16 @@ import Preloader from './components/preloader';
 
 ReactDOM.render(
     <React.Fragment>
-        <Navbar />
-        <Intro />
-        <About />
-        <Portfolio />
-        <Contact />
-        <BackToTop />
-        <Preloader />
+        <MatrixBackground />
+        <div className="app-content">
+            <Navbar />
+            <Intro />
+            <About />
+            <Portfolio />
+            <Contact />
+            <BackToTop />
+            <Preloader />
+        </div>
     </React.Fragment>,
 document.getElementById('root'));
 
