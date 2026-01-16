@@ -7,9 +7,18 @@ const WorkBox = ({ title, logo, date, role, skills, details, logoStyle }) => {
     setShowMore((prevState) => !prevState);
   };
 
+  const handleToggleClick = (event) => {
+    event.stopPropagation();
+    handleIconClick();
+  };
+
+  const handleContainerClick = () => {
+    handleIconClick();
+  };
+
   return (
-    <div className="col-md-12" onClick={handleIconClick} style={{ cursor: "pointer", marginBottom: "-35px"}}>
-        <div className="work-box">
+    <div className="col-md-12" onClick={handleContainerClick} style={{ cursor: "pointer", marginBottom: "-35px"}}>
+        <div className={`work-box ${showMore ? "is-expanded" : "is-collapsed"}`}>
         <div className="work-content" style={{ backgroundColor: "#1E1E1E", marginTop: "15px"}}>
             <div className="row">
             <div className="col-sm-10">
@@ -17,6 +26,7 @@ const WorkBox = ({ title, logo, date, role, skills, details, logoStyle }) => {
                 <img
                     src={logo}
                     alt="logo"
+                    onClick={handleToggleClick}
                     style={{
                         width: "200px",
                         maxWidth: "200px",
@@ -24,30 +34,38 @@ const WorkBox = ({ title, logo, date, role, skills, details, logoStyle }) => {
                         marginBottom: "20px",
                         borderRadius: "2%",
                         marginLeft: "10px",
-                        pointerEvents: "none",
                         ...logoStyle,
                     }}
                 />
                 </div>
-                {/* <h2 className="w-title" style={{ fontSize: "1.5rem", color: "#E4E4E4" }}>{title}</h2> */}
-                <h2 className="w-title" style={{ fontSize: ".8rem", color: "#9A9A9A" }}>{date}</h2>
-                <h2 className="w-title" style={{color: "#E4E4E4"}}>{role}</h2>
-                <div className="w-more" style={{ marginLeft: "1rem", color: "#9A9A9A" }}>
-                <span>{skills}</span>
+                <div
+                  className="work-text"
+                  onClick={(event) => {
+                    if (showMore) {
+                      event.stopPropagation();
+                    }
+                  }}
+                >
+                  {/* <h2 className="w-title" style={{ fontSize: "1.5rem", color: "#E4E4E4" }}>{title}</h2> */}
+                  <h2 className="w-title" style={{ fontSize: ".8rem", color: "#9A9A9A" }}>{date}</h2>
+                  <h2 className="w-title" style={{color: "#E4E4E4"}}>{role}</h2>
+                  <div className="w-more" style={{ marginLeft: "1rem", color: "#9A9A9A" }}>
+                  <span>{skills}</span>
+                  </div>
+                  {showMore && (
+                  <div className="extra-text" style={{ marginTop: "1rem", color: "#E4E4E4" }}>
+                      {details.map((item, index) => (
+                          <li key={index} style={{ marginBottom: "0.5rem", marginLeft: /^\s{3}/.test(item) ? "20px" : "0px" }}>
+                              <p dangerouslySetInnerHTML={{ __html: item }} style={{ display: "inline"}}></p>
+                          </li>
+                      ))}
+                  </div>
+                  )}
                 </div>
-                {showMore && (
-                <div className="extra-text" style={{ marginTop: "1rem", color: "#E4E4E4" }}>
-                    {details.map((item, index) => (
-                        <li key={index} style={{ marginBottom: "0.5rem", marginLeft: /^\s{3}/.test(item) ? "20px" : "0px" }}>
-                            <p dangerouslySetInnerHTML={{ __html: item }} style={{ display: "inline"}}></p>
-                        </li>
-                    ))}
-                </div>
-                )}
             </div>
             <div className="col-sm-2">
-                <div className="w-like">
-                {!showMore ? <span className="ion-ios-plus-outline"></span> : <span className="ion-ios-minus-outline"> </span>}
+                <div className="w-like" onClick={handleToggleClick}>
+                {!showMore ? <span className="ion-ios-arrow-down"></span> : <span className="ion-ios-arrow-up"></span>}
                 </div>
             </div>
             </div>

@@ -14,6 +14,8 @@ class MatrixBackground extends React.Component {
     this.canvasHeight = 0;
     this.columnSpacing = 0.65;
     this.speed = 0.6;
+    this.lastWidth = 0;
+    this.lastHeight = 0;
   }
 
   componentDidMount() {
@@ -38,6 +40,11 @@ class MatrixBackground extends React.Component {
 
     const width = window.innerWidth;
     const height = window.innerHeight;
+    const heightDelta = Math.abs(height - this.lastHeight);
+
+    if (restart && this.lastWidth === width && heightDelta > 0 && heightDelta < 120) {
+      return;
+    }
 
     this.dpr = window.devicePixelRatio || 1;
     canvas.width = width * this.dpr;
@@ -51,6 +58,8 @@ class MatrixBackground extends React.Component {
     this.ctx = ctx;
     this.canvasWidth = width;
     this.canvasHeight = height;
+    this.lastWidth = width;
+    this.lastHeight = height;
 
     this.columns = Math.floor(width / (this.fontSize * this.columnSpacing));
     this.drops = new Array(this.columns).fill(1);

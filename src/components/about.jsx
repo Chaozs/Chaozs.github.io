@@ -49,17 +49,17 @@ class About extends React.Component {
         {
           id: "first-p-about",
           content:
-            "I'm a full-stack developer passionate about creating robust, modular, and scalable software that I hope will outlive me. I’ve been fortunate to gain experience across a wide range of development environments—from a fast-paced startup to a structured, large-scale corporate setting, and even a research-oriented role at a hospital. "
+            "I'm a Software engineer passionate about creating robust, modular, and scalable software that I hope will outlive me. I’ve been fortunate to gain experience across a wide range of development environments—from a fast-paced startup to a structured, large-scale corporate setting, and even a research-oriented role at a hospital. "
         },
         {
           id: "second-p-about",
           content:
-            'Most recently, I was an intermediate developer at Prodigy Education, where I worked on <a href="https://www.prodigygame.com/main-en" target="_blank" rel="noopener noreferrer">Prodigy Math</a>, north america\'s #1 Education Game for kids.'
+            'Most recently, I was a Software Engineer at Prodigy Education, where I worked on <a href="https://www.prodigygame.com/main-en" target="_blank" rel="noopener noreferrer">Prodigy Math</a>, North America\'s #1 Education Game for kids.'
         },
         {
           id: "third-p-about",
           content:
-            'Prior to that, I served as the lead full-stack developer at a Startup: Gatarn Games Ltd., where I worked on <a href="https://www.crazygames.com/game/skillfite-io" target="_blank" rel="noopener noreferrer">Skillfite.io</a>, a popular web game with over 1,000 daily players and more than 1 million accounts created.'
+            'Prior to that, I served as the lead full-stack developer at a startup: Gatarn Games Ltd., where I worked on <a href="https://www.crazygames.com/game/skillfite-io" target="_blank" rel="noopener noreferrer">Skillfite.io</a>, a popular web game with over 1,000 daily players and more than 1 million accounts created.'
         },
         {
           id: "fourth-p-about",
@@ -114,18 +114,23 @@ class About extends React.Component {
                             }}
                           >
                           {skills.map((lang, index) => (
-                            <img
+                            <span
                               key={index}
-                              src={lang.icon}
-                              alt={lang.alt}
-                              style={{
-                                width: "100%",
-                                maxWidth: "130px",
-                                height: "110px",
-                                objectFit: "contain",
-                                justifySelf: "center",
-                              }}
-                            />
+                              className="skill-icon"
+                              data-tooltip={lang.alt}
+                            >
+                              <img
+                                src={lang.icon}
+                                alt={lang.alt}
+                                style={{
+                                  width: "100%",
+                                  maxWidth: "130px",
+                                  height: "110px",
+                                  objectFit: "contain",
+                                  justifySelf: "center",
+                                }}
+                              />
+                            </span>
                           ))}
                           </div>
                         </div>

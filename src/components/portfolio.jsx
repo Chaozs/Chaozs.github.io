@@ -16,9 +16,9 @@ class Portfolio extends React.Component {
         logoStyle: { width: "300px", maxWidth: "300px", marginLeft: "-60px" },
         date: "February 2025 – Jan 2026",
         role: "Software Engineer",
-        skills: "Typescript, C#, Unity, Live Ops, A/B Testing (Growthbook), Git, Jira, AI-assisted Development, scrum",
+        skills: "Typescript, C#, Unity, Live Ops, A/B Testing (Growthbook), Git, Jira, AI-assisted Development, Scrum",
         details: [
-          "Main contributor to Prodigy Math’s Replay Campaign (New Game+), a scalable post-completion progression system.",
+          "Main contributor to <a href=\"https://www.prodigygame.com/main-en\" target=\"_blank\" rel=\"noopener noreferrer\">Prodigy Math</a>’s Replay Campaign (New Game+), a scalable post-completion progression system.",
           "    Increased subscription conversion by 8.6% and monthly revenue by 11%.",
           "    Increased free-to-play premium currency spend by 7.9%, driving OTPs and upgrades.",
           "    Built modular level pipelines that reduced content iteration time by 50%+ and enabled designer-owned updates.",
@@ -50,7 +50,7 @@ class Portfolio extends React.Component {
         role: "Lead Software Engineer",
         skills: "C# .NET, TypeScript, SQL, REST APIs, Live Ops, SaaS, AI-assisted Development, Scrum",
         details: [
-          'Led development and operation of <a href="https://www.crazygames.com/game/skillfite-io" target="_blank" rel="noopener noreferrer">Skillfite</a>, a live-service web-based MMORPG SaaS with 1,000+ daily active users.',
+          'Led development and operation of <a href="https://www.crazygames.com/game/skillfite-io" target="_blank" rel="noopener noreferrer">Skillfite</a>, a web-based MMORPG SaaS with 1,000+ daily active users.',
           "Built and ran live-ops systems and content pipelines driving an 80% increase in monthly revenue.",
           "Owned production stability, uptime, and player experience for a continuously running live service.",
 
@@ -130,8 +130,8 @@ class Portfolio extends React.Component {
       },
     ];
     return (
-      <section id="work" className="portfolio-mf sect-pt4 route" style={{ backgroundColor: "rgba(32, 33, 36, 0.6)" }}>
-        <div className="container" style={{backgroundColor: "#2a2a2a", borderRadius: "1%", padding: "20px"}}>
+      <section id="work" className="portfolio-mf sect-pt4 route" style={{ backgroundColor: "#202124" }}>
+        <div className="container" style={{backgroundColor: "#181818", borderRadius: "1%", padding: "20px"}}>
           <div className="row">
             <div className="col-sm-12">
               <div className="title-box text-center">

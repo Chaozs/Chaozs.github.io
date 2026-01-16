@@ -11,7 +11,7 @@ class Contact extends React.Component {
               <div className="contact-mf">
                 <div id="contact">
                   <div className="row">
-                    <div className="col-md-6">
+                    <div className="col-md-6 contact-form-col">
                       <div className="title-box-2">
                         <h5 className="title-left" style={{ color: "#E4E4E4" }}>Send A Message</h5>
                       </div>
@@ -124,7 +124,7 @@ class Contact extends React.Component {
                       </div>
                       <div className="more-info">
                         <p className="lead" style={{ color: "#E4E4E4" }}>
-                          Interested in my expertise? Have a question? Or just wanted to chat? Send me a message here on or linkedin!
+                          Interested in my expertise? Have a question? Or just wanted to chat? Send me a message here on or LinkedIn!
                         </p>
                         {/* <!-- <ul class="list-ico">
                                 <li><span class="ion-ios-location"></span> 329 WASHINGTON ST BOSTON, MA 02108</li>
