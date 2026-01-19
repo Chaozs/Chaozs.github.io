@@ -56,7 +56,7 @@ class Portfolio extends React.Component {
 
           "Built the scalable backend platform powering player progression, monetization, and real-time gameplay.",
           "Designed authentication, login, and session services connecting web clients to game servers.",
-          "Implemented a SQL-backed player data platform using Entity Framework to support accounts, inventory, and progression.",
+          "Implemented a SQL-backed player data platform to support accounts, inventory, and progression.",
 
           "Architected and optimized the game’s core runtime systems, including:",
           "    Reducing client-server network traffic by ~90%, improving latency and lowering server costs.",
@@ -69,7 +69,7 @@ class Portfolio extends React.Component {
 
           "Drove performance, reliability, and developer velocity across the live service.",
           "    Used Visual Studio and runtime profiling to identify bottlenecks, improving performance by ~50%.",
-          "    Integrated AI-assisted development workflows (OpenAI Codex in VS Code) to accelerate refactoring, test generation, and large-scale system changes while maintaining production-grade code quality.",
+          "    Integrated AI-assisted development workflows to accelerate refactoring, test generation, and large-scale system changes while maintaining production-grade code quality.",
 
           "Led engineering delivery and team growth.",
           "    Ran standups, sprint planning, sprint reviews, and retrospectives using Jira.",
@@ -130,8 +130,8 @@ class Portfolio extends React.Component {
       },
     ];
     return (
-      <section id="work" className="portfolio-mf sect-pt4 route" style={{ backgroundColor: "#202124" }}>
-        <div className="container" style={{backgroundColor: "#181818", borderRadius: "1%", padding: "20px"}}>
+      <section id="work" className="portfolio-mf sect-pt4 route" style={{ backgroundColor: "rgba(32, 33, 36, 0.6)" }}>
+        <div className="container" style={{backgroundColor: "#2a2a2a", borderRadius: "1%", padding: "20px"}}>
           <div className="row">
             <div className="col-sm-12">
               <div className="title-box text-center">

@@ -785,6 +785,14 @@ PORTFOLIO
   float: right;
 }
 
+@media (max-width: 767px) {
+  .work-content .w-like {
+    float: none;
+    text-align: center;
+    margin-top: 8px;
+  }
+}
+
 .work-content .w-like a {
   color: #3bd16f;
 }

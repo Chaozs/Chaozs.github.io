@@ -5,10 +5,11 @@ class MatrixBackground extends React.Component {
     super(props);
     this.canvasRef = React.createRef();
     this.animationFrameId = null;
+    this.idleCallbackId = null;
     this.ctx = null;
     this.drops = [];
     this.columns = 0;
-    this.fontSize = 22;
+    this.fontSize = 28;
     this.dpr = 1;
     this.canvasWidth = 0;
     this.canvasHeight = 0;
@@ -16,19 +17,45 @@ class MatrixBackground extends React.Component {
     this.speed = 0.6;
     this.lastWidth = 0;
     this.lastHeight = 0;
+    this.lastFrameTime = 0;
+    this.targetFps = 60;
   }
 
   componentDidMount() {
-    this.initMatrix();
+    this.setTargetFps();
+    this.deferInit();
     window.addEventListener("resize", this.handleResize);
   }
 
   componentWillUnmount() {
     window.removeEventListener("resize", this.handleResize);
+    if (this.idleCallbackId && window.cancelIdleCallback) {
+      window.cancelIdleCallback(this.idleCallbackId);
+    }
     if (this.animationFrameId) {
       cancelAnimationFrame(this.animationFrameId);
     }
   }
+
+  setTargetFps = () => {
+    const cores = navigator.hardwareConcurrency || 0;
+    const memory = navigator.deviceMemory || 0;
+    const lowEnd = (cores && cores <= 4) || (memory && memory <= 4);
+    this.targetFps = lowEnd ? 20 : 60;
+  };
+
+  deferInit = () => {
+    if (window.requestIdleCallback) {
+      this.idleCallbackId = window.requestIdleCallback(() => {
+        this.initMatrix();
+      }, { timeout: 3000 });
+      return;
+    }
+
+    this.idleCallbackId = setTimeout(() => {
+      this.initMatrix();
+    }, 2000);
+  };
 
   handleResize = () => {
     this.initMatrix(true);
@@ -74,7 +101,17 @@ class MatrixBackground extends React.Component {
     const ctx = this.ctx;
     if (!ctx) return;
 
-    ctx.fillStyle = "rgba(11, 26, 18, 0.06)";
+    if (this.targetFps < 60) {
+      const now = performance.now();
+      const frameInterval = 1000 / this.targetFps;
+      if (now - this.lastFrameTime < frameInterval) {
+        this.animationFrameId = requestAnimationFrame(this.animateMatrix);
+        return;
+      }
+      this.lastFrameTime = now;
+    }
+
+    ctx.fillStyle = "rgba(0, 0, 0, 0.06)";
     ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
 
     ctx.fillStyle = "#3bd16f";
@@ -115,7 +152,7 @@ class MatrixBackground extends React.Component {
           height: "100%",
           zIndex: 0,
           pointerEvents: "none",
-          backgroundColor: "#0b1a12",
+          backgroundColor: "#000000",
         }}
       />
     );
