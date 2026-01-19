@@ -1,22 +1,20 @@
 import React, { useEffect } from 'react';
-import $ from 'jquery';
-import '../libs/easing.js';
 
 const BackToTop: React.FC = () => {
   useEffect(() => {
-    const clickHandler = () => {
-      $('html, body').animate({scrollTop : 0},1500, 'easeInOutExpo');
-      return false;
+    const backToTop = document.querySelector<HTMLAnchorElement>('.back-to-top');
+    if (!backToTop) {
+      return;
+    }
+
+    const clickHandler = (event: MouseEvent) => {
+      event.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
-    const $backToTop = $('.back-to-top');
-    $backToTop.on('click', clickHandler);
+    backToTop.addEventListener('click', clickHandler);
 
     const scrollHandler = () => {
-      const backToTop = document.querySelector<HTMLElement>('.back-to-top');
-      if (!backToTop) {
-        return;
-      }
       if (window.pageYOffset > 100) {
         backToTop.classList.remove("fadeOut");
         backToTop.style.display = "block";
@@ -30,7 +28,7 @@ const BackToTop: React.FC = () => {
     window.addEventListener('scroll', scrollHandler);
 
     return () => {
-      $backToTop.off('click', clickHandler);
+      backToTop.removeEventListener('click', clickHandler);
       window.removeEventListener('scroll', scrollHandler);
     };
   }, []);

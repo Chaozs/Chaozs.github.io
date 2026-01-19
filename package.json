@@ -5,13 +5,10 @@
   "dependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.16.7",
     "bootstrap": "^5.3.3",
-    "jquery": "^3.4.1",
-    "lightbox2": "^2.11.0",
     "normalize.css": "^8.0.1",
     "popper.js": "^1.15.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "react-typed": "^1.1.2",
     "sass": "^1.82.0",
     "typed.js": "^2.0.10"
   },
@@ -37,7 +34,6 @@
   "devDependencies": {
     "@types/bootstrap": "^5.2.10",
     "@types/jest": "^29.5.12",
-    "@types/jquery": "^3.5.30",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
     "@vitejs/plugin-react": "^4.3.1",

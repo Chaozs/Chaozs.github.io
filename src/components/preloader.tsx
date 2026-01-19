@@ -1,20 +1,27 @@
 import React, { useEffect } from 'react';
-import $ from 'jquery';
 
 const Preloader: React.FC = () => {
   useEffect(() => {
     const onLoad = () => {
-      if ($('#preloader').length) {
-        $('#preloader').delay(100).fadeOut('slow', function () {
-          $(this).remove();
-        });
+      const preloader = document.getElementById('preloader');
+      if (!preloader) {
+        return;
       }
+      const delayMs = 100;
+      const fadeMs = 400;
+      window.setTimeout(() => {
+        preloader.style.transition = `opacity ${fadeMs}ms ease`;
+        preloader.style.opacity = "0";
+        window.setTimeout(() => {
+          preloader.remove();
+        }, fadeMs);
+      }, delayMs);
     };
 
-    $(window).on('load', onLoad);
+    window.addEventListener('load', onLoad);
 
     return () => {
-      $(window).off('load', onLoad);
+      window.removeEventListener('load', onLoad);
     };
   }, []);
 
