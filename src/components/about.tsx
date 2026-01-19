@@ -71,7 +71,7 @@ const About: React.FC = () => {
       {
         id: "second-p-about",
         content:
-          'Most recently, I was a Software Engineer at Prodigy Education, where I worked on <a href="https://www.prodigygame.com/main-en" target="_blank" rel="noopener noreferrer">Prodigy Math</a>, North America\'s #1 Education Game for kids.'
+          'Most recently, I was a Software Engineer at Prodigy Education, where I worked on <a href="https://www.prodigygame.com/main-en" target="_blank" rel="noopener noreferrer">Prodigy Math</a>, North America\'s #1 Education Game for students.'
       },
       {
         id: "third-p-about",
