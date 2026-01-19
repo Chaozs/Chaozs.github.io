@@ -20,31 +20,33 @@ import 'lightbox2/dist/js/lightbox.min.js';
 import * as serviceWorker from './serviceWorker';
 
 //import components
-import Navbar from './components/navbar.jsx';
-import MatrixBackground from './components/matrix-background.jsx';
-import Intro from './components/intro.jsx';
-import About from './components/about.jsx';
-import Portfolio from './components/portfolio.jsx';
-import Contact from './components/contact.jsx';
-import BackToTop from './components/back-top.jsx';
+import Navbar from './components/navbar';
+import MatrixBackground from './components/matrix-background';
+import Intro from './components/intro';
+import About from './components/about';
+import Portfolio from './components/portfolio';
+import Contact from './components/contact';
+import BackToTop from './components/back-top';
 import Preloader from './components/preloader';
 
-
-
-ReactDOM.render(
-    <React.Fragment>
-        <MatrixBackground />
-        <div className="app-content">
-            <Navbar />
-            <Intro />
-            <About />
-            <Portfolio />
-            <Contact />
-            <BackToTop />
-            <Preloader />
-        </div>
-    </React.Fragment>,
-document.getElementById('root'));
+const root = document.getElementById('root');
+if (root) {
+    ReactDOM.render(
+        <React.Fragment>
+            <MatrixBackground />
+            <div className="app-content">
+                <Navbar />
+                <Intro />
+                <About />
+                <Portfolio />
+                <Contact />
+                <BackToTop />
+                <Preloader />
+            </div>
+        </React.Fragment>,
+        root
+    );
+}
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

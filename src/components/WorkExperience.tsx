@@ -1,18 +1,28 @@
 import React, { useState } from "react";
 
-const WorkBox = ({ title, logo, date, role, skills, details, logoStyle }) => {
-  const [showMore, setShowMore] = useState(false);
+type WorkBoxProps = {
+  title: string;
+  logo: string;
+  date: string;
+  role: string;
+  skills: string;
+  details: string[];
+  logoStyle?: React.CSSProperties;
+};
 
-  const handleIconClick = () => {
+const WorkBox: React.FC<WorkBoxProps> = ({ title, logo, date, role, skills, details, logoStyle }) => {
+  const [showMore, setShowMore] = useState<boolean>(false);
+
+  const handleIconClick = (): void => {
     setShowMore((prevState) => !prevState);
   };
 
-  const handleToggleClick = (event) => {
+  const handleToggleClick = (event: React.MouseEvent<HTMLElement>): void => {
     event.stopPropagation();
     handleIconClick();
   };
 
-  const handleContainerClick = () => {
+  const handleContainerClick = (): void => {
     handleIconClick();
   };
 
@@ -54,7 +64,7 @@ const WorkBox = ({ title, logo, date, role, skills, details, logoStyle }) => {
                   </div>
                   {showMore && (
                   <div className="extra-text" style={{ marginTop: "1rem", color: "#E4E4E4" }}>
-                      {details.map((item, index) => (
+                      {details.map((item: string, index: number) => (
                           <li key={index} style={{ marginBottom: "0.5rem", marginLeft: /^\s{3}/.test(item) ? "20px" : "0px" }}>
                               <p dangerouslySetInnerHTML={{ __html: item }} style={{ display: "inline"}}></p>
                           </li>
