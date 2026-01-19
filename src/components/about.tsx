@@ -1,20 +1,20 @@
-import React from "react";
-import logo1 from "../img/ProfilePic.jpg";
-import cat from "../img/Kiwi.png";
+﻿import React from "react";
+import logo1 from "../img/ProfilePic.webp";
+import cat from "../img/Kiwi.webp";
 import cSharp from "../img/skillIcons/CSharp.svg";
 import gitLogo from "../img/skillIcons/gitLogo.webp";
 import javaLogo from "../img/skillIcons/javaLogo.svg";
 import jiraLogo from "../img/skillIcons/jiraLogo.webp";
 import jsLogo from "../img/skillIcons/JS.svg";
-import linuxLogo from "../img/skillIcons/linuxLogo.png";
-import playcanvasLogo from "../img/skillIcons/playcanvasLogo.jpg";
-import reactLogo from "../img/skillIcons/reactLogo.png";
-import scrumLogo from "../img/skillIcons/scrumLogo.png";
-import sqlLogo from "../img/skillIcons/sqlLogo.png";
+import linuxLogo from "../img/skillIcons/linuxLogo.webp";
+import playcanvasLogo from "../img/skillIcons/playcanvasLogo.webp";
+import reactLogo from "../img/skillIcons/reactLogo.webp";
+import scrumLogo from "../img/skillIcons/scrumLogo.webp";
+import sqlLogo from "../img/skillIcons/sqlLogo.webp";
 import typeScriptLogo from "../img/skillIcons/TypeScript.svg";
-import unityLogo from "../img/skillIcons/unityLogo.png";
-import vueJsLogo from "../img/skillIcons/vueJSLogo.png";
-import dotNetLogo from "../img/skillIcons/netLogo.png";
+import unityLogo from "../img/skillIcons/unityLogo.webp";
+import vueJsLogo from "../img/skillIcons/vueJSLogo.webp";
+import dotNetLogo from "../img/skillIcons/netLogo.webp";
 import { aboutContent } from "../content";
 
 type Skill = {
@@ -183,3 +183,4 @@ const About: React.FC = () => {
 };
 
 export default About;
+

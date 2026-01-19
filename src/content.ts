@@ -1,10 +1,10 @@
-import type { CSSProperties } from "react";
-import gatarnLogo from "./img/gglogo.png";
-import prodigyLogo from "./img/ProdigyLogo.png";
-import imagineLogo from "./img/ImagineLogo.png";
-import ViralStagingLogo from "./img/ViralStagingLogo.png";
-import McmasterLogo from "./img/mcmasterChildrenHospitalLogo.jpg";
-import EvertzLogo from "./img/Evertz_Microsystems_logo.svg.png";
+﻿import type { CSSProperties } from "react";
+import gatarnLogo from "./img/gglogo.webp";
+import prodigyLogo from "./img/ProdigyLogo.webp";
+import imagineLogo from "./img/ImagineLogo.webp";
+import ViralStagingLogo from "./img/ViralStagingLogo.webp";
+import McmasterLogo from "./img/mcmasterChildrenHospitalLogo.webp";
+import EvertzLogo from "./img/Evertz_Microsystems_logo.svg.webp";
 
 export type AboutContent = {
   id: string;
@@ -169,3 +169,4 @@ export const workExperiences: WorkExperience[] = [
     ],
   },
 ];
+
