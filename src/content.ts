@@ -133,7 +133,7 @@ export const workExperiences: WorkExperience[] = [
   {
     title: "Viral Staging",
     logo: ViralStagingLogo,
-    logoStyle: { marginLeft: "-25px" },
+    logoStyle: { width: "150px", marginLeft: "-25px", marginTop: "-10px" },
     date: "May 2022 - Aug 2022",
     role: "Freelancer Software Engineer",
     skills: "JavaScript",

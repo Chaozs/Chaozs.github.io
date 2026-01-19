@@ -16,6 +16,7 @@ import unityLogo from "../img/skillIcons/unityLogo.webp";
 import vueJsLogo from "../img/skillIcons/vueJSLogo.webp";
 import dotNetLogo from "../img/skillIcons/netLogo.webp";
 import { aboutContent } from "../content";
+import ImageWithSkeleton from "./ImageWithSkeleton";
 
 type Skill = {
   icon: string;
@@ -56,10 +57,13 @@ const About: React.FC = () => {
                     <div className="about-me pt-4 pt-md-0">
                       <a>
                         <div style={{ display: "flex", justifyContent: "center" }}>
-                          <img
+                          <ImageWithSkeleton
                             src={logo}
                             alt="logo"
-                            style={{ maxWidth: "100%", marginBottom: "20px", borderRadius: "2%", marginLeft: "-15px" }}
+                            width={420}
+                            height={320}
+                            style={{ maxWidth: "100%" }}
+                            imgStyle={{ maxWidth: "100%", marginBottom: "20px", borderRadius: "2%", marginLeft: "-15px" }}
                           />
                         </div>
                       </a>
@@ -83,10 +87,12 @@ const About: React.FC = () => {
                             className="skill-icon"
                             data-tooltip={lang.alt}
                           >
-                            <img
+                            <ImageWithSkeleton
                               src={lang.icon}
                               alt={lang.alt}
-                              style={{
+                              width={130}
+                              height={110}
+                              imgStyle={{
                                 width: "100%",
                                 maxWidth: "130px",
                                 height: "110px",
@@ -136,10 +142,13 @@ const About: React.FC = () => {
                       );
                     })}
                     <div style={{ display: "flex", justifyContent: "center" }}>
-                      <img
+                      <ImageWithSkeleton
                         src={cat}
                         alt="logo"
-                        style={{ maxWidth: "100%", marginBottom: "20px", borderRadius: "2%", marginLeft: "-15px" }}
+                        width={420}
+                        height={320}
+                        style={{ maxWidth: "100%" }}
+                        imgStyle={{ maxWidth: "100%", marginBottom: "20px", borderRadius: "2%", marginLeft: "-15px" }}
                       />
                     </div>
                     <p

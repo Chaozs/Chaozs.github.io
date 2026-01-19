@@ -36,8 +36,8 @@ if (root) {
                 <Portfolio />
                 <Contact />
                 <BackToTop />
-                <Preloader />
-            </div>
+            <Preloader />
+        </div>
         </React.Fragment>
     );
 }

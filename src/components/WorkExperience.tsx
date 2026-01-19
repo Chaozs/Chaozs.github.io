@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ImageWithSkeleton from "./ImageWithSkeleton";
 
 type WorkBoxProps = {
   title: string;
@@ -10,8 +11,21 @@ type WorkBoxProps = {
   logoStyle?: React.CSSProperties;
 };
 
+const resolveDimension = (value?: React.CSSProperties["width"]): number | undefined => {
+  if (typeof value === "number") {
+    return value;
+  }
+  if (typeof value === "string") {
+    const parsed = parseInt(value, 10);
+    return Number.isNaN(parsed) ? undefined : parsed;
+  }
+  return undefined;
+};
+
 const WorkBox: React.FC<WorkBoxProps> = ({ title, logo, date, role, skills, details, logoStyle }) => {
   const [showMore, setShowMore] = useState<boolean>(false);
+  const logoWidth = resolveDimension(logoStyle?.width) ?? 200;
+  const logoHeight = resolveDimension(logoStyle?.height) ?? 120;
 
   const handleIconClick = (): void => {
     setShowMore((prevState) => !prevState);
@@ -33,11 +47,13 @@ const WorkBox: React.FC<WorkBoxProps> = ({ title, logo, date, role, skills, deta
             <div className="row">
             <div className="col-sm-10">
                 <div style={{ display: "flex", justifyContent: "left", marginLeft: "15px" }}>
-                <img
+                <ImageWithSkeleton
                     src={logo}
                     alt="logo"
                     onClick={handleToggleClick}
-                    style={{
+                    width={logoWidth}
+                    height={logoHeight}
+                    imgStyle={{
                         width: "200px",
                         maxWidth: "200px",
                         height: "auto", // Maintain aspect ratio
