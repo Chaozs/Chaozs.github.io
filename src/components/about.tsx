@@ -15,34 +15,12 @@ import typeScriptLogo from "../img/skillIcons/TypeScript.svg";
 import unityLogo from "../img/skillIcons/unityLogo.png";
 import vueJsLogo from "../img/skillIcons/vueJSLogo.png";
 import dotNetLogo from "../img/skillIcons/netLogo.png";
+import { aboutContent } from "../content";
 
 type Skill = {
   icon: string;
   alt: string;
 };
-
-type SkillIconProps = {
-  src: string;
-  alt: string;
-};
-
-type AboutContent = {
-  id: string;
-  content: string;
-};
-
-type AboutState = {
-  logo: string;
-  about_me: AboutContent[];
-};
-
-const SkillIcon = ({ src, alt }: SkillIconProps) => (
-  <img 
-    src={src} 
-    alt={alt} 
-    style={{ width: "40px", height: "40px", borderRadius: "4px" }} 
-  />
-);
 
 const skills: Skill[] = [
   { icon: cSharp, alt: "C#" },
@@ -60,36 +38,7 @@ const skills: Skill[] = [
 ];
 
 const About: React.FC = () => {
-  const state: AboutState = {
-    logo: logo1,
-    about_me: [
-      {
-        id: "first-p-about",
-        content:
-          "I'm a Software engineer passionate about creating robust, modular, and scalable software that I hope will outlive me. I've been fortunate to gain experience across a wide range of development environments-from a fast-paced startup to a structured, large-scale corporate setting, and even a research-oriented role at a hospital. "
-      },
-      {
-        id: "second-p-about",
-        content:
-          'Most recently, I was a Software Engineer at Prodigy Education, where I worked on <a href="https://www.prodigygame.com/main-en" target="_blank" rel="noopener noreferrer">Prodigy Math</a>, North America\'s #1 Education Game for students.'
-      },
-      {
-        id: "third-p-about",
-        content:
-          'Prior to that, I served as the lead full-stack developer at a startup: Gatarn Games Ltd., where I worked on <a href="https://www.crazygames.com/game/skillfite-io" target="_blank" rel="noopener noreferrer">Skillfite.io</a>, a popular web game with over 1,000 daily players and more than 1 million accounts created.'
-      },
-      {
-        id: "fourth-p-about",
-        content:
-          'Outside of my professional experience, I completed my thesis, <a href="https://macsphere.mcmaster.ca/handle/11375/29773" target="_blank" rel="noopener noreferrer">Generating Player-Traversable Paths for Cyclescape From Real World Data</a> as part of my MASc in Software Engineering.'
-      },
-      {
-        id: "fifth-p-about",
-        content:
-          'In my free time, I like finding and experimenting new cooking recipes, playing video games, and failing to entertain permanently bored cats (See proof below!)'
-      }
-    ]
-  };
+  const logo = logo1;
 
   return (
     <section id="about" className="about-mf sect-pt4 route" style={{ backgroundColor: "rgba(32, 33, 36, 0.6)" }}>
@@ -108,7 +57,7 @@ const About: React.FC = () => {
                       <a>
                         <div style={{ display: "flex", justifyContent: "center" }}>
                           <img
-                            src={state.logo}
+                            src={logo}
                             alt="logo"
                             style={{ maxWidth: "100%", marginBottom: "20px", borderRadius: "2%", marginLeft: "-15px" }}
                           />
@@ -176,7 +125,7 @@ const About: React.FC = () => {
                         </div>
                       </div>
                     </div>
-                    {state.about_me.map((content: AboutContent) => {
+                    {aboutContent.map((content) => {
                       return (
                         <p
                           className="lead"
