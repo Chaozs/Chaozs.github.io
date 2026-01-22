@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 const Preloader: React.FC = () => {
   useEffect(() => {
-    const onLoad = () => {
+    const hidePreloader = () => {
       const preloader = document.getElementById('preloader');
       if (!preloader) {
         return;
@@ -18,10 +18,20 @@ const Preloader: React.FC = () => {
       }, delayMs);
     };
 
-    window.addEventListener('load', onLoad);
+    const hardTimeoutMs = 3000;
+    const hardTimeoutId = window.setTimeout(() => {
+      hidePreloader();
+    }, hardTimeoutMs);
+
+    if (document.readyState === "loading") {
+      document.addEventListener('DOMContentLoaded', hidePreloader);
+    } else {
+      hidePreloader();
+    }
 
     return () => {
-      window.removeEventListener('load', onLoad);
+      document.removeEventListener('DOMContentLoaded', hidePreloader);
+      window.clearTimeout(hardTimeoutId);
     };
   }, []);
 

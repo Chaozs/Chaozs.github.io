@@ -23,6 +23,7 @@ import Portfolio from './components/portfolio';
 import Contact from './components/contact';
 import BackToTop from './components/back-top';
 import Preloader from './components/preloader';
+import LazySection from './components/LazySection';
 
 const root = document.getElementById('root');
 if (root) {
@@ -32,12 +33,18 @@ if (root) {
             <div className="app-content">
                 <Navbar />
                 <Intro />
-                <About />
-                <Portfolio />
-                <Contact />
+                <LazySection minHeight={700}>
+                    <About />
+                </LazySection>
+                <LazySection minHeight={900}>
+                    <Portfolio />
+                </LazySection>
+                <LazySection minHeight={600}>
+                    <Contact />
+                </LazySection>
                 <BackToTop />
-            <Preloader />
-        </div>
+                <Preloader />
+            </div>
         </React.Fragment>
     );
 }
