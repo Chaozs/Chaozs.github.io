@@ -42,10 +42,10 @@ const About: React.FC = () => {
   const logo = logo1;
 
   return (
-    <section id="about" className="about-mf sect-pt4 route" style={{ backgroundColor: "rgba(32, 33, 36, 0.6)" }}>
-      <div className="container" style={{ backgroundColor: "#2a2a2a", borderRadius: "1%", padding: "20px" }}>
+    <section id="about" className="about-mf sect-pt4 route" style={{ backgroundColor: "var(--section-bg)" }}>
+      <div className="container" style={{ backgroundColor: "var(--surface-1)", borderRadius: "1%", padding: "20px" }}>
         <div className="title-box text-center" style={{ padding: "20px" }}>
-          <h3 className="title-a" style={{ color: "#E4E4E4" }}> About</h3>
+          <h3 className="title-a" style={{ color: "var(--text-heading)" }}> About</h3>
           <div className="line-mf"></div>
         </div>
         <div className="container">
@@ -67,9 +67,9 @@ const About: React.FC = () => {
                           />
                         </div>
                       </a>
-                      <div className="skill-mf" style={{ backgroundColor: "#1E1E1E", padding: "15px", borderRadius: "2%", marginLeft: "-5px" }}>
+                      <div className="skill-mf" style={{ backgroundColor: "var(--surface-2)", padding: "15px", borderRadius: "2%", marginLeft: "-5px" }}>
                       <div className="skill-category">
-                        <p className="title-s" style={{ color: "#9A9A9A" }}>Skills:</p>
+                        <p className="title-s" style={{ color: "var(--text-muted)" }}>Skills:</p>
                         <div
                           className="icons"
                           style={{
@@ -114,7 +114,7 @@ const About: React.FC = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="col-md-6" style={{ backgroundColor: "#1E1E1E", padding: "15px", borderRadius: "2%", marginRight: "-50px" }}>
+                  <div className="col-md-6" style={{ backgroundColor: "var(--surface-2)", padding: "15px", borderRadius: "2%", marginRight: "-50px" }}>
                     <div className="row">
                       <div
                         className="col-sm-6 col-md-5"
@@ -136,7 +136,7 @@ const About: React.FC = () => {
                         <p
                           className="lead"
                           key={content.id}
-                          style={{ color: "#E4E4E4" }}
+                          style={{ color: "var(--text-primary)" }}
                           dangerouslySetInnerHTML={{ __html: content.content }}
                         ></p>
                       );
@@ -153,7 +153,7 @@ const About: React.FC = () => {
                     </div>
                     <p
                       className="lead"
-                      style={{ color: "#E4E4E4" }}
+                      style={{ color: "var(--text-primary)" }}
                       dangerouslySetInnerHTML={{ __html: aboutFooterContent }}
                     ></p>
                     <div className="socials">

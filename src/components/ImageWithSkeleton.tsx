@@ -47,7 +47,7 @@ const ImageWithSkeleton: React.FC<ImageWithSkeletonProps> = ({
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: "rgba(255, 255, 255, 0.04)",
+            backgroundColor: "var(--skeleton-bg)",
             borderRadius: "6px",
           }}
         >
@@ -55,8 +55,8 @@ const ImageWithSkeleton: React.FC<ImageWithSkeletonProps> = ({
             style={{
               width: "28px",
               height: "28px",
-              border: "3px solid rgba(228, 228, 228, 0.5)",
-              borderTopColor: "#3bd16f",
+              border: "3px solid var(--skeleton-border)",
+              borderTopColor: "var(--accent)",
               borderRadius: "50%",
               animation: "spin 0.8s linear infinite",
             }}

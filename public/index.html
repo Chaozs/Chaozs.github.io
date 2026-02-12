@@ -5,6 +5,17 @@
   <meta charset="utf-8" />
   <title>Thien Trandinh Portfolio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark light" />
+  <script>
+    (() => {
+      const storedTheme = localStorage.getItem("theme");
+      const prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+      const theme = storedTheme === "light" || storedTheme === "dark"
+        ? storedTheme
+        : (prefersLight ? "light" : "dark");
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
   <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/

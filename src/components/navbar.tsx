@@ -1,10 +1,28 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import * as bootstrap from 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
+const getInitialTheme = (): "light" | "dark" => {
+  if (typeof document === "undefined") {
+    return "dark";
+  }
+  const attrTheme = document.documentElement.getAttribute("data-theme");
+  return attrTheme === "light" || attrTheme === "dark" ? attrTheme : "dark";
+};
+
 const Navbar: React.FC = () => {
+  const [theme, setTheme] = useState<"light" | "dark">(getInitialTheme);
+
   useEffect(() => {
+    const storedTheme = window.localStorage.getItem("theme");
+    const prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+    const initialTheme = storedTheme === "light" || storedTheme === "dark"
+      ? storedTheme
+      : (prefersLight ? "light" : "dark");
+    setTheme(initialTheme);
+    document.documentElement.setAttribute("data-theme", initialTheme);
+
     const nav = document.querySelector<HTMLElement>("nav");
     if (!nav) {
       return;
@@ -81,13 +99,32 @@ const Navbar: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    window.localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const handleThemeToggle = () => {
+    setTheme((prevTheme) => (prevTheme === "dark" ? "light" : "dark"));
+  };
+
   return (
     <nav
       className="navbar navbar-b navbar-trans navbar-expand-md fixed-top"
       id="mainNav"
-      style={{backgroundColor: "#2a2a2a", borderRadius: "1%"}}
+      style={{ borderRadius: "1%" }}
     >
       <div className="container">
+        <div className="d-flex align-items-center theme-toggle-wrap">
+          <button
+            type="button"
+            className="theme-toggle"
+            onClick={handleThemeToggle}
+            aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+          >
+            {theme === "dark" ? "Light Mode" : "Dark Mode"}
+          </button>
+        </div>
         {/* <a className="navbar-brand js-scroll" href="#page-top">
           <img
             src={this.state.logo}

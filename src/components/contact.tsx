@@ -2,17 +2,17 @@ import React from "react";
 
 const Contact: React.FC = () => {
   return (
-    <section id="work" className="portfolio-mf sect-pt4 route" style={{ backgroundColor: "rgba(32, 33, 36, 0.6)" }}>
+    <section id="work" className="portfolio-mf sect-pt4 route" style={{ backgroundColor: "var(--section-bg)" }}>
 
-      <div className="container" style={{ backgroundColor: "#2a2a2a", borderRadius: "1%", padding: "35px" }}>
+      <div className="container" style={{ backgroundColor: "var(--surface-1)", borderRadius: "1%", padding: "35px" }}>
         <div className="row">
-          <div className="col-sm-12" style={{ backgroundColor: "#1E1E1E", padding: "15px", borderRadius: "2%" }}>
+          <div className="col-sm-12" style={{ backgroundColor: "var(--surface-2)", padding: "15px", borderRadius: "2%" }}>
             <div className="contact-mf">
               <div id="contact">
                 <div className="row">
                   <div className="col-md-6 contact-form-col">
                     <div className="title-box-2">
-                      <h5 className="title-left" style={{ color: "#E4E4E4" }}>Send A Message</h5>
+                      <h5 className="title-left" style={{ color: "var(--text-heading)" }}>Send A Message</h5>
                     </div>
                     <div>
                       <form
@@ -94,7 +94,7 @@ const Contact: React.FC = () => {
                   </div>
                   <div className="col-md-6">
                     <div className="title-box-2 pt-4 pt-md-0">
-                      <h5 className="title-left" style={{ color: "#E4E4E4" }}>
+                      <h5 className="title-left" style={{ color: "var(--text-heading)" }}>
                         <div className="socials">
                           <ul>
                             <span style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
@@ -122,7 +122,7 @@ const Contact: React.FC = () => {
                       </h5>
                     </div>
                     <div className="more-info">
-                      <p className="lead" style={{ color: "#E4E4E4" }}>
+                      <p className="lead" style={{ color: "var(--text-primary)" }}>
                         Interested in my expertise? Have a question? Or just wanted to chat? Send me a message here on or LinkedIn!
                       </p>
                       {/* <!-- <ul class="list-ico">

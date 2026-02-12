@@ -43,7 +43,7 @@ const WorkBox: React.FC<WorkBoxProps> = ({ title, logo, date, role, skills, deta
   return (
     <div className="col-md-12" onClick={handleContainerClick} style={{ cursor: "pointer", marginBottom: "-35px"}}>
         <div className={`work-box ${showMore ? "is-expanded" : "is-collapsed"}`}>
-        <div className="work-content" style={{ backgroundColor: "#1E1E1E", marginTop: "15px"}}>
+        <div className="work-content" style={{ backgroundColor: "var(--surface-2)", marginTop: "15px"}}>
             <div className="row">
             <div className="col-sm-10">
                 <div style={{ display: "flex", justifyContent: "left", marginLeft: "15px" }}>
@@ -73,13 +73,13 @@ const WorkBox: React.FC<WorkBoxProps> = ({ title, logo, date, role, skills, deta
                   }}
                 >
                   {/* <h2 className="w-title" style={{ fontSize: "1.5rem", color: "#E4E4E4" }}>{title}</h2> */}
-                  <h2 className="w-title" style={{ fontSize: ".8rem", color: "#9A9A9A" }}>{date}</h2>
-                  <h2 className="w-title" style={{color: "#E4E4E4"}}>{role}</h2>
-                  <div className="w-more" style={{ marginLeft: "1rem", color: "#9A9A9A" }}>
+                  <h2 className="w-title" style={{ fontSize: ".8rem", color: "var(--text-muted)" }}>{date}</h2>
+                  <h2 className="w-title" style={{color: "var(--text-primary)"}}>{role}</h2>
+                  <div className="w-more" style={{ marginLeft: "1rem", color: "var(--text-muted)" }}>
                   <span>{skills}</span>
                   </div>
                   {showMore && (
-                  <div className="extra-text" style={{ marginTop: "1rem", color: "#E4E4E4" }}>
+                  <div className="extra-text" style={{ marginTop: "1rem", color: "var(--text-primary)" }}>
                       {details.map((item: string, index: number) => (
                           <li key={index} style={{ marginBottom: "0.5rem", marginLeft: /^\s{3}/.test(item) ? "20px" : "0px" }}>
                               <p dangerouslySetInnerHTML={{ __html: item }} style={{ display: "inline"}}></p>

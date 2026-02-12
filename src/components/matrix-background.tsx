@@ -31,6 +31,17 @@ const MatrixBackground: React.FC = () => {
   const fontSize = 28;
   const columnSpacing = 0.65;
   const speed = 0.6;
+  const matrixColorsRef = useRef({
+    trail: "rgba(0, 0, 0, 0.06)",
+    char: "#3bd16f",
+  });
+
+  const readMatrixColors = useCallback(() => {
+    const styles = getComputedStyle(document.documentElement);
+    const trail = styles.getPropertyValue("--matrix-trail").trim() || "rgba(0, 0, 0, 0.06)";
+    const char = styles.getPropertyValue("--matrix-char").trim() || "#3bd16f";
+    matrixColorsRef.current = { trail, char };
+  }, []);
 
   const setTargetFps = useCallback(() => {
     const cores = navigator.hardwareConcurrency || 0;
@@ -53,10 +64,10 @@ const MatrixBackground: React.FC = () => {
       lastFrameTimeRef.current = now;
     }
 
-    ctx.fillStyle = "rgba(0, 0, 0, 0.06)";
+    ctx.fillStyle = matrixColorsRef.current.trail;
     ctx.fillRect(0, 0, canvasWidthRef.current, canvasHeightRef.current);
 
-    ctx.fillStyle = "#3bd16f";
+    ctx.fillStyle = matrixColorsRef.current.char;
     ctx.font = `${fontSize}px monospace`;
 
     const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*";
@@ -104,6 +115,7 @@ const MatrixBackground: React.FC = () => {
     if (!ctx) return;
     ctx.setTransform(dprRef.current, 0, 0, dprRef.current, 0, 0);
     ctxRef.current = ctx;
+    readMatrixColors();
     canvasWidthRef.current = width;
     canvasHeightRef.current = height;
     lastWidthRef.current = width;
@@ -116,7 +128,7 @@ const MatrixBackground: React.FC = () => {
       cancelAnimationFrame(animationFrameIdRef.current);
     }
     animateMatrix();
-  }, [animateMatrix, columnSpacing, fontSize]);
+  }, [animateMatrix, columnSpacing, fontSize, readMatrixColors]);
 
   const deferInit = useCallback(() => {
     const requestIdle = (window as Window & { requestIdleCallback?: IdleCallback }).requestIdleCallback;
@@ -134,7 +146,13 @@ const MatrixBackground: React.FC = () => {
 
   useEffect(() => {
     setTargetFps();
+    readMatrixColors();
     deferInit();
+
+    const observer = new MutationObserver(() => {
+      readMatrixColors();
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
 
     const handleResize = () => {
       initMatrix(true);
@@ -154,13 +172,15 @@ const MatrixBackground: React.FC = () => {
       if (animationFrameIdRef.current) {
         cancelAnimationFrame(animationFrameIdRef.current);
       }
+      observer.disconnect();
     };
-  }, [deferInit, initMatrix, setTargetFps]);
+  }, [deferInit, initMatrix, readMatrixColors, setTargetFps]);
 
   return (
     <canvas
       ref={canvasRef}
       aria-hidden="true"
+      className="matrix-canvas"
       style={{
         position: "fixed",
         inset: 0,
@@ -168,7 +188,7 @@ const MatrixBackground: React.FC = () => {
         height: "100%",
         zIndex: 0,
         pointerEvents: "none",
-        backgroundColor: "#000000",
+        backgroundColor: "var(--matrix-bg)",
       }}
     />
   );
