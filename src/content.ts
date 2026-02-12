@@ -25,29 +25,32 @@ export const aboutContent: AboutContent[] = [
   {
     id: "first-p-about",
     content:
-      "I'm a Software engineer passionate about creating robust, modular, and scalable software that I hope will outlive me. I've been fortunate to gain experience across a wide range of development environments-from a fast-paced startup to a structured, large-scale corporate setting, and even a research-oriented role at a hospital. "
+      "I’m a full-stack software engineer who builds and scales live production systems. I focus on modular architecture, performance optimization, and end-to-end feature ownership — from backend services and data models to front-end experiences and release stability."
   },
   {
     id: "second-p-about",
     content:
-      'Most recently, I was a Software Engineer at Prodigy Education, where I worked on <a href="https://www.prodigygame.com/main-en" target="_blank" rel="noopener noreferrer">Prodigy Math</a>, North America\'s #1 Education Game for kids.'
+      'Most recently at <a href="https://www.prodigygame.com/main-en" target="_blank" rel="noopener noreferrer">Prodigy Education</a>, I led development of high-impact features including the Replay Campaign and onboarding systems, improving subscription conversion by 8.6% and reducing churn by 15% through data-driven iteration and A/B testing.'
   },
   {
     id: "third-p-about",
     content:
-      'Prior to that, I served as the lead full-stack developer at a startup: Gatarn Games Ltd., where I worked on <a href="https://www.crazygames.com/game/skillfite-io" target="_blank" rel="noopener noreferrer">Skillfite.io</a>, a popular web game with over 1,000 daily players and more than 1 million accounts created.'
+      'Previously, as the lead full-stack engineer at Gatarn Games Ltd., I architected and built <a href="https://www.crazygames.com/game/skillfite-io" target="_blank" rel="noopener noreferrer">Skillfite.io</a>, a real-time web platform supporting 1,000+ daily active users and over 1 million accounts, designing authentication services, SQL-backed data systems, and performance-optimized runtime architecture.'
   },
   {
     id: "fourth-p-about",
     content:
-      'Outside of my professional experience, I completed my thesis, <a href="https://macsphere.mcmaster.ca/handle/11375/29773" target="_blank" rel="noopener noreferrer">Generating Player-Traversable Paths for Cyclescape From Real World Data</a> as part of my MASc in Software Engineering.'
+      'I care about building systems that are maintainable, measurable, and built to evolve — whether that means refactoring legacy components to reduce long-term cost, optimizing network traffic by 90%, or building tooling that accelerates entire teams.'
   },
   {
     id: "fifth-p-about",
     content:
-      "In my free time, I like finding and experimenting new cooking recipes, playing video games, and failing to entertain permanently bored cats (See proof below!)"
+      "Outside of work, I enjoy experimenting with new recipes, playing games, and attempting (unsuccessfully) to entertain permanently bored cats."
   }
 ];
+
+export const aboutFooterContent =
+  "I also enjoy playing piano (I used to both teach and perform part-time before starting my tech career), check out my youtube piano covers by clicking the icon below!";
 
 export const workExperiences: WorkExperience[] = [
   {
@@ -60,26 +63,27 @@ export const workExperiences: WorkExperience[] = [
     details: [
       "Main contributor to <a href=\"https://www.prodigygame.com/main-en\" target=\"_blank\" rel=\"noopener noreferrer\">Prodigy Math</a>'s Replay Campaign (New Game+), a scalable post-completion progression system.",
       "    Increased subscription conversion by 8.6% and monthly revenue by 11%.",
-      "    Increased free-to-play premium currency spend by 7.9%, driving OTPs and upgrades.",
-      "    Built modular level pipelines that reduced content iteration time by 50%+ and enabled designer-owned updates.",
+      "    Built modular ECS components following SOLID principles, reducing content iteration time by 50%+ and enabling designer-owned updates.",
+      "    Performed cost analysis on legacy bug maintenance versus refactoring, then implemented reusable components to reduce long-term maintenance costs.",
 
-      "Designed and delivered the Linear Campaign onboarding system, reducing new-player churn by 15%.",
-      "    Improved subscription conversion by 5%.",
-      "    Set up A/B testing to initially validate the feature with new players.",
-      "        Designed staged rollouts for different cohorts and eventual legacy-player inclusion.",
+      "Designed and delivered the Linear Campaign onboarding system reducing new-player churn by 15%.",
+      "    Improved subscription conversion by 4%.",
+      "    Validated feature via A/B testing with new players.",
+      "    Designed staged rollouts across cohorts, including eventual legacy-player inclusion.",
 
-      "Core engineer on Prodigy's rapid-prototyping Game Island initiative, delivering monetized Unity minigames at production scale across web and Chromebook platforms.",
+      "Core engineer on Prodigy’s rapid-prototyping Game Island initiative, delivering monetized Unity experiences at production scale across web and Chromebook platforms.",
       "    Built and standardized AI-assisted development workflows for large Unity codebases, improving onboarding speed, refactoring safety, and test coverage.",
-      "    Built A/B-tested monetization systems, including CDN video ads optimized for low-end Chromebooks.",
-      "    Led development of Neek's Bubble Rescue and Academy Defense, integrating education, progression, and monetization frameworks.",
-      "        Shipped games that contributed to an 8% increase in player retention.",
+      "    Built A/B-tested monetization, including CDN-served video ads optimized for low-end Chromebooks.",
+      "    Led development of Neek’s Bubble Rescue and Academy Defense, integrating education, progression, and monetization frameworks.",
+      "    Shipped games that contributed to an 8% increase in player retention.",
 
-      "Built internal designer and QA tooling.",
+      "Built internal designer & QA tooling to accelerate content development and testing.",
       "    Spreadsheet-to-JSON pipelines reduced data iteration time by 90%.",
       "    Debug commands and cheat tools significantly improved QA throughput and regression testing.",
 
-      "Regular production release owner and incident responder.",
-      "    Shipped hotfixes for live issues and drove permanent solutions to production problems.",
+      "Owned multiple live, user-facing features end-to-end and supported production operations.",
+      "    Partnered closely with designers to iteratively refine core user flows through rapid prototyping and playtesting feedback.",
+      "    Regular production release owner and incident responder, shipping hotfixes for live issues and driving permanent solutions.",
     ],
   },
   {
@@ -90,26 +94,26 @@ export const workExperiences: WorkExperience[] = [
     role: "Lead Software Engineer",
     skills: "C# .NET, TypeScript, SQL, REST APIs, Live Ops, SaaS, AI-assisted Development, Scrum",
     details: [
-      'Led development and operation of <a href="https://www.crazygames.com/game/skillfite-io" target="_blank" rel="noopener noreferrer">Skillfite</a>, a web-based MMORPG SaaS with 1,000+ daily active users.',
-      "Built and ran live-ops systems and content pipelines driving an 80% increase in monthly revenue.",
-      "Owned production stability, uptime, and player experience for a continuously running live service.",
+      "Led development of Skillfite.io, a real-time web application with 1,000+ daily active users.",
+      "    Built and ran live-ops systems and content pipelines driving an 80% increase in monthly revenue.",
+      "    Owned backend systems powering player progression, monetization, and real-time gameplay.",
 
-      "Built the scalable backend platform powering player progression, monetization, and real-time gameplay.",
-      "Designed authentication, login, and session services connecting web clients to game servers.",
-      "Implemented a SQL-backed player data platform to support accounts, inventory, and progression.",
+      "Designed and implemented core backend services for authentication, sessions, and data persistence.",
+      "    Built login and session services connecting web clients to backend services via TCP and WebSockets.",
+      "    Implemented a SQL-backed data platform supporting accounts, inventory, and progression.",
 
-      "Architected and optimized the game's core runtime systems, including:",
-      "    Reducing client-server network traffic by ~90%, improving latency and lowering server costs.",
-      "    Building a reusable ECS (Entity-Component-System) enabling rapid feature iteration and content expansion.",
-      "    Implementing an object-pooling framework improving CPU and memory performance by ~80%.",
+      "Architected and optimized the game’s core runtime systems to improve performance and scalability.",
+      "    Reduced client-server network traffic by ~90%, improving latency and lowering server costs.",
+      "    Built a reusable ECS-style architecture enabling modular, data-driven feature development.",
+      "    Implemented an object-pooling framework improving CPU and memory performance by ~80%.",
 
       "Built the TypeScript web client powering gameplay, UI, and monetization.",
       "    Designed reusable, SDK-agnostic ad-integration layers supporting multiple monetization providers.",
-      "    Built extensible UI frameworks enabling rapid feature and UX development.",
+      "    Built extensible UI frameworks enabling rapid feature development and UX iteration.",
 
       "Drove performance, reliability, and developer velocity across the live service.",
-      "    Used Visual Studio and runtime profiling to identify bottlenecks, improving performance by ~50%.",
-      "    Integrated AI-assisted development workflows to accelerate refactoring, test generation, and large-scale system changes while maintaining production-grade code quality.",
+      "    Used runtime profiling to identify bottlenecks, improving performance by ~50%.",
+      "    Integrated AI-assisted engineering workflows to accelerate refactoring, test generation, and large-scale system changes.",
 
       "Led engineering delivery and team growth.",
       "    Ran standups, sprint planning, sprint reviews, and retrospectives using Jira.",
@@ -124,10 +128,15 @@ export const workExperiences: WorkExperience[] = [
     role: "Software Engineer",
     skills: "Typescript, C# .NET, VUE",
     details: [
-      "Designed containerized web pages using VUE.js, Typescript, and Docker.",
-      "Worked in a SAFe Agile environment using Git, Bitbucket, Jenkins, and Jira.",
-      "Improved customer usability with dynamic landing pages and custom table filtering.",
-      "Enhanced code maintainability by taking an active role in bi-weekly merges of long-term branches.",
+      "Developed and maintained containerized web applications within a large-scale media technology environment.",
+      "    Built responsive web interfaces using Vue.js and TypeScript, packaged and deployed via Docker.",
+      "    Worked within a SAFe Agile framework using Git, Bitbucket, Jenkins, and Jira to deliver features iteratively and reliably.",
+
+      "Improved customer usability through dynamic landing pages and advanced table filtering.",
+      "    Implemented data-driven UI components that streamlined user workflows and improved interaction efficiency.",
+
+      "Strengthened long-term code maintainability and release stability.",
+      "    Contributed to bi-weekly merges of long-lived branches, resolving integration conflicts and reducing deployment risk.",
     ],
   },
   {
@@ -138,8 +147,9 @@ export const workExperiences: WorkExperience[] = [
     role: "Freelancer Software Engineer",
     skills: "JavaScript",
     details: [
-      "Implemented an embeddable HTML/JavaScript geolocation widget that resolved user postal codes to the nearest of 700+ vendors",
-      "Built Google Maps and Google Drive API integrations to dynamically surface location data on customer-facing websites",
+      "Built customer-facing web tooling for location-based services.",
+      "    Implemented an embeddable HTML/JavaScript geolocation widget resolving postal codes to the nearest of 700+ vendors.",
+      "    Integrated Google Maps and Google Drive APIs to dynamically display, update, and manage vendor location data.",
     ],
   },
   {
@@ -150,10 +160,11 @@ export const workExperiences: WorkExperience[] = [
     role: "Software Engineer",
     skills: "C#, Unity",
     details: [
-      "Developed a Virtual Reality (VR) exercise/cycling application in C# and Unity.",
-      "Interacted with doctors and external stakeholders to derive requirements and constraints.",
-      "Leveraged Google Maps API to dynamically obtain terrain data.",
-      "Designed tuning methods to transform terrain data into a traversable game map.",
+      "Designed, developed, and maintained a VR-based rehabilitation application used in a clinical hospital setting.",
+      "    Collaborated with doctors and physiotherapists to translate medical requirements and safety constraints into technical system designs.",
+      "    Leveraged Google Maps APIs to dynamically retrieve real-world terrain data for use in virtual rehabilitation scenarios.",
+      "    Designed tuning and transformation algorithms to convert terrain data into safe, traversable virtual environments.",
+      "    Maintained and iteratively improved the application based on ongoing clinical feedback and patient usage.",
     ],
   },
   {
@@ -164,8 +175,13 @@ export const workExperiences: WorkExperience[] = [
     role: "Software Design Engineer Intern",
     skills: "JavaScript",
     details: [
-      "Developed and maintained UI control applications.",
-      "Implemented third-party hardware integration.",
+      "Developed and maintained a graphical UI control application used by camera operators during live sports broadcasts.",
+      "    Built interactive UI components including multiviewer displays, favourites bar, and drag-and-drop workflows to support real-time production control.",
+      "    Integrated third-party broadcast hardware including Tektronix and Wohler devices for monitoring and signal management.",
+
+      "Designed and implemented a Unity-based sports field simulation controllable via TCP connections and command protocols.",
+      "    Developed network communication layers to simulate real-time device interactions and broadcast workflows.",
+      "    Researched and implemented image tracking techniques for live sports feeds to enable virtual telestration and augmented reality overlays.",
     ],
   },
 ];

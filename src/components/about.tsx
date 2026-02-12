@@ -15,7 +15,7 @@ import typeScriptLogo from "../img/skillIcons/TypeScript.svg";
 import unityLogo from "../img/skillIcons/unityLogo.webp";
 import vueJsLogo from "../img/skillIcons/vueJSLogo.webp";
 import dotNetLogo from "../img/skillIcons/netLogo.webp";
-import { aboutContent } from "../content";
+import { aboutContent, aboutFooterContent } from "../content";
 import ImageWithSkeleton from "./ImageWithSkeleton";
 
 type Skill = {
@@ -154,7 +154,8 @@ const About: React.FC = () => {
                     <p
                       className="lead"
                       style={{ color: "#E4E4E4" }}
-                    > I also enjoy playing piano (I used to both teach and perform part-time before starting my tech career), check out my youtube piano covers by clicking the icon below! </p>
+                      dangerouslySetInnerHTML={{ __html: aboutFooterContent }}
+                    ></p>
                     <div className="socials">
                       <ul>
                         <span style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
