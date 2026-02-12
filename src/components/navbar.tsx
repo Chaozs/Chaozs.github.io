@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import resumePdf from "../ThienTrandinhResume.pdf";
 import * as bootstrap from 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
@@ -156,6 +157,11 @@ const Navbar: React.FC = () => {
             <li className="nav-item">
               <a className="nav-link js-scroll" href="#contact">
                 Contact
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href={resumePdf} download>
+                Download Resume
               </a>
             </li>
           </ul>
