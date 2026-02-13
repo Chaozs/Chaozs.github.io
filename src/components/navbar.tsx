@@ -155,6 +155,11 @@ const Navbar: React.FC = () => {
               </a>
             </li>
             <li className="nav-item">
+              <a className="nav-link js-scroll" href="#doom">
+                Play DOOM
+              </a>
+            </li>
+            <li className="nav-item">
               <a className="nav-link js-scroll" href="#contact">
                 Contact
               </a>

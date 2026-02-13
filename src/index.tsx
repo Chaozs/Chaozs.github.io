@@ -20,6 +20,7 @@ import MatrixBackground from './components/matrix-background';
 import Intro from './components/intro';
 import About from './components/about';
 import Portfolio from './components/portfolio';
+import Doom from './components/doom';
 import Contact from './components/contact';
 import BackToTop from './components/back-top';
 import Preloader from './components/preloader';
@@ -39,6 +40,7 @@ if (root) {
                 <LazySection minHeight={900}>
                     <Portfolio />
                 </LazySection>
+                <Doom />
                 <LazySection minHeight={600}>
                     <Contact />
                 </LazySection>
