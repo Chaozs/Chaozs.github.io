@@ -577,6 +577,53 @@ NAVBAR
   color: var(--accent);
 }
 
+.nav-resume-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--nav-link-trans) !important;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.75rem;
+  line-height: 1.2;
+  white-space: nowrap;
+  margin-left: 12px;
+  transition: all 200ms ease;
+}
+
+.navbar-b .nav-resume-button {
+  border: 1px solid var(--accent);
+}
+
+.nav-resume-button:before {
+  display: none !important;
+  content: none !important;
+}
+
+.nav-resume-button:hover,
+.nav-resume-button:focus {
+  background-color: var(--accent);
+  color: #fff !important;
+}
+
+.navbar-b.navbar-reduce .nav-resume-button {
+  color: var(--nav-link-reduce) !important;
+  background-color: transparent;
+  border: 1px solid var(--accent);
+}
+
+.navbar-b.navbar-reduce .nav-resume-button:hover,
+.navbar-b.navbar-reduce .nav-resume-button:focus {
+  background-color: var(--accent);
+  border-color: var(--accent);
+  color: #fff !important;
+}
+
 .navbar-b.navbar-reduce .navbar-brand {
   color: var(--accent);
 }

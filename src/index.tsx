@@ -37,13 +37,11 @@ if (root) {
                 <LazySection minHeight={700}>
                     <About />
                 </LazySection>
-                <LazySection minHeight={900}>
+                <LazySection minHeight={900} revealOnEvent="reveal-portfolio">
                     <Portfolio />
                 </LazySection>
                 <Doom />
-                <LazySection minHeight={600}>
-                    <Contact />
-                </LazySection>
+                <Contact />
                 <BackToTop />
                 <Preloader />
             </div>

@@ -28,12 +28,10 @@ const Navbar: React.FC = () => {
     if (!nav) {
       return;
     }
-    const navHeight = nav.offsetHeight;
-
     // ScrollSpy initialization
     const scrollSpy = new bootstrap.ScrollSpy(document.body, {
       target: '#mainNav',
-      offset: navHeight,
+      offset: nav.offsetHeight,
     });
 
     const collapseHandler = () => {
@@ -77,8 +75,22 @@ const Navbar: React.FC = () => {
       const targetId = targetAttribute.slice(1);
       const target = document.getElementById(targetId);
       if (target) {
+        if (targetId === "doom") {
+          window.dispatchEvent(new Event("reveal-portfolio"));
+          const scrollToTarget = () => {
+            window.scrollTo({
+              top: target.offsetTop - nav.offsetHeight + 5,
+              behavior: "smooth",
+            });
+          };
+          requestAnimationFrame(() => {
+            requestAnimationFrame(scrollToTarget);
+          });
+          window.setTimeout(scrollToTarget, 200);
+          return;
+        }
         window.scrollTo({
-          top: target.offsetTop - navHeight + 5,
+          top: target.offsetTop - nav.offsetHeight + 5,
           behavior: "smooth",
         });
       }
@@ -165,7 +177,7 @@ const Navbar: React.FC = () => {
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href={resumePdf} download>
+              <a className="nav-link nav-resume-button" href={resumePdf} download>
                 Download Resume
               </a>
             </li>

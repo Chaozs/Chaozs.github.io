@@ -2,13 +2,13 @@ import React from "react";
 
 const Contact: React.FC = () => {
   return (
-    <section id="work" className="portfolio-mf sect-pt4 route" style={{ backgroundColor: "var(--section-bg)" }}>
+    <section id="contact" className="portfolio-mf sect-pt4 route" style={{ backgroundColor: "var(--section-bg)" }}>
 
       <div className="container" style={{ backgroundColor: "var(--surface-1)", borderRadius: "1%", padding: "35px" }}>
         <div className="row">
           <div className="col-sm-12" style={{ backgroundColor: "var(--surface-2)", padding: "15px", borderRadius: "2%" }}>
             <div className="contact-mf">
-              <div id="contact">
+              <div className="contact-inner">
                 <div className="row">
                   <div className="col-md-6 contact-form-col">
                     <div className="title-box-2">

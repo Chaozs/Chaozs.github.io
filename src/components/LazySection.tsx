@@ -4,12 +4,14 @@ type LazySectionProps = {
   children: React.ReactNode;
   minHeight?: number;
   rootMargin?: string;
+  revealOnEvent?: string;
 };
 
 const LazySection: React.FC<LazySectionProps> = ({
   children,
   minHeight = 600,
   rootMargin = "200px 0px",
+  revealOnEvent,
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -40,6 +42,19 @@ const LazySection: React.FC<LazySectionProps> = ({
       observer.disconnect();
     };
   }, [isVisible, rootMargin]);
+
+  useEffect(() => {
+    if (!revealOnEvent || isVisible) {
+      return;
+    }
+    const handleReveal = () => {
+      setIsVisible(true);
+    };
+    window.addEventListener(revealOnEvent, handleReveal);
+    return () => {
+      window.removeEventListener(revealOnEvent, handleReveal);
+    };
+  }, [revealOnEvent, isVisible]);
 
   return (
     <div ref={containerRef} style={{ minHeight: isVisible ? undefined : `${minHeight}px` }}>

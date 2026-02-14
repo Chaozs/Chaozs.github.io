@@ -21,7 +21,7 @@ declare global {
   }
 }
 
-const DOOM_BUNDLE_URL = `${import.meta.env.BASE_URL}doom/doom.jsdos?v=20260213f`;
+const DOOM_BUNDLE_URL = `${import.meta.env.BASE_URL}doom/doom.jsdos?v=20260213g`;
 
 const Doom: React.FC = () => {
   const [isReady, setIsReady] = useState(false);
@@ -156,7 +156,7 @@ const Doom: React.FC = () => {
         </div>
         <div style={{ backgroundColor: "var(--surface-2)", borderRadius: "2%", padding: "16px" }}>
           <p className="lead" style={{ color: "var(--text-primary)", textAlign: "center", marginBottom: "16px" }}>
-            Yes, this website DOES run DOOM!
+            Yes, this website CAN run DOOM!
           </p>
           <div className="doom-frame-wrap" onClick={handleStart}>
             {statusText ? (
@@ -191,8 +191,8 @@ const Doom: React.FC = () => {
                       <li><span className="doom-key">W / S</span> Move</li>
                       <li><span className="doom-key">A / D</span> Strafe</li>
                       <li><span className="doom-key">&larr; / &rarr;</span> Turn</li>
-                      <li><span className="doom-key">Space</span> Fire</li>
-                      <li><span className="doom-key">Ctrl</span> Use/Open</li>
+                      <li><span className="doom-key">&uarr;</span> Fire</li>
+                      <li><span className="doom-key">&darr;</span> Use/Open</li>
                       <li><span className="doom-key">Shift</span> Run</li>
                       <li><span className="doom-key">Tab</span> Automap</li>
                       <li><span className="doom-key">1-7</span> Weapons</li>
