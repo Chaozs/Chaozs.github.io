@@ -26,6 +26,10 @@ const WorkBox: React.FC<WorkBoxProps> = ({ title, logo, date, role, skills, deta
   const [showMore, setShowMore] = useState<boolean>(false);
   const logoWidth = resolveDimension(logoStyle?.width) ?? 200;
   const logoHeight = resolveDimension(logoStyle?.height) ?? 120;
+  const minLogoWidth = Math.min(140, Math.round(logoWidth * 0.6));
+  const responsiveLogoWidth = `clamp(${minLogoWidth}px, 28vw, ${logoWidth}px)`;
+  const logoAspectRatio = `${logoWidth} / ${logoHeight}`;
+  const { width: _logoWidth, height: _logoHeight, ...logoStyleRest } = logoStyle ?? {};
 
   const handleIconClick = (): void => {
     setShowMore((prevState) => !prevState);
@@ -51,16 +55,16 @@ const WorkBox: React.FC<WorkBoxProps> = ({ title, logo, date, role, skills, deta
                     src={logo}
                     alt="logo"
                     onClick={handleToggleClick}
-                    width={logoWidth}
-                    height={logoHeight}
+                    style={{
+                        width: responsiveLogoWidth,
+                        maxWidth: "100%",
+                        aspectRatio: logoAspectRatio,
+                    }}
                     imgStyle={{
-                        width: "200px",
-                        maxWidth: "200px",
-                        height: "auto", // Maintain aspect ratio
                         marginBottom: "20px",
                         borderRadius: "2%",
                         marginLeft: "10px",
-                        ...logoStyle,
+                        ...logoStyleRest,
                     }}
                 />
                 </div>
