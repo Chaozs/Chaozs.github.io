@@ -938,12 +938,70 @@ PORTFOLIO
   }
 }
 
+@media (max-width: 767px) {
+  .about-left-col .skill-mf {
+    margin-left: 0 !important;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .about-right-col {
+    margin-right: 0 !important;
+  }
+
+  .about-photo {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .about-photo {
+    display: block;
+    max-width: 100%;
+  }
+}
+
 .work-content .w-like a {
   color: var(--accent);
 }
 
 .work-content .w-like .num-like {
   font-size: .7rem;
+}
+
+.work-embed {
+  margin-top: 16px;
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.work-embed-label {
+  width: 100%;
+  text-align: center;
+  padding: 8px 12px;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: var(--surface-3);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.work-embed iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
 }
 
 .contact-form-col {
@@ -1310,7 +1368,7 @@ BUTTON
   transition: opacity 200ms ease;
 }
 
-.doom-frame-wrap {
+.emulator-frame-wrap {
   width: 100%;
   aspect-ratio: 4 / 3;
   background:
@@ -1322,28 +1380,28 @@ BUTTON
   position: relative;
 }
 
-.doom-dosbox,
-.doom-dosbox .dosbox-container,
-.doom-dosbox canvas {
+.emulator-dosbox,
+.emulator-dosbox .dosbox-container,
+.emulator-dosbox canvas {
   width: 100%;
   height: 100%;
   display: block;
 }
 
-.doom-dosbox:focus {
+.emulator-dosbox:focus {
   outline: none;
 }
 
-.doom-dosbox.is-pointer-locked,
-.doom-dosbox.is-pointer-locked * {
+.emulator-dosbox.is-pointer-locked,
+.emulator-dosbox.is-pointer-locked * {
   cursor: none;
 }
 
-.doom-dosbox canvas {
+.emulator-dosbox canvas {
   image-rendering: pixelated;
 }
 
-.doom-status {
+.emulator-status {
   margin: 12px 0 0;
   text-align: center;
   font-size: 0.85rem;
@@ -1352,7 +1410,7 @@ BUTTON
   color: var(--text-muted);
 }
 
-.doom-start-overlay {
+.emulator-start-overlay {
   position: absolute;
   inset: 0;
   display: flex;
@@ -1364,7 +1422,7 @@ BUTTON
   text-align: center;
 }
 
-.doom-start-text {
+.emulator-start-text {
   font-size: 1.3rem;
   color: #e6e6e6;
   letter-spacing: 0.18em;
@@ -1372,7 +1430,7 @@ BUTTON
   text-shadow: 0 0 16px rgba(255, 90, 40, 0.35);
 }
 
-.doom-game-toggle {
+.emulator-game-toggle {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -1380,7 +1438,7 @@ BUTTON
   margin-bottom: 12px;
 }
 
-.doom-game-button {
+.emulator-game-button {
   background: transparent;
   border: 1px solid var(--border-color);
   color: var(--text-primary);
@@ -1392,20 +1450,20 @@ BUTTON
   transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease;
 }
 
-.doom-game-button:hover,
-.doom-game-button:focus {
+.emulator-game-button:hover,
+.emulator-game-button:focus {
   background: var(--surface-3);
   border-color: var(--accent);
   color: var(--text-heading);
 }
 
-.doom-game-button.is-active {
+.emulator-game-button.is-active {
   background: var(--accent);
   border-color: var(--accent);
   color: #fff;
 }
 
-.doom-esc-hint {
+.emulator-esc-hint {
   position: absolute;
   top: 10px;
   left: 50%;
@@ -1423,7 +1481,7 @@ BUTTON
   backdrop-filter: blur(4px);
 }
 
-.doom-mouse-overlay {
+.emulator-mouse-overlay {
   position: absolute;
   inset: 0;
   display: flex;
@@ -1437,7 +1495,7 @@ BUTTON
   text-align: center;
 }
 
-.doom-mouse-title {
+.emulator-mouse-title {
   font-size: 1.1rem;
   color: #f2f2f2;
   letter-spacing: 0.16em;
@@ -1445,14 +1503,14 @@ BUTTON
   text-shadow: 0 0 14px rgba(255, 90, 40, 0.35);
 }
 
-.doom-mouse-subtitle {
+.emulator-mouse-subtitle {
   font-size: 0.75rem;
   color: var(--text-muted);
   letter-spacing: 0.18em;
   text-transform: uppercase;
 }
 
-.doom-controls {
+.emulator-controls {
   margin-top: 16px;
   padding: 12px;
   border-radius: 12px;
@@ -1460,14 +1518,14 @@ BUTTON
   border: 1px solid var(--border-color);
 }
 
-.doom-controls-header {
+.emulator-controls-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
 }
 
-.doom-controls-overlay {
+.emulator-controls-overlay {
   position: absolute;
   top: 12px;
   right: 12px;
@@ -1481,11 +1539,11 @@ BUTTON
   z-index: 3;
 }
 
-.doom-controls-overlay.is-collapsed {
+.emulator-controls-overlay.is-collapsed {
   padding-bottom: 8px;
 }
 
-.doom-controls-title {
+.emulator-controls-title {
   text-align: center;
   font-size: 0.85rem;
   text-transform: uppercase;
@@ -1494,11 +1552,11 @@ BUTTON
   margin-bottom: 8px;
 }
 
-.doom-controls-header .doom-controls-title {
+.emulator-controls-header .emulator-controls-title {
   margin-bottom: 0;
 }
 
-.doom-controls-subtitle {
+.emulator-controls-subtitle {
   margin-top: 10px;
   text-align: center;
   font-size: 0.7rem;
@@ -1507,12 +1565,12 @@ BUTTON
   color: var(--text-muted);
 }
 
-.doom-controls-overlay .doom-controls-title {
+.emulator-controls-overlay .emulator-controls-title {
   font-size: 0.7rem;
   margin-bottom: 6px;
 }
 
-.doom-controls-list {
+.emulator-controls-list {
   list-style: none;
   padding-left: 0;
   margin: 0;
@@ -1523,13 +1581,13 @@ BUTTON
   font-size: 0.9rem;
 }
 
-.doom-controls-overlay .doom-controls-list {
+.emulator-controls-overlay .emulator-controls-list {
   grid-template-columns: 1fr;
   gap: 6px;
   font-size: 0.75rem;
 }
 
-.doom-key {
+.emulator-key {
   display: inline-block;
   min-width: 72px;
   padding: 2px 8px;
@@ -1543,20 +1601,20 @@ BUTTON
   text-transform: uppercase;
 }
 
-.doom-controls-overlay .doom-key {
+.emulator-controls-overlay .emulator-key {
   min-width: 88px;
   font-size: 0.7rem;
   padding: 2px 6px;
 }
 
-.doom-instructions {
+.emulator-instructions {
   margin: 12px 0 0;
   text-align: center;
   font-size: 0.85rem;
   color: var(--text-muted);
 }
 
-.doom-controls-toggle {
+.emulator-controls-toggle {
   padding: 4px 10px;
   border-radius: 999px;
   border: 1px solid var(--border-color);
@@ -1573,14 +1631,14 @@ BUTTON
   pointer-events: auto;
 }
 
-.doom-controls-toggle:hover,
-.doom-controls-toggle:focus {
+.emulator-controls-toggle:hover,
+.emulator-controls-toggle:focus {
   background: var(--accent);
   color: #fff;
   border-color: var(--accent);
 }
 
-.doom-mobile-note {
+.emulator-mobile-note {
   margin: 10px 0 0;
   text-align: center;
   font-size: 0.8rem;
@@ -1589,19 +1647,19 @@ BUTTON
 }
 
 @media (pointer: coarse) {
-  .doom-mobile-note {
+  .emulator-mobile-note {
     display: block;
   }
 }
 
 
-.doom-source {
+.emulator-source {
   margin: 12px 0 0;
   text-align: center;
   font-size: 0.85rem;
   color: var(--text-muted);
 }
 
-.doom-source a {
+.emulator-source a {
   color: var(--accent);
 }

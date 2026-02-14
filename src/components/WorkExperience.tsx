@@ -9,6 +9,7 @@ type WorkBoxProps = {
   skills: string;
   details: string[];
   logoStyle?: React.CSSProperties;
+  iframeUrl?: string;
 };
 
 const resolveDimension = (value?: React.CSSProperties["width"]): number | undefined => {
@@ -22,7 +23,7 @@ const resolveDimension = (value?: React.CSSProperties["width"]): number | undefi
   return undefined;
 };
 
-const WorkBox: React.FC<WorkBoxProps> = ({ title, logo, date, role, skills, details, logoStyle }) => {
+const WorkBox: React.FC<WorkBoxProps> = ({ title, logo, date, role, skills, details, logoStyle, iframeUrl }) => {
   const [showMore, setShowMore] = useState<boolean>(false);
   const logoWidth = resolveDimension(logoStyle?.width) ?? 200;
   const logoHeight = resolveDimension(logoStyle?.height) ?? 120;
@@ -89,6 +90,18 @@ const WorkBox: React.FC<WorkBoxProps> = ({ title, logo, date, role, skills, deta
                               <p dangerouslySetInnerHTML={{ __html: item }} style={{ display: "inline"}}></p>
                           </li>
                       ))}
+                      {iframeUrl ? (
+                        <div className="work-embed">
+                          <div className="work-embed-label">Iframe of skillfite.io</div>
+                          <iframe
+                            src={iframeUrl}
+                            title={`${title} demo`}
+                            loading="lazy"
+                            referrerPolicy="no-referrer-when-downgrade"
+                            sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+                          ></iframe>
+                        </div>
+                      ) : null}
                   </div>
                   )}
                 </div>

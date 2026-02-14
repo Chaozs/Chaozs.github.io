@@ -25,6 +25,7 @@ const Portfolio: React.FC = () => {
             role={experience.role}
             skills={experience.skills}
             details={experience.details}
+            iframeUrl={experience.iframeUrl}
           />
         ))}
         </div>

@@ -19,6 +19,7 @@ export type WorkExperience = {
   role: string;
   skills: string;
   details: string[];
+  iframeUrl?: string;
 };
 
 export const aboutContent: AboutContent[] = [
@@ -93,6 +94,7 @@ export const workExperiences: WorkExperience[] = [
     date: "Dec 2022 - Dec 2024",
     role: "Lead Software Engineer",
     skills: "C# .NET, TypeScript, SQL, REST APIs, Live Ops, SaaS, AI-assisted Development, Scrum",
+    iframeUrl: "https://skillfite.io/",
     details: [
       "Led development of Skillfite.io, a real-time web application with 1,000+ daily active users.",
       "    Built and ran live-ops systems and content pipelines driving an 80% increase in monthly revenue.",
@@ -185,4 +187,3 @@ export const workExperiences: WorkExperience[] = [
     ],
   },
 ];
-

@@ -75,7 +75,7 @@ const Navbar: React.FC = () => {
       const targetId = targetAttribute.slice(1);
       const target = document.getElementById(targetId);
       if (target) {
-        if (targetId === "doom") {
+        if (targetId === "emulator") {
           window.dispatchEvent(new Event("reveal-portfolio"));
           const scrollToTarget = () => {
             window.scrollTo({
@@ -167,7 +167,7 @@ const Navbar: React.FC = () => {
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link js-scroll" href="#doom">
+              <a className="nav-link js-scroll" href="#emulator">
                 Play DOOM
               </a>
             </li>

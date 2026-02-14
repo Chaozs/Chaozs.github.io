@@ -53,7 +53,7 @@ const About: React.FC = () => {
             <div className="col-sm-12">
               <div>
                 <div className="row">
-                  <div className="col-md-6">
+                  <div className="col-md-6 about-left-col">
                     <div className="about-me pt-4 pt-md-0">
                       <a>
                         <div style={{ display: "flex", justifyContent: "center" }}>
@@ -63,6 +63,7 @@ const About: React.FC = () => {
                             width={420}
                             height={320}
                             style={{ maxWidth: "100%" }}
+                            className="about-photo"
                             imgStyle={{ maxWidth: "100%", marginBottom: "20px", borderRadius: "2%", marginLeft: "-15px" }}
                           />
                         </div>
@@ -114,7 +115,7 @@ const About: React.FC = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="col-md-6" style={{ backgroundColor: "var(--surface-2)", padding: "15px", borderRadius: "2%", marginRight: "-50px" }}>
+                  <div className="col-md-6 about-right-col" style={{ backgroundColor: "var(--surface-2)", padding: "15px", borderRadius: "2%", marginRight: "-50px" }}>
                     <div className="row">
                       <div
                         className="col-sm-6 col-md-5"
@@ -148,6 +149,7 @@ const About: React.FC = () => {
                         width={420}
                         height={320}
                         style={{ maxWidth: "100%" }}
+                        className="about-photo"
                         imgStyle={{ maxWidth: "100%", marginBottom: "20px", borderRadius: "2%", marginLeft: "-15px" }}
                       />
                     </div>
