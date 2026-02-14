@@ -56,7 +56,7 @@ export const workExperiences: WorkExperience[] = [
   {
     title: "Prodigy Education",
     logo: prodigyLogo,
-    logoStyle: { width: "300px", maxWidth: "300px", marginLeft: "-60px" },
+    logoStyle: { width: "300px", maxWidth: "300px", marginLeft: "-40px" },
     date: "February 2025 - Jan 2026",
     role: "Software Engineer",
     skills: "Typescript, C#, Unity, Live Ops, A/B Testing (Growthbook), Git, Jira, AI-assisted Development, Scrum",

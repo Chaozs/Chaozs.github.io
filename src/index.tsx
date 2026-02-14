@@ -20,7 +20,7 @@ import MatrixBackground from './components/matrix-background';
 import Intro from './components/intro';
 import About from './components/about';
 import Portfolio from './components/portfolio';
-import Doom from './components/doom';
+import Doom from './components/js-dos-emulator';
 import Contact from './components/contact';
 import BackToTop from './components/back-top';
 import Preloader from './components/preloader';
