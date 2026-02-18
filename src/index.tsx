@@ -20,7 +20,7 @@ import MatrixBackground from './components/matrix-background';
 import Intro from './components/intro';
 import About from './components/about';
 import Portfolio from './components/portfolio';
-import JSDosEmulator from './components/js-dos/js-dos-emulator';
+import EmulatorSection from './components/emulator/EmulatorSection';
 import Contact from './components/contact';
 import BackToTop from './components/back-top';
 import Preloader from './components/preloader';
@@ -40,7 +40,7 @@ if (root) {
                 <LazySection minHeight={900} revealOnEvent="reveal-portfolio">
                     <Portfolio />
                 </LazySection>
-                <JSDosEmulator />
+                <EmulatorSection />
                 <Contact />
                 <BackToTop />
                 <Preloader />

@@ -168,7 +168,7 @@ const Navbar: React.FC = () => {
             </li>
             <li className="nav-item">
               <a className="nav-link js-scroll" href="#emulator">
-                Play DOOM
+                Play DOOM and More!
               </a>
             </li>
             <li className="nav-item">
