@@ -17,6 +17,8 @@ import vueJsLogo from "../img/skillIcons/vueJSLogo.webp";
 import dotNetLogo from "../img/skillIcons/netLogo.webp";
 import { aboutContent, aboutFooterContent } from "../content";
 import ImageWithSkeleton from "./ImageWithSkeleton";
+import SectionHeader from "./shared/SectionHeader";
+import SectionShell from "./shared/SectionShell";
 
 type Skill = {
   icon: string;
@@ -42,76 +44,68 @@ const About: React.FC = () => {
   const logo = logo1;
 
   return (
-    <section id="about" className="about-mf sect-pt4 route" style={{ backgroundColor: "var(--section-bg)" }}>
-      <div className="container" style={{ backgroundColor: "var(--surface-1)", borderRadius: "1%", padding: "20px" }}>
-        <div className="title-box text-center" style={{ padding: "20px" }}>
-          <h3 className="title-a" style={{ color: "var(--text-heading)" }}> About</h3>
-          <div className="line-mf"></div>
-        </div>
-        <div className="container">
-          <div className="row">
-            <div className="col-sm-12">
-              <div>
-                <div className="row">
-                  <div className="col-md-6 about-left-col">
-                    <div className="about-me pt-4 pt-md-0">
-                      <a>
-                        <div style={{ display: "flex", justifyContent: "center" }}>
-                          <ImageWithSkeleton
-                            src={logo}
-                            alt="logo"
-                            width={420}
-                            height={320}
-                            style={{ maxWidth: "100%" }}
-                            className="about-photo"
-                            imgStyle={{ maxWidth: "100%", marginBottom: "20px", borderRadius: "2%", marginLeft: "-15px" }}
-                          />
-                        </div>
-                      </a>
-                      <div className="skill-mf" style={{ backgroundColor: "var(--surface-2)", padding: "15px", borderRadius: "2%", marginLeft: "-5px" }}>
-                      <div className="skill-category">
-                        <p className="title-s" style={{ color: "var(--text-muted)" }}>Skills:</p>
-                        <div
-                          className="icons"
-                          style={{
-                            display: "grid",
-                            gridTemplateColumns: "repeat(3, minmax(70px, 1fr))",
-                            gap: "12px",
-                            alignItems: "center",
-                            justifyItems: "stretch",
-                            width: "100%",
-                          }}
+    <SectionShell id="about" className="about-mf sect-pt4 route">
+      <SectionHeader title="About" padding="20px" />
+      <div className="container">
+        <div className="row">
+          <div className="col-sm-12">
+            <div>
+              <div className="row">
+                <div className="col-md-6 about-left-col">
+                  <div className="about-me pt-4 pt-md-0">
+                    <div style={{ display: "flex", justifyContent: "center" }}>
+                      <ImageWithSkeleton
+                        src={logo}
+                        alt="logo"
+                        style={{ width: "100%", maxWidth: "100%", aspectRatio: "4 / 3" }}
+                        className="about-photo"
+                        imgStyle={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                          marginBottom: "20px",
+                          borderRadius: "2%",
+                          marginLeft: "0",
+                        }}
+                      />
+                    </div>
+                    <div className="skill-mf" style={{ backgroundColor: "var(--surface-2)", padding: "15px", borderRadius: "2%", marginLeft: "0" }}>
+                    <div className="skill-category">
+                      <p className="title-s" style={{ color: "var(--text-muted)" }}>Skills:</p>
+                      <div
+                        className="icons"
+                        style={{
+                          display: "grid",
+                          gridTemplateColumns: "repeat(3, minmax(70px, 1fr))",
+                          gap: "12px",
+                          alignItems: "center",
+                          justifyItems: "stretch",
+                          width: "100%",
+                        }}
+                      >
+                      {skills.map((lang: Skill, index: number) => (
+                        <span
+                          key={index}
+                          className="skill-icon"
+                          data-tooltip={lang.alt}
                         >
-                        {skills.map((lang: Skill, index: number) => (
-                          <span
-                            key={index}
-                            className="skill-icon"
-                            data-tooltip={lang.alt}
-                          >
-                            <ImageWithSkeleton
-                              src={lang.icon}
-                              alt={lang.alt}
-                              width={130}
-                              height={110}
-                              imgStyle={{
-                                width: "100%",
-                                maxWidth: "130px",
-                                height: "110px",
-                                objectFit: "contain",
-                                justifySelf: "center",
-                              }}
-                            />
-                          </span>
-                        ))}
-                        </div>
+                          <ImageWithSkeleton
+                            src={lang.icon}
+                            alt={lang.alt}
+                            width={130}
+                            height={110}
+                            imgStyle={{
+                              width: "100%",
+                              maxWidth: "130px",
+                              height: "110px",
+                              objectFit: "contain",
+                              justifySelf: "center",
+                            }}
+                          />
+                        </span>
+                      ))}
                       </div>
-
-                        {/* <p className="title-s" style={{ color: "#9A9A9A" }}>Languages:</p>
-                        <p className="lead" style={{ color: "#E4E4E4" }}>C#, Typescript, Javascript, Java, SQL </p>
-                        <p className="title-s" style={{ color: "#9A9A9A" }}>Frameworks:</p>
-                        <p className="lead" style={{ color: "#E4E4E4" }}> .NET, Unity, VUE, Playcanvas</p>
-                        <p className="title-s" style={{ color: "#9A9A9A" }}>Other:</p>
-                        <p className="lead" style={{ color: "#E4E4E4" }}> Git, REST, Linux, Jira, Jenkins, Agile, Scrum</p> */}
+                    </div>
                       </div>
                     </div>
                   </div>
@@ -189,10 +183,8 @@ const About: React.FC = () => {
             </div>
           </div>
         </div>
-      </div>
-    </section>
+    </SectionShell>
   );
 };
 
 export default About;
-

@@ -1,20 +1,18 @@
 import React from "react";
 import WorkBox from "./WorkExperience";
 import { workExperiences } from "../content";
+import SectionHeader from "./shared/SectionHeader";
+import SectionShell from "./shared/SectionShell";
 
 const Portfolio: React.FC = () => {
   return (
-    <section id="work" className="portfolio-mf sect-pt4 route" style={{ backgroundColor: "var(--section-bg)" }}>
-      <div className="container" style={{ backgroundColor: "var(--surface-1)", borderRadius: "1%", padding: "20px" }}>
-        <div className="row">
-          <div className="col-sm-12">
-            <div className="title-box text-center">
-              <h3 className="title-a" style={{ color: "var(--text-heading)", marginTop: "25px" }}> Work Experience</h3>
-              <div className="line-mf"></div>
-            </div>
-          </div>
+    <SectionShell id="work" className="portfolio-mf sect-pt4 route">
+      <div className="row">
+        <div className="col-sm-12">
+          <SectionHeader title="Work Experience" marginTop="25px" />
         </div>
-        <div className="row">
+      </div>
+      <div className="row">
         {workExperiences.map((experience, index) => (
           <WorkBox
             key={index}
@@ -28,9 +26,8 @@ const Portfolio: React.FC = () => {
             iframeUrl={experience.iframeUrl}
           />
         ))}
-        </div>
       </div>
-    </section>
+    </SectionShell>
   );
 };
 

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ImageWithSkeleton from "./ImageWithSkeleton";
+import SurfaceCard from "./shared/SurfaceCard";
 
 type WorkBoxProps = {
   title: string;
@@ -48,7 +49,7 @@ const WorkBox: React.FC<WorkBoxProps> = ({ title, logo, date, role, skills, deta
   return (
     <div className="col-md-12" onClick={handleContainerClick} style={{ cursor: "pointer", marginBottom: "-35px"}}>
         <div className={`work-box ${showMore ? "is-expanded" : "is-collapsed"}`}>
-        <div className="work-content" style={{ backgroundColor: "var(--surface-2)", marginTop: "15px"}}>
+        <SurfaceCard className="work-content" radius="0" style={{ marginTop: "15px" }}>
             <div className="row">
             <div className="col-sm-10">
                 <div style={{ display: "flex", justifyContent: "left", marginLeft: "15px" }}>
@@ -112,7 +113,7 @@ const WorkBox: React.FC<WorkBoxProps> = ({ title, logo, date, role, skills, deta
                 </div>
             </div>
             </div>
-        </div>
+        </SurfaceCard>
         </div>
     </div>
   );

@@ -1,12 +1,30 @@
 import React from "react";
+import SectionShell from "./shared/SectionShell";
+import { ContactInput, ContactTextarea } from "./shared/ContactField";
+import SocialIconLink from "./shared/SocialIconLink";
+import SurfaceCard from "./shared/SurfaceCard";
 
 const Contact: React.FC = () => {
   return (
-    <section id="contact" className="portfolio-mf sect-pt4 route" style={{ backgroundColor: "var(--section-bg)" }}>
-
-      <div className="container" style={{ backgroundColor: "var(--surface-1)", borderRadius: "1%", padding: "35px" }}>
+    <SectionShell
+      id="contact"
+      className="portfolio-mf sect-pt4 route"
+      containerPadding="35px"
+      after={(
+        <footer>
+          <div className="container">
+            <div className="row">
+              <div className="col-sm-12">
+                <div className="copyright-box">
+                </div>
+              </div>
+            </div>
+          </div>
+        </footer>
+      )}
+    >
         <div className="row">
-          <div className="col-sm-12" style={{ backgroundColor: "var(--surface-2)", padding: "15px", borderRadius: "2%" }}>
+          <SurfaceCard className="col-sm-12" padding="15px">
             <div className="contact-mf">
               <div className="contact-inner">
                 <div className="row">
@@ -26,59 +44,43 @@ const Contact: React.FC = () => {
                         <div id="errormessage"></div>
                         <div className="row">
                           <div className="col-md-12 mb-3">
-                            <div className="form-group">
-                              <input
-                                type="text"
-                                name="name"
-                                className="form-control"
-                                id="name"
-                                placeholder="Your Name"
-                                data-rule="minlen:4"
-                                data-msg="Please enter at least 4 chars"
-                              />
-                              <div className="validation"></div>
-                            </div>
+                            <ContactInput
+                              type="text"
+                              name="name"
+                              id="name"
+                              placeholder="Your Name"
+                              dataRule="minlen:4"
+                              dataMsg="Please enter at least 4 chars"
+                            />
                           </div>
                           <div className="col-md-12 mb-3">
-                            <div className="form-group">
-                              <input
-                                type="email"
-                                className="form-control"
-                                name="email"
-                                id="email"
-                                placeholder="Your Email"
-                                data-rule="email"
-                                data-msg="Please enter a valid email"
-                              />
-                              <div className="validation"></div>
-                            </div>
+                            <ContactInput
+                              type="email"
+                              name="email"
+                              id="email"
+                              placeholder="Your Email"
+                              dataRule="email"
+                              dataMsg="Please enter a valid email"
+                            />
                           </div>
                           <div className="col-md-12 mb-3">
-                            <div className="form-group">
-                              <input
-                                type="text"
-                                className="form-control"
-                                name="subject"
-                                id="subject"
-                                placeholder="Subject"
-                                data-rule="minlen:4"
-                                data-msg="Please enter at least 8 chars of subject"
-                              />
-                              <div className="validation"></div>
-                            </div>
+                            <ContactInput
+                              type="text"
+                              name="subject"
+                              id="subject"
+                              placeholder="Subject"
+                              dataRule="minlen:4"
+                              dataMsg="Please enter at least 8 chars of subject"
+                            />
                           </div>
                           <div className="col-md-12 mb-3">
-                            <div className="form-group">
-                              <textarea
-                                className="form-control"
-                                name="message"
-                                rows={5}
-                                data-rule="required"
-                                data-msg="Please write something for us"
-                                placeholder="Message"
-                              ></textarea>
-                              <div className="validation"></div>
-                            </div>
+                            <ContactTextarea
+                              name="message"
+                              id="message"
+                              placeholder="Message"
+                              dataRule="required"
+                              dataMsg="Please write something for us"
+                            />
                           </div>
                           <div className="col-md-12">
                             <button
@@ -95,30 +97,11 @@ const Contact: React.FC = () => {
                   <div className="col-md-6">
                     <div className="title-box-2 pt-4 pt-md-0">
                       <h5 className="title-left" style={{ color: "var(--text-heading)" }}>
-                        <div className="socials">
-                          <ul>
-                            <span style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                              <a
-                                href="https://www.linkedin.com/in/thien-trandinh/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                style={{
-                                  display: "flex",
-                                  justifyContent: "center",
-                                  alignItems: "center",
-                                }}
-                              >
-                                  <span className="ico-circle"   style={{
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                  }}>
-                                  <i className="ion-social-linkedin"></i>
-                                </span>
-                              </a>
-                            </span>
-                          </ul>
-                        </div>
+                        <SocialIconLink
+                          href="https://www.linkedin.com/in/thien-trandinh/"
+                          iconClass="ion-social-linkedin"
+                          label="LinkedIn"
+                        />
                       </h5>
                     </div>
                     <div className="more-info">
@@ -135,20 +118,9 @@ const Contact: React.FC = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </SurfaceCard>
         </div>
-      </div>
-      <footer>
-        <div className="container">
-          <div className="row">
-            <div className="col-sm-12">
-              <div className="copyright-box">
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
-    </section>
+    </SectionShell>
   );
 };
 
