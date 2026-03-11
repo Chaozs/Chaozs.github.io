@@ -122,7 +122,9 @@ const MatrixBackground: React.FC = () => {
     lastHeightRef.current = height;
 
     const columns = Math.floor(width / (fontSize * columnSpacing));
-    dropsRef.current = new Array(columns).fill(1);
+    const initialRows = Math.ceil(height / fontSize);
+    // Seed each column at a different off-screen row so the first visible frame is already staggered.
+    dropsRef.current = Array.from({ length: columns }, () => -Math.random() * initialRows);
 
     if (restart && animationFrameIdRef.current) {
       cancelAnimationFrame(animationFrameIdRef.current);
