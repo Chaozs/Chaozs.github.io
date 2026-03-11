@@ -31,21 +31,22 @@ const Intro: React.FC = () => {
     >
       <div className="intro-content display-table" style={{ position: "relative", zIndex: 1 }}>
         <div className="table-cell">
-          <div className="container">
-            <h1 className="intro-title mb-4">Thien Trandinh</h1>
-              <p className="intro-subtitle">
+          <div className="container intro-stagger">
+            <h1 className="intro-title mb-4 intro-stagger-item">Thien Trandinh</h1>
+              <p className="intro-subtitle intro-stagger-item">
                 <span className="text-slider-items"></span>
                 <strong className="text-slider">
                   <span ref={typedRef}></span>
                 </strong>
               </p>
-            <p className="pt-3">
+            <p className="pt-3 intro-stagger-item">
               <a
                 className="btn btn-primary btn js-scroll px-4 intro-work-btn"
                 href="#work"
                 role="button"
               >
                 View Work Experiences
+                <span className="intro-work-btn__icon" aria-hidden="true">-&gt;</span>
               </a>
             </p>
           </div>

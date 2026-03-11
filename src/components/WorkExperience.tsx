@@ -98,12 +98,20 @@ const WorkBox: React.FC<WorkBoxProps> = ({
                   </div>
                   <div className="extra-text" style={{ color: "var(--text-primary)" }}>
                     {details.map((item: string, index: number) => (
-                      <li key={index} style={{ marginBottom: "0.5rem", marginLeft: /^\s{3}/.test(item) ? "20px" : "0px" }}>
+                      <li
+                        key={index}
+                        className="work-detail-item"
+                        style={{
+                          marginBottom: "0.5rem",
+                          marginLeft: /^\s{3}/.test(item) ? "20px" : "0px",
+                          transitionDelay: `${Math.min(index * 45, 180)}ms`,
+                        }}
+                      >
                         <p dangerouslySetInnerHTML={{ __html: item }} style={{ display: "inline" }}></p>
                       </li>
                     ))}
                     {iframeUrl ? (
-                      <div className="work-embed">
+                      <div className="work-embed work-detail-item" style={{ transitionDelay: `${Math.min(details.length * 45, 220)}ms` }}>
                         <div className="work-embed-label">Iframe of skillfite.io</div>
                         <iframe
                           src={iframeUrl}

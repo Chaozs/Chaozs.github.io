@@ -73,27 +73,31 @@ const Navbar: React.FC = () => {
         return;
       }
       const targetId = targetAttribute.slice(1);
-      const target = document.getElementById(targetId);
-      if (target) {
-        if (targetId === "emulator") {
-          window.dispatchEvent(new Event("reveal-portfolio"));
-          const scrollToTarget = () => {
-            window.scrollTo({
-              top: target.offsetTop - nav.offsetHeight + 5,
-              behavior: "smooth",
-            });
-          };
-          requestAnimationFrame(() => {
-            requestAnimationFrame(scrollToTarget);
-          });
-          window.setTimeout(scrollToTarget, 200);
-          return;
+      const scrollToTarget = () => {
+        const target = document.getElementById(targetId);
+        if (!target) {
+          return false;
         }
         window.scrollTo({
           top: target.offsetTop - nav.offsetHeight + 5,
           behavior: "smooth",
         });
+        return true;
+      };
+
+      if (targetId === "work" || targetId === "emulator") {
+        window.dispatchEvent(new Event("reveal-portfolio"));
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            if (!scrollToTarget()) {
+              window.setTimeout(scrollToTarget, 200);
+            }
+          });
+        });
+        return;
       }
+
+      scrollToTarget();
     };
 
     smoothLinks.forEach((link) => {

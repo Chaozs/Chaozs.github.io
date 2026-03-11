@@ -328,6 +328,8 @@ const NesEmulator: React.FC<NesEmulatorProps> = ({ activePresetId }) => {
         statusText={statusText}
         onStart={handleStart}
         isIdle={!hasClickedStart}
+        isStarting={hasClickedStart && status === "loading"}
+        isRunning={status === "running"}
         showControls={showControls}
         controls={NES_CONTROLS}
         onToggleControls={() => setShowControls((current) => !current)}

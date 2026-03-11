@@ -129,6 +129,8 @@ const JSDosEmulator: React.FC<JSDosEmulatorProps> = ({ activeGame }) => {
         statusText={statusText}
         onStart={handleStart}
         isIdle={!hasClickedStart}
+        isStarting={hasClickedStart && !isRunning}
+        isRunning={isRunning}
         showControls={showControls}
         controls={GAME_CONTROLS[activeGame]}
         onToggleControls={() => setShowControls((current) => !current)}

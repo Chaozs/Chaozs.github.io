@@ -6,6 +6,8 @@ type EmulatorShellProps = {
   statusText?: string;
   onStart?: () => void;
   isIdle?: boolean;
+  isStarting?: boolean;
+  isRunning?: boolean;
   showControls?: boolean;
   controls?: ControlSection[];
   onToggleControls?: () => void;
@@ -18,6 +20,8 @@ const EmulatorShell: React.FC<EmulatorShellProps> = ({
   statusText,
   onStart,
   isIdle,
+  isStarting,
+  isRunning,
   showControls,
   controls,
   onToggleControls,
@@ -26,9 +30,17 @@ const EmulatorShell: React.FC<EmulatorShellProps> = ({
   children,
 }) => (
   <>
-    <div className={`emulator-frame-wrap${isIdle ? " is-idle" : ""}`} onClick={onStart}>
+    <div
+      className={`emulator-frame-wrap${isIdle ? " is-idle" : ""}${isStarting ? " is-starting" : ""}${isRunning ? " is-running" : ""}`}
+      onClick={onStart}
+    >
       {statusText ? (
-        <div className="emulator-start-overlay" role="button" tabIndex={0} onClick={onStart}>
+        <div
+          className={`emulator-start-overlay${isStarting ? " is-starting" : ""}`}
+          role="button"
+          tabIndex={0}
+          onClick={onStart}
+        >
           <div className="emulator-start-text">{statusText}</div>
         </div>
       ) : null}

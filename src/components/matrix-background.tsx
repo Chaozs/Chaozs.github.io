@@ -1,23 +1,8 @@
 import React, { useCallback, useEffect, useRef } from "react";
 
-type IdleDeadline = {
-  timeRemaining: () => number;
-  didTimeout: boolean;
-};
-
-type IdleCallbackOptions = {
-  timeout?: number;
-};
-
-type IdleCallbackHandle = number;
-type TimeoutHandle = ReturnType<typeof setTimeout>;
-
-type IdleCallback = (callback: (deadline: IdleDeadline) => void, options?: IdleCallbackOptions) => IdleCallbackHandle;
-
 const MatrixBackground: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const animationFrameIdRef = useRef<number | null>(null);
-  const idleCallbackIdRef = useRef<IdleCallbackHandle | TimeoutHandle | null>(null);
   const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
   const dropsRef = useRef<number[]>([]);
   const dprRef = useRef<number>(1);
@@ -27,6 +12,8 @@ const MatrixBackground: React.FC = () => {
   const lastHeightRef = useRef<number>(0);
   const lastFrameTimeRef = useRef<number>(0);
   const targetFpsRef = useRef<number>(60);
+  const baseOpacityRef = useRef<number>(1);
+  const scrollFrameRef = useRef<number | null>(null);
 
   const fontSize = 28;
   const columnSpacing = 0.65;
@@ -40,7 +27,21 @@ const MatrixBackground: React.FC = () => {
     const styles = getComputedStyle(document.documentElement);
     const trail = styles.getPropertyValue("--matrix-trail").trim() || "rgba(0, 0, 0, 0.06)";
     const char = styles.getPropertyValue("--matrix-char").trim() || "#3bd16f";
+    const opacity = Number.parseFloat(styles.getPropertyValue("--matrix-opacity").trim() || "1");
     matrixColorsRef.current = { trail, char };
+    baseOpacityRef.current = Number.isFinite(opacity) ? opacity : 1;
+  }, []);
+
+  const updateMatrixOpacity = useCallback(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) {
+      return;
+    }
+
+    const scrollRange = Math.max(window.innerHeight * 1.2, 1);
+    const progress = Math.min(window.scrollY / scrollRange, 1);
+    const intensity = 1 - progress * 0.28;
+    canvas.style.opacity = `${baseOpacityRef.current * intensity}`;
   }, []);
 
   const setTargetFps = useCallback(() => {
@@ -133,15 +134,16 @@ const MatrixBackground: React.FC = () => {
   }, [animateMatrix, columnSpacing, fontSize, readMatrixColors]);
 
   const deferInit = useCallback(() => {
-    const requestIdle = (window as Window & { requestIdleCallback?: IdleCallback }).requestIdleCallback;
+    const requestIdle = (window as Window & { requestIdleCallback?: (callback: () => void, options?: { timeout?: number }) => number })
+      .requestIdleCallback;
     if (requestIdle) {
-      idleCallbackIdRef.current = requestIdle(() => {
+      requestIdle(() => {
         initMatrix();
       }, { timeout: 3000 });
       return;
     }
 
-    idleCallbackIdRef.current = setTimeout(() => {
+    window.setTimeout(() => {
       initMatrix();
     }, 2000);
   }, [initMatrix]);
@@ -150,33 +152,44 @@ const MatrixBackground: React.FC = () => {
     setTargetFps();
     readMatrixColors();
     deferInit();
+    updateMatrixOpacity();
 
     const observer = new MutationObserver(() => {
       readMatrixColors();
+      updateMatrixOpacity();
     });
     observer.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
 
     const handleResize = () => {
       initMatrix(true);
+      updateMatrixOpacity();
+    };
+
+    const handleScroll = () => {
+      if (scrollFrameRef.current !== null) {
+        return;
+      }
+      scrollFrameRef.current = window.requestAnimationFrame(() => {
+        scrollFrameRef.current = null;
+        updateMatrixOpacity();
+      });
     };
 
     window.addEventListener("resize", handleResize);
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
       window.removeEventListener("resize", handleResize);
-      const cancelIdle = (window as Window & { cancelIdleCallback?: (handle: IdleCallbackHandle) => void })
-        .cancelIdleCallback;
-      if (idleCallbackIdRef.current !== null && cancelIdle && typeof idleCallbackIdRef.current === "number") {
-        cancelIdle(idleCallbackIdRef.current);
-      } else if (idleCallbackIdRef.current !== null) {
-        clearTimeout(idleCallbackIdRef.current);
-      }
+      window.removeEventListener("scroll", handleScroll);
       if (animationFrameIdRef.current) {
         cancelAnimationFrame(animationFrameIdRef.current);
       }
+      if (scrollFrameRef.current !== null) {
+        cancelAnimationFrame(scrollFrameRef.current);
+      }
       observer.disconnect();
     };
-  }, [deferInit, initMatrix, readMatrixColors, setTargetFps]);
+  }, [deferInit, initMatrix, readMatrixColors, setTargetFps, updateMatrixOpacity]);
 
   return (
     <canvas

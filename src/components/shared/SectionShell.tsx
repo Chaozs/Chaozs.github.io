@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 type SectionShellProps = {
   id: string;
@@ -18,16 +18,49 @@ const SectionShell: React.FC<SectionShellProps> = ({
   containerRadius = "var(--radius-lg)",
   after,
   children,
-}) => (
-  <section id={id} className={className} style={{ backgroundColor: "var(--section-bg)" }}>
-    <div
-      className="container section-shell__container"
-      style={{ backgroundColor: containerBackground, borderRadius: containerRadius, padding: containerPadding }}
+}) => {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const node = sectionRef.current;
+    if (!node || isVisible) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry?.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -8% 0px" },
+    );
+
+    observer.observe(node);
+    return () => {
+      observer.disconnect();
+    };
+  }, [isVisible]);
+
+  return (
+    <section
+      ref={sectionRef}
+      id={id}
+      className={`${className ?? ""} section-shell${isVisible ? " is-visible" : ""}`.trim()}
+      style={{ backgroundColor: "var(--section-bg)" }}
     >
-      {children}
-    </div>
-    {after}
-  </section>
-);
+      <div
+        className="container section-shell__container"
+        style={{ backgroundColor: containerBackground, borderRadius: containerRadius, padding: containerPadding }}
+      >
+        {children}
+      </div>
+      {after}
+    </section>
+  );
+};
 
 export default SectionShell;
