@@ -11,6 +11,7 @@ type WorkBoxProps = {
   details: string[];
   logoStyle?: React.CSSProperties;
   iframeUrl?: string;
+  surfaceTone?: "base" | "alt";
 };
 
 const resolveDimension = (value?: React.CSSProperties["width"]): number | undefined => {
@@ -24,7 +25,17 @@ const resolveDimension = (value?: React.CSSProperties["width"]): number | undefi
   return undefined;
 };
 
-const WorkBox: React.FC<WorkBoxProps> = ({ title, logo, date, role, skills, details, logoStyle, iframeUrl }) => {
+const WorkBox: React.FC<WorkBoxProps> = ({
+  title,
+  logo,
+  date,
+  role,
+  skills,
+  details,
+  logoStyle,
+  iframeUrl,
+  surfaceTone = "base",
+}) => {
   const [showMore, setShowMore] = useState<boolean>(false);
   const logoWidth = resolveDimension(logoStyle?.width) ?? 200;
   const logoHeight = resolveDimension(logoStyle?.height) ?? 120;
@@ -32,6 +43,7 @@ const WorkBox: React.FC<WorkBoxProps> = ({ title, logo, date, role, skills, deta
   const responsiveLogoWidth = `clamp(${minLogoWidth}px, 28vw, ${logoWidth}px)`;
   const logoAspectRatio = `${logoWidth} / ${logoHeight}`;
   const { width: _logoWidth, height: _logoHeight, ...logoStyleRest } = logoStyle ?? {};
+  const cardBackground = surfaceTone === "alt" ? "var(--surface-3)" : "var(--surface-2)";
 
   const handleIconClick = (): void => {
     setShowMore((prevState) => !prevState);
@@ -47,9 +59,9 @@ const WorkBox: React.FC<WorkBoxProps> = ({ title, logo, date, role, skills, deta
   };
 
   return (
-    <div className="col-md-12" onClick={handleContainerClick} style={{ cursor: "pointer", marginBottom: "-35px"}}>
+    <div className="col-md-12" onClick={handleContainerClick} style={{ cursor: "pointer", marginBottom: "24px" }}>
         <div className={`work-box ${showMore ? "is-expanded" : "is-collapsed"}`}>
-        <SurfaceCard className="work-content" radius="0" style={{ marginTop: "15px" }}>
+        <SurfaceCard className="work-content" background={cardBackground} style={{ marginTop: "15px" }}>
             <div className="row">
             <div className="col-sm-10">
                 <div style={{ display: "flex", justifyContent: "left", marginLeft: "15px" }}>
@@ -64,7 +76,7 @@ const WorkBox: React.FC<WorkBoxProps> = ({ title, logo, date, role, skills, deta
                     }}
                     imgStyle={{
                         marginBottom: "20px",
-                        borderRadius: "2%",
+                        borderRadius: "var(--radius-md)",
                         marginLeft: "10px",
                         ...logoStyleRest,
                     }}
@@ -79,32 +91,30 @@ const WorkBox: React.FC<WorkBoxProps> = ({ title, logo, date, role, skills, deta
                   }}
                 >
                   {/* <h2 className="w-title" style={{ fontSize: "1.5rem", color: "#E4E4E4" }}>{title}</h2> */}
-                  <h2 className="w-title" style={{ fontSize: ".8rem", color: "var(--text-muted)" }}>{date}</h2>
-                  <h2 className="w-title" style={{color: "var(--text-primary)"}}>{role}</h2>
+                  <h2 className="w-title w-date" style={{ color: "var(--text-muted)" }}>{date}</h2>
+                  <h2 className="w-title w-role" style={{ color: "var(--text-primary)" }}>{role}</h2>
                   <div className="w-more" style={{ marginLeft: "1rem", color: "var(--text-muted)" }}>
                   <span>{skills}</span>
                   </div>
-                  {showMore && (
-                  <div className="extra-text" style={{ marginTop: "1rem", color: "var(--text-primary)" }}>
-                      {details.map((item: string, index: number) => (
-                          <li key={index} style={{ marginBottom: "0.5rem", marginLeft: /^\s{3}/.test(item) ? "20px" : "0px" }}>
-                              <p dangerouslySetInnerHTML={{ __html: item }} style={{ display: "inline"}}></p>
-                          </li>
-                      ))}
-                      {iframeUrl ? (
-                        <div className="work-embed">
-                          <div className="work-embed-label">Iframe of skillfite.io</div>
-                          <iframe
-                            src={iframeUrl}
-                            title={`${title} demo`}
-                            loading="lazy"
-                            referrerPolicy="no-referrer-when-downgrade"
-                            sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
-                          ></iframe>
-                        </div>
-                      ) : null}
+                  <div className="extra-text" style={{ color: "var(--text-primary)" }}>
+                    {details.map((item: string, index: number) => (
+                      <li key={index} style={{ marginBottom: "0.5rem", marginLeft: /^\s{3}/.test(item) ? "20px" : "0px" }}>
+                        <p dangerouslySetInnerHTML={{ __html: item }} style={{ display: "inline" }}></p>
+                      </li>
+                    ))}
+                    {iframeUrl ? (
+                      <div className="work-embed">
+                        <div className="work-embed-label">Iframe of skillfite.io</div>
+                        <iframe
+                          src={iframeUrl}
+                          title={`${title} demo`}
+                          loading="lazy"
+                          referrerPolicy="no-referrer-when-downgrade"
+                          sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+                        ></iframe>
+                      </div>
+                    ) : null}
                   </div>
-                  )}
                 </div>
             </div>
             <div className="col-sm-2">

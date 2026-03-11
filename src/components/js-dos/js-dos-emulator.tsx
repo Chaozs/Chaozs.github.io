@@ -57,6 +57,45 @@ const JSDosEmulator: React.FC<JSDosEmulatorProps> = ({ activeGame }) => {
     previousGameRef.current = activeGame;
   }, [activeGame, stopAndReset]);
 
+  useEffect(() => {
+    const container = dosboxContainerRef.current;
+    if (!container || !isRunning || !isPointerLocked) {
+      return;
+    }
+
+    const handleMouseMove = (event: MouseEvent) => {
+      if (!event.isTrusted || event.movementY === 0) {
+        return;
+      }
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      const target = event.target instanceof Element ? event.target : container;
+      const synthetic = new MouseEvent(event.type, {
+        bubbles: true,
+        cancelable: true,
+        clientX: event.clientX,
+        clientY: event.clientY,
+        screenX: event.screenX,
+        screenY: event.screenY,
+        movementX: event.movementX,
+        movementY: 0,
+        buttons: event.buttons,
+        button: event.button,
+        ctrlKey: event.ctrlKey,
+        shiftKey: event.shiftKey,
+        altKey: event.altKey,
+        metaKey: event.metaKey,
+        relatedTarget: event.relatedTarget,
+      });
+      target.dispatchEvent(synthetic);
+    };
+
+    container.addEventListener("mousemove", handleMouseMove, true);
+    return () => {
+      container.removeEventListener("mousemove", handleMouseMove, true);
+    };
+  }, [isPointerLocked, isRunning]);
+
   const handleGamePointerDown = () => {
     const container = dosboxContainerRef.current;
     if (!container) {
@@ -109,6 +148,7 @@ const JSDosEmulator: React.FC<JSDosEmulatorProps> = ({ activeGame }) => {
           When the main menu loads, press <span className="emulator-key">Enter</span> to start the game.
         </p>
       ) : null}
+      <p className="emulator-hint">Tip: Click the game to focus input. Controls live in the top-right overlay.</p>
     </>
   );
 };

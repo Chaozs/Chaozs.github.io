@@ -19,6 +19,9 @@ import { aboutContent, aboutFooterContent } from "../content";
 import ImageWithSkeleton from "./ImageWithSkeleton";
 import SectionHeader from "./shared/SectionHeader";
 import SectionShell from "./shared/SectionShell";
+import SkillGrid from "./shared/SkillGrid";
+import SocialIconLink from "./shared/SocialIconLink";
+import SurfaceCard from "./shared/SurfaceCard";
 
 type Skill = {
   icon: string;
@@ -54,62 +57,25 @@ const About: React.FC = () => {
                 <div className="col-md-6 about-left-col">
                   <div className="about-me pt-4 pt-md-0">
                     <div style={{ display: "flex", justifyContent: "center" }}>
-                      <ImageWithSkeleton
-                        src={logo}
-                        alt="logo"
-                        style={{ width: "100%", maxWidth: "100%", aspectRatio: "4 / 3" }}
-                        className="about-photo"
-                        imgStyle={{
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
-                          marginBottom: "20px",
-                          borderRadius: "2%",
-                          marginLeft: "0",
-                        }}
-                      />
-                    </div>
-                    <div className="skill-mf" style={{ backgroundColor: "var(--surface-2)", padding: "15px", borderRadius: "2%", marginLeft: "0" }}>
-                    <div className="skill-category">
-                      <p className="title-s" style={{ color: "var(--text-muted)" }}>Skills:</p>
-                      <div
-                        className="icons"
-                        style={{
-                          display: "grid",
-                          gridTemplateColumns: "repeat(3, minmax(70px, 1fr))",
-                          gap: "12px",
-                          alignItems: "center",
-                          justifyItems: "stretch",
-                          width: "100%",
-                        }}
-                      >
-                      {skills.map((lang: Skill, index: number) => (
-                        <span
-                          key={index}
-                          className="skill-icon"
-                          data-tooltip={lang.alt}
-                        >
-                          <ImageWithSkeleton
-                            src={lang.icon}
-                            alt={lang.alt}
-                            width={130}
-                            height={110}
-                            imgStyle={{
-                              width: "100%",
-                              maxWidth: "130px",
-                              height: "110px",
-                              objectFit: "contain",
-                              justifySelf: "center",
-                            }}
-                          />
-                        </span>
-                      ))}
+                        <ImageWithSkeleton
+                          src={logo}
+                          alt="logo"
+                          style={{ width: "100%", maxWidth: "100%", aspectRatio: "4 / 3" }}
+                          className="about-photo"
+                          imgStyle={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "cover",
+                            marginBottom: "20px",
+                            borderRadius: "var(--radius-md)",
+                            marginLeft: "0",
+                          }}
+                        />
                       </div>
-                    </div>
-                      </div>
+                    <SkillGrid skills={skills} />
                     </div>
                   </div>
-                  <div className="col-md-6 about-right-col" style={{ backgroundColor: "var(--surface-2)", padding: "15px", borderRadius: "2%", marginRight: "-50px" }}>
+                  <SurfaceCard className="col-md-6 about-right-col" padding="18px" style={{ marginRight: "-50px" }}>
                     <div className="row">
                       <div
                         className="col-sm-6 col-md-5"
@@ -144,7 +110,12 @@ const About: React.FC = () => {
                         height={320}
                         style={{ maxWidth: "100%" }}
                         className="about-photo"
-                        imgStyle={{ maxWidth: "100%", marginBottom: "20px", borderRadius: "2%", marginLeft: "-15px" }}
+                        imgStyle={{
+                          maxWidth: "100%",
+                          marginBottom: "20px",
+                          borderRadius: "var(--radius-md)",
+                          marginLeft: "0",
+                        }}
                       />
                     </div>
                     <p
@@ -152,32 +123,12 @@ const About: React.FC = () => {
                       style={{ color: "var(--text-primary)" }}
                       dangerouslySetInnerHTML={{ __html: aboutFooterContent }}
                     ></p>
-                    <div className="socials">
-                      <ul>
-                        <span style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                          <a
-                            href="https://www.youtube.com/@Chaos4496/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            style={{
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                            }}
-                          >
-                            <span className="ico-circle"   style={{
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                            }}>
-                              <i className="ion-social-youtube"></i>
-                            </span>
-                          </a>
-                        </span>
-                      </ul>
-                    </div>
-
-                  </div>
+                    <SocialIconLink
+                      href="https://www.youtube.com/@Chaos4496/"
+                      iconClass="ion-social-youtube"
+                      label="YouTube"
+                    />
+                  </SurfaceCard>
                 </div>
               </div>
             </div>

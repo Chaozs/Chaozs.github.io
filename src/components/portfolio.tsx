@@ -24,6 +24,7 @@ const Portfolio: React.FC = () => {
             skills={experience.skills}
             details={experience.details}
             iframeUrl={experience.iframeUrl}
+            surfaceTone={index % 2 === 0 ? "base" : "alt"}
           />
         ))}
       </div>

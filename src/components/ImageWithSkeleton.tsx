@@ -48,7 +48,7 @@ const ImageWithSkeleton: React.FC<ImageWithSkeletonProps> = ({
             alignItems: "center",
             justifyContent: "center",
             backgroundColor: "var(--skeleton-bg)",
-            borderRadius: "6px",
+            borderRadius: "var(--radius-md)",
           }}
         >
           <div

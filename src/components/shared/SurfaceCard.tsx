@@ -12,7 +12,7 @@ type SurfaceCardProps = {
 const SurfaceCard: React.FC<SurfaceCardProps> = ({
   className,
   background = "var(--surface-2)",
-  radius = "2%",
+  radius = "var(--radius-md)",
   padding,
   style,
   children,
@@ -27,8 +27,10 @@ const SurfaceCard: React.FC<SurfaceCardProps> = ({
     baseStyle.padding = padding;
   }
 
+  const mergedClassName = className ? `surface-card ${className}` : "surface-card";
+
   return (
-    <div className={className} style={baseStyle}>
+    <div className={mergedClassName} style={baseStyle}>
       {children}
     </div>
   );

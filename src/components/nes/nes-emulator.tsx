@@ -335,6 +335,7 @@ const NesEmulator: React.FC<NesEmulatorProps> = ({ activePresetId }) => {
       >
         <canvas className="emulator-nes-canvas" ref={canvasRef}></canvas>
       </EmulatorShell>
+      <p className="emulator-hint">Tip: Click the game to focus input. Controls live in the top-right overlay.</p>
     </>
   );
 };

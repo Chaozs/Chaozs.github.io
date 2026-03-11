@@ -13,14 +13,17 @@ type SectionShellProps = {
 const SectionShell: React.FC<SectionShellProps> = ({
   id,
   className,
-  containerPadding = "20px",
+  containerPadding = "24px",
   containerBackground = "var(--surface-1)",
-  containerRadius = "1%",
+  containerRadius = "var(--radius-lg)",
   after,
   children,
 }) => (
   <section id={id} className={className} style={{ backgroundColor: "var(--section-bg)" }}>
-    <div className="container" style={{ backgroundColor: containerBackground, borderRadius: containerRadius, padding: containerPadding }}>
+    <div
+      className="container section-shell__container"
+      style={{ backgroundColor: containerBackground, borderRadius: containerRadius, padding: containerPadding }}
+    >
       {children}
     </div>
     {after}

@@ -125,7 +125,7 @@ const Navbar: React.FC = () => {
     <nav
       className="navbar navbar-b navbar-trans navbar-expand-md fixed-top"
       id="mainNav"
-      style={{ borderRadius: "1%" }}
+      style={{ borderRadius: "var(--radius-md)" }}
     >
       <div className="container">
         <div className="d-flex align-items-center theme-toggle-wrap">
