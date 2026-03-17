@@ -1,6 +1,9 @@
-# React-portfolio
+# React Portfolio
 
-Portfolio link -> https://Chaozs.github.io/Chaozs.github.io/
+## Live Site
+
+- Azure Static Web Apps: https://www.thientrandinh.com
+- GitHub Pages (legacy): https://chaozs.github.io/Chaozs.github.io/
 
 ## Setup
 
@@ -26,6 +29,8 @@ Create a production build:
 npm run build
 ```
 
+The production build is generated in `dist/`.
+
 Preview the production build locally:
 
 ```bash
@@ -34,8 +39,10 @@ npm run preview
 
 ## Deploy
 
-Publish the `dist` folder to GitHub Pages:
+Legacy GitHub Pages deployment publishes the `dist` folder:
 
 ```bash
 npm run deploy
 ```
+
+Azure Static Web Apps builds from source automatically through its GitHub integration, so `dist` does not need to be committed for Azure deployment.
