@@ -26,6 +26,11 @@ const LazySection: React.FC<LazySectionProps> = ({
       return;
     }
 
+    if (typeof window === "undefined" || typeof window.IntersectionObserver === "undefined") {
+      setIsVisible(true);
+      return;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         const entry = entries[0];
@@ -57,7 +62,11 @@ const LazySection: React.FC<LazySectionProps> = ({
   }, [revealOnEvent, isVisible]);
 
   return (
-    <div ref={containerRef} style={{ minHeight: isVisible ? undefined : `${minHeight}px` }}>
+    <div
+      ref={containerRef}
+      style={{ minHeight: isVisible ? undefined : `${minHeight}px` }}
+      aria-busy={!isVisible}
+    >
       {isVisible ? children : null}
     </div>
   );

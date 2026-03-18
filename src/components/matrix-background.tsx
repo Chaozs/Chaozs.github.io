@@ -14,10 +14,8 @@ const MatrixBackground: React.FC = () => {
   const targetFpsRef = useRef<number>(60);
   const baseOpacityRef = useRef<number>(1);
   const scrollFrameRef = useRef<number | null>(null);
-
-  const fontSize = 28;
   const columnSpacing = 0.65;
-  const speed = 0.6;
+  const speed = 0.15;
   const matrixColorsRef = useRef({
     trail: "rgba(0, 0, 0, 0.06)",
     char: "#3bd16f",
@@ -51,19 +49,35 @@ const MatrixBackground: React.FC = () => {
     targetFpsRef.current = lowEnd ? 20 : 60;
   }, []);
 
+  const getFontSize = useCallback(() => {
+    if (window.innerWidth <= 480) {
+      return 22;
+    }
+    if (window.innerWidth <= 767.98) {
+      return 28;
+    }
+    return 39;
+  }, []);
+
   const animateMatrix = useCallback(() => {
     const ctx = ctxRef.current;
     if (!ctx) return;
+    const fontSize = getFontSize();
+    const now = performance.now();
+    const frameInterval = 1000 / targetFpsRef.current;
 
-    if (targetFpsRef.current < 60) {
-      const now = performance.now();
-      const frameInterval = 1000 / targetFpsRef.current;
-      if (now - lastFrameTimeRef.current < frameInterval) {
-        animationFrameIdRef.current = requestAnimationFrame(animateMatrix);
-        return;
-      }
+    if (lastFrameTimeRef.current === 0) {
       lastFrameTimeRef.current = now;
     }
+
+    if (targetFpsRef.current < 60 && now - lastFrameTimeRef.current < frameInterval) {
+      animationFrameIdRef.current = requestAnimationFrame(animateMatrix);
+      return;
+    }
+
+    const deltaMs = Math.max(now - lastFrameTimeRef.current, frameInterval);
+    const frameMultiplier = Math.min(deltaMs / (1000 / 60), 3);
+    lastFrameTimeRef.current = now;
 
     ctx.fillStyle = matrixColorsRef.current.trail;
     ctx.fillRect(0, 0, canvasWidthRef.current, canvasHeightRef.current);
@@ -87,12 +101,12 @@ const MatrixBackground: React.FC = () => {
       if (y > canvasHeightRef.current && Math.random() > 0.99) {
         dropsRef.current[i] = 0;
       }
-      dropsRef.current[i] += speed;
+      dropsRef.current[i] += speed * frameMultiplier;
     }
     ctx.restore();
 
     animationFrameIdRef.current = requestAnimationFrame(animateMatrix);
-  }, [columnSpacing, fontSize, speed]);
+  }, [columnSpacing, getFontSize, speed]);
 
   const initMatrix = useCallback((restart = false) => {
     const canvas = canvasRef.current;
@@ -122,16 +136,19 @@ const MatrixBackground: React.FC = () => {
     lastWidthRef.current = width;
     lastHeightRef.current = height;
 
-    const columns = Math.floor(width / (fontSize * columnSpacing));
+    const fontSize = getFontSize();
+    // Overdraw slightly so edge columns still cover the viewport after transform/rounding.
+    const columns = Math.ceil(width / (fontSize * columnSpacing)) + 1;
     const initialRows = Math.ceil(height / fontSize);
     // Seed each column at a different off-screen row so the first visible frame is already staggered.
     dropsRef.current = Array.from({ length: columns }, () => -Math.random() * initialRows);
+    lastFrameTimeRef.current = 0;
 
     if (restart && animationFrameIdRef.current) {
       cancelAnimationFrame(animationFrameIdRef.current);
     }
     animateMatrix();
-  }, [animateMatrix, columnSpacing, fontSize, readMatrixColors]);
+  }, [animateMatrix, columnSpacing, getFontSize, readMatrixColors]);
 
   const deferInit = useCallback(() => {
     const requestIdle = (window as Window & { requestIdleCallback?: (callback: () => void, options?: { timeout?: number }) => number })

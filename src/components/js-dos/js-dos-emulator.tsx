@@ -35,7 +35,7 @@ type JSDosEmulatorProps = {
 const JSDosEmulator: React.FC<JSDosEmulatorProps> = ({ activeGame }) => {
   const [showControls, setShowControls] = useState(true);
   const dosboxContainerRef = useRef<HTMLDivElement | null>(null);
-  const { isReady, isRunning, hasClickedStart, mouseEnabled, handleStart, stopAndReset } =
+  const { isReady, isRunning, hasClickedStart, mouseEnabled, loadError, handleStart, stopAndReset } =
     useDosPlayer({
       bundleUrl: GAME_CONFIG[activeGame].bundleUrl,
       containerRef: dosboxContainerRef,
@@ -114,6 +114,8 @@ const JSDosEmulator: React.FC<JSDosEmulatorProps> = ({ activeGame }) => {
   const activeGameLabel = GAME_CONFIG[activeGame].label;
   const statusText = isRunning
     ? ""
+    : loadError
+      ? loadError
     : (hasClickedStart
         ? (isReady ? `Deploying ${activeGameLabel}...` : "Initializing mission console...")
         : "Click to deploy");

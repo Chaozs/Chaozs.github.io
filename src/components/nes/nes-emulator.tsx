@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import EmulatorShell from "../emulator/EmulatorShell";
+import { ensureJsNes } from "../emulator/externalAssets";
 import type { ControlSection } from "../js-dos/controls";
 
 type NesStatus = "idle" | "loading" | "running" | "paused" | "error";
@@ -186,6 +187,17 @@ const NesEmulator: React.FC<NesEmulatorProps> = ({ activePresetId }) => {
       setStatus("loading");
       setErrorMessage(null);
       stopLoop();
+
+      try {
+        await ensureJsNes();
+      } catch (error) {
+        if (!isMountedRef.current) {
+          return;
+        }
+        setStatus("error");
+        setErrorMessage(error instanceof Error ? error.message : "Failed to load jsnes.");
+        return;
+      }
 
       const jsnes = getJsNes();
       if (!jsnes) {

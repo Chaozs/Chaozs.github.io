@@ -28,33 +28,49 @@ const EmulatorShell: React.FC<EmulatorShellProps> = ({
   showControlsOverlay,
   showMobileNote = true,
   children,
-}) => (
-  <>
-    <div
-      className={`emulator-frame-wrap${isIdle ? " is-idle" : ""}${isStarting ? " is-starting" : ""}${isRunning ? " is-running" : ""}`}
-      onClick={onStart}
-    >
-      {statusText ? (
-        <div
-          className={`emulator-start-overlay${isStarting ? " is-starting" : ""}`}
-          role="button"
-          tabIndex={0}
-          onClick={onStart}
-        >
-          <div className="emulator-start-text">{statusText}</div>
-        </div>
-      ) : null}
-      {children}
-      {showControlsOverlay && controls && onToggleControls ? (
-        <ControlsOverlay
-          sections={controls}
-          showControls={showControls ?? true}
-          onToggle={onToggleControls}
-        />
-      ) : null}
-    </div>
-    {showMobileNote ? <p className="emulator-mobile-note">Mission controls only work on desktop.</p> : null}
-  </>
-);
+}) => {
+  const handleOverlayKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (!onStart) {
+      return;
+    }
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      onStart();
+    }
+  };
+
+  return (
+    <>
+      <div
+        className={`emulator-frame-wrap${isIdle ? " is-idle" : ""}${isStarting ? " is-starting" : ""}${isRunning ? " is-running" : ""}`}
+        onClick={onStart}
+      >
+        {statusText ? (
+          <div
+            className={`emulator-start-overlay${isStarting ? " is-starting" : ""}`}
+            role="button"
+            tabIndex={0}
+            onClick={onStart}
+            onKeyDown={handleOverlayKeyDown}
+            aria-label={statusText}
+          >
+            <div className="emulator-start-text" aria-live="polite">
+              {statusText}
+            </div>
+          </div>
+        ) : null}
+        {children}
+        {showControlsOverlay && controls && onToggleControls ? (
+          <ControlsOverlay
+            sections={controls}
+            showControls={showControls ?? true}
+            onToggle={onToggleControls}
+          />
+        ) : null}
+      </div>
+      {showMobileNote ? <p className="emulator-mobile-note">Mission controls only work on desktop.</p> : null}
+    </>
+  );
+};
 
 export default EmulatorShell;

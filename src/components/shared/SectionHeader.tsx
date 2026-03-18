@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 
 type SectionHeaderProps = {
   command: string;
@@ -7,12 +7,19 @@ type SectionHeaderProps = {
 };
 
 const SectionHeader: React.FC<SectionHeaderProps> = ({ command, className, padding }) => {
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
   return (
     <header
       className={`terminal-section-header${className ? ` ${className}` : ""}`}
       style={padding ? { padding } : undefined}
     >
-      <div className="terminal-section-header__command">
+      <div
+        className="terminal-section-header__command"
+        onClick={() => {
+          inputRef.current?.focus();
+        }}
+      >
         <span className="terminal-section-header__prompt" aria-hidden="true">
           &gt;
         </span>
@@ -21,11 +28,11 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({ command, className, paddi
             {command}
           </span>
           <input
+            ref={inputRef}
             className="terminal-section-header__input"
             type="text"
             value={command}
             readOnly
-            tabIndex={-1}
             spellCheck={false}
             aria-label={command}
           />

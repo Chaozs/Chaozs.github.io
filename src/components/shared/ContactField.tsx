@@ -1,11 +1,17 @@
 import React from "react";
 
 type BaseProps = {
+  label: string;
   name: string;
   id: string;
   placeholder: string;
-  dataRule?: string;
-  dataMsg?: string;
+  value: string;
+  onChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+  onBlur?: React.FocusEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+  error?: string;
+  required?: boolean;
+  minLength?: number;
+  autoComplete?: string;
 };
 
 type ContactInputProps = BaseProps & {
@@ -18,44 +24,86 @@ type ContactTextareaProps = BaseProps & {
 
 export const ContactInput: React.FC<ContactInputProps> = ({
   type,
+  label,
   name,
   id,
   placeholder,
-  dataRule,
-  dataMsg,
+  value,
+  onChange,
+  onBlur,
+  error,
+  required,
+  minLength,
+  autoComplete,
 }) => (
   <div className="form-group">
+    <label className="visually-hidden" htmlFor={id}>
+      {label}
+    </label>
     <input
       type={type}
       className="form-control"
       name={name}
       id={id}
       placeholder={placeholder}
-      data-rule={dataRule}
-      data-msg={dataMsg}
+      value={value}
+      onChange={onChange}
+      onBlur={onBlur}
+      aria-invalid={Boolean(error)}
+      aria-describedby={error ? `${id}-validation` : undefined}
+      required={required}
+      minLength={minLength}
+      autoComplete={autoComplete}
     />
-    <div className="validation"></div>
+    <div
+      id={`${id}-validation`}
+      className={`validation${error ? " show" : ""}`}
+      role={error ? "alert" : undefined}
+      aria-live="polite"
+    >
+      {error}
+    </div>
   </div>
 );
 
 export const ContactTextarea: React.FC<ContactTextareaProps> = ({
   name,
+  label,
   id,
   placeholder,
-  dataRule,
-  dataMsg,
+  value,
+  onChange,
+  onBlur,
+  error,
+  required,
+  minLength,
   rows = 5,
 }) => (
   <div className="form-group">
+    <label className="visually-hidden" htmlFor={id}>
+      {label}
+    </label>
     <textarea
       className="form-control"
       name={name}
       id={id}
       rows={rows}
-      data-rule={dataRule}
-      data-msg={dataMsg}
       placeholder={placeholder}
+      value={value}
+      onChange={onChange}
+      onBlur={onBlur}
+      aria-invalid={Boolean(error)}
+      aria-describedby={error ? `${id}-validation` : undefined}
+      required={required}
+      minLength={minLength}
     ></textarea>
-    <div className="validation"></div>
+    <div
+      id={`${id}-validation`}
+      className={`validation${error ? " show" : ""}`}
+      role={error ? "alert" : undefined}
+      aria-live="polite"
+    >
+      {error}
+    </div>
   </div>
 );

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState, type RefObject } from "react";
+import { ensureDosAssets } from "../emulator/externalAssets";
 
 type DosEvent = "emu-ready" | "bnd-play" | "ci-ready" | "fullscreen-changed";
 type DosOptions = {
@@ -39,6 +40,7 @@ type UseDosPlayerResult = {
   isRunning: boolean;
   hasClickedStart: boolean;
   mouseEnabled: boolean;
+  loadError: string;
   handleStart: () => void;
   stopAndReset: () => void;
 };
@@ -51,25 +53,19 @@ export const useDosPlayer = ({
   const [isRunning, setIsRunning] = useState(false);
   const [hasClickedStart, setHasClickedStart] = useState(false);
   const [mouseEnabled, setMouseEnabled] = useState(false);
+  const [loadError, setLoadError] = useState("");
 
   const dosPlayerRef = useRef<DosProps | null>(null);
   const initRef = useRef(false);
   const isMountedRef = useRef(true);
-  const hasLoggedScriptRef = useRef(false);
-  const hasLoggedInstanceRef = useRef(false);
   const startRequestedRef = useRef(false);
   const promptListenerBoundRef = useRef(false);
   const promptDetectionArmedRef = useRef(false);
   const promptBufferRef = useRef("");
   const promptArmTimeoutRef = useRef<number | null>(null);
-  const pollRef = useRef<number | null>(null);
   const readyFallbackRef = useRef<number | null>(null);
 
   const clearTimers = useCallback(() => {
-    if (pollRef.current) {
-      window.clearInterval(pollRef.current);
-      pollRef.current = null;
-    }
     if (readyFallbackRef.current) {
       window.clearTimeout(readyFallbackRef.current);
       readyFallbackRef.current = null;
@@ -85,6 +81,7 @@ export const useDosPlayer = ({
     setIsRunning(false);
     setHasClickedStart(false);
     setMouseEnabled(false);
+    setLoadError("");
     startRequestedRef.current = false;
     promptListenerBoundRef.current = false;
     promptDetectionArmedRef.current = false;
@@ -163,18 +160,8 @@ export const useDosPlayer = ({
     if (!window.Dos || !container) {
       return;
     }
-    if (!hasLoggedScriptRef.current) {
-      // eslint-disable-next-line no-console
-      console.log("js-dos script detected");
-      hasLoggedScriptRef.current = true;
-    }
     if (dosPlayerRef.current) {
       return;
-    }
-    if (!hasLoggedInstanceRef.current) {
-      // eslint-disable-next-line no-console
-      console.log("js-dos player created");
-      hasLoggedInstanceRef.current = true;
     }
     dosPlayerRef.current = window.Dos(container, {
       url: bundleUrl,
@@ -227,6 +214,7 @@ export const useDosPlayer = ({
     if (isRunning || startRequestedRef.current) {
       return;
     }
+    setLoadError("");
     setHasClickedStart(true);
     setMouseEnabled(true);
     startRequestedRef.current = true;
@@ -239,21 +227,25 @@ export const useDosPlayer = ({
       }
     }, 1500);
 
-    if (window.Dos) {
-      initPlayer();
-      return;
-    }
-
-    pollRef.current = window.setInterval(() => {
-      if (!window.Dos) {
-        return;
+    void (async () => {
+      try {
+        await ensureDosAssets();
+        if (!isMountedRef.current) {
+          return;
+        }
+        initPlayer();
+      } catch (error) {
+        if (!isMountedRef.current) {
+          return;
+        }
+        setLoadError(error instanceof Error ? error.message : "Failed to load mission console.");
+        setIsReady(false);
+        setIsRunning(false);
+        setHasClickedStart(false);
+        setMouseEnabled(false);
+        startRequestedRef.current = false;
       }
-      if (pollRef.current) {
-        window.clearInterval(pollRef.current);
-        pollRef.current = null;
-      }
-      initPlayer();
-    }, 100);
+    })();
   }, [initPlayer, isRunning]);
 
   return {
@@ -261,6 +253,7 @@ export const useDosPlayer = ({
     isRunning,
     hasClickedStart,
     mouseEnabled,
+    loadError,
     handleStart,
     stopAndReset,
   };

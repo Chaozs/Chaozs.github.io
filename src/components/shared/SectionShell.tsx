@@ -28,6 +28,11 @@ const SectionShell: React.FC<SectionShellProps> = ({
       return;
     }
 
+    if (typeof window === "undefined" || typeof window.IntersectionObserver === "undefined") {
+      setIsVisible(true);
+      return;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         const entry = entries[0];

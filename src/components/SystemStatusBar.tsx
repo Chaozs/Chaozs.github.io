@@ -15,9 +15,11 @@ const SECTION_TARGETS: SectionTarget[] = [
 
 type SystemStatusBarProps = {
   embedded?: boolean;
+  onNavigate?: () => void;
+  utilityContent?: React.ReactNode;
 };
 
-const SystemStatusBar: React.FC<SystemStatusBarProps> = ({ embedded = false }) => {
+const SystemStatusBar: React.FC<SystemStatusBarProps> = ({ embedded = false, onNavigate, utilityContent }) => {
   const [activeSection, setActiveSection] = useState<string>("home");
   const [scrollProgress, setScrollProgress] = useState(0);
 
@@ -82,15 +84,16 @@ const SystemStatusBar: React.FC<SystemStatusBarProps> = ({ embedded = false }) =
   }, []);
 
   return (
-    <div
+    <nav
       className={`system-status${embedded ? " system-status--embedded" : ""}`}
       style={{ ["--status-progress" as string]: `${Math.round(scrollProgress * 100)}%` }}
-      aria-label="System section status"
+      aria-label="Section navigation"
     >
-      <div className="system-status__header">
-        <span className="system-status__eyebrow">System Status</span>
-        <span className="system-status__meta">{Math.round(scrollProgress * 100)}% Synced</span>
-      </div>
+      {utilityContent ? (
+        <div className="system-status__utility">
+          {utilityContent}
+        </div>
+      ) : null}
       <div className="system-status__track">
         {SECTION_TARGETS.map((section, index) => {
           const isActive = activeSection === section.id;
@@ -102,6 +105,10 @@ const SystemStatusBar: React.FC<SystemStatusBarProps> = ({ embedded = false }) =
               className={`system-status__item js-scroll${isActive ? " is-active" : ""}${isComplete ? " is-complete" : ""}`}
               href={`#${section.id}`}
               aria-current={isActive ? "location" : undefined}
+              onClick={(event) => {
+                event.currentTarget.blur();
+                onNavigate?.();
+              }}
             >
               <span className="system-status__index">{String(index + 1).padStart(2, "0")}</span>
               <span className="system-status__label">{section.label}</span>
@@ -109,7 +116,7 @@ const SystemStatusBar: React.FC<SystemStatusBarProps> = ({ embedded = false }) =
           );
         })}
       </div>
-    </div>
+    </nav>
   );
 };
 

@@ -1,6 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import resumePdf from "../ThienTrandinhResume.pdf";
+import AppIcon from "./shared/AppIcon";
 import SystemStatusBar from "./SystemStatusBar";
+
+const MOBILE_BREAKPOINT = 767.98;
+const NAVBAR_REDUCE_OFFSET = 50;
+const SCROLL_RETRY_DELAY = 180;
+const SCROLL_RETRY_ATTEMPTS = 10;
 
 const getInitialTheme = (): "light" | "dark" => {
   if (typeof document === "undefined") {
@@ -16,39 +22,32 @@ const revealEventsByTarget: Record<string, string[]> = {
   emulator: ["reveal-experiences"],
 };
 
+const syncNavbarScrollState = (navbar: HTMLElement) => {
+  const isReduced = window.pageYOffset > NAVBAR_REDUCE_OFFSET;
+  navbar.classList.toggle("navbar-reduce", isReduced);
+  navbar.classList.toggle("navbar-trans", !isReduced);
+};
+
 const Navbar: React.FC = () => {
   const [theme, setTheme] = useState<"light" | "dark">(getInitialTheme);
+  const [isMobileStatusOpen, setIsMobileStatusOpen] = useState(false);
+  const navRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    const storedTheme = window.localStorage.getItem("theme");
-    const prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
-    const initialTheme = storedTheme === "light" || storedTheme === "dark"
-      ? storedTheme
-      : (prefersLight ? "light" : "dark");
+    const initialTheme = getInitialTheme();
     setTheme(initialTheme);
     document.documentElement.setAttribute("data-theme", initialTheme);
 
-    const nav = document.getElementById("mainNav");
+    const nav = navRef.current;
     if (!nav) {
       return;
     }
 
     const reduceHandler = () => {
-      const navbar = document.querySelector<HTMLElement>(".navbar-expand-md");
-      if (!navbar) {
-        return;
-      }
-      if (window.pageYOffset > 50) {
-        navbar.classList.add("navbar-reduce");
-        navbar.classList.remove("navbar-trans");
-        //this.setState({ logo: logo2 });
-      } else {
-        navbar.classList.add("navbar-trans");
-        navbar.classList.remove("navbar-reduce");
-        //this.setState({ logo: logo1 });
-      }
+      syncNavbarScrollState(nav);
     };
     window.addEventListener("scroll", reduceHandler);
+    reduceHandler();
 
     const smoothLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('a.js-scroll[href*="#"]:not([href="#"])'));
     const smoothHandler = (e: Event) => {
@@ -72,13 +71,13 @@ const Navbar: React.FC = () => {
         return true;
       };
 
-      const attemptScrollToTarget = (remainingAttempts = 4) => {
+      const attemptScrollToTarget = (remainingAttempts = SCROLL_RETRY_ATTEMPTS) => {
         if (scrollToTarget() || remainingAttempts <= 0) {
           return;
         }
         window.setTimeout(() => {
           attemptScrollToTarget(remainingAttempts - 1);
-        }, 150);
+        }, SCROLL_RETRY_DELAY);
       };
 
       if (revealEvents.length > 0) {
@@ -113,27 +112,138 @@ const Navbar: React.FC = () => {
     window.localStorage.setItem("theme", theme);
   }, [theme]);
 
-  const handleThemeToggle = () => {
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > MOBILE_BREAKPOINT) {
+        setIsMobileStatusOpen(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isMobileStatusOpen) {
+      return;
+    }
+
+    const handlePointerDown = (event: PointerEvent) => {
+      const target = event.target as Node | null;
+      if (!target || !navRef.current) {
+        return;
+      }
+      if (!navRef.current.contains(target)) {
+        setIsMobileStatusOpen(false);
+      }
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsMobileStatusOpen(false);
+      }
+    };
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDown);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isMobileStatusOpen]);
+
+  const handleThemeToggle = (event: React.MouseEvent<HTMLButtonElement>) => {
     setTheme((prevTheme) => (prevTheme === "dark" ? "light" : "dark"));
+    event.currentTarget.blur();
   };
 
   return (
     <nav
+      ref={navRef}
       className="navbar navbar-b navbar-trans navbar-expand-md fixed-top"
       id="mainNav"
-      style={{ borderRadius: "var(--radius-md)" }}
+      aria-label="Primary"
     >
       <div className="container-fluid navbar-shell">
-        <div className="navbar-utility-spacer" aria-hidden="true"></div>
+        <div className="navbar-utility-spacer" aria-hidden="true">
+          <div className="navbar-brand-block">
+            <div className="navbar-brand-block__eyebrow">Node</div>
+            <div className="navbar-brand-block__title">THN://PORTFOLIO</div>
+          </div>
+        </div>
 
-        <div className="navbar-status-slot">
-          <SystemStatusBar embedded />
+        <div
+          className={`navbar-status-slot${isMobileStatusOpen ? " is-mobile-open" : ""}`}
+          id="mobileStatusOverlay"
+        >
+          <div className="navbar-status-slot__eyebrow" aria-hidden="true">
+            System Navigation Console
+          </div>
+          {!isMobileStatusOpen ? (
+            <button
+              type="button"
+              className="navbar-status-toggle"
+              onClick={() => setIsMobileStatusOpen(true)}
+              aria-expanded="false"
+              aria-controls="mobileStatusOverlay"
+              aria-label="Open section status navigation"
+            >
+              <span className="navbar-status-toggle__icon" aria-hidden="true">
+                <AppIcon name="bars" />
+              </span>
+            </button>
+          ) : null}
+          <SystemStatusBar
+            embedded
+            onNavigate={() => setIsMobileStatusOpen(false)}
+            utilityContent={(
+              <div className="system-status__utility-bar">
+                <a
+                  className="nav-link nav-mobile-action nav-mobile-action--resume"
+                  href={resumePdf}
+                  download
+                  onClick={() => setIsMobileStatusOpen(false)}
+                >
+                  <span className="nav-mobile-action__icon" aria-hidden="true">
+                    <AppIcon name="download" />
+                  </span>
+                  <span className="nav-mobile-action__label">Resume</span>
+                </a>
+                <div className="system-status__utility-actions">
+                  <button
+                    type="button"
+                    className="nav-mobile-action nav-mobile-action--theme"
+                    onClick={handleThemeToggle}
+                    aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+                    title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+                  >
+                    <span className="nav-mobile-action__icon" aria-hidden="true">
+                      <AppIcon name="sun" />
+                    </span>
+                  </button>
+                  <button
+                    type="button"
+                    className="nav-mobile-action nav-mobile-action--close"
+                    onClick={() => setIsMobileStatusOpen(false)}
+                    aria-label="Close section status navigation"
+                  >
+                    <span className="nav-mobile-action__icon" aria-hidden="true">
+                      <AppIcon name="chevron-up" />
+                    </span>
+                  </button>
+                </div>
+              </div>
+            )}
+          />
         </div>
 
         <div className="navbar-utility">
           <a className="nav-link nav-resume-button" href={resumePdf} download>
             <span className="nav-resume-button__icon" aria-hidden="true">
-              <i className="fa fa-download"></i>
+              <AppIcon name="download" />
             </span>
             <span className="nav-resume-button__content">
               <span className="nav-resume-button__eyebrow">File</span>
@@ -147,7 +257,7 @@ const Navbar: React.FC = () => {
             aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
             title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
           >
-            <i className="fa fa-sun-o theme-toggle__icon" aria-hidden="true"></i>
+            <AppIcon name="sun" className="theme-toggle__icon" />
           </button>
         </div>
       </div>

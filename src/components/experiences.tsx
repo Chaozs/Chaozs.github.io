@@ -22,6 +22,8 @@ const Experiences: React.FC = () => {
             date={experience.date}
             role={experience.role}
             skills={experience.skills}
+            summary={experience.summary}
+            highlights={experience.highlights}
             details={experience.details}
             iframeUrl={experience.iframeUrl}
           />
