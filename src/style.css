@@ -29,6 +29,9 @@ GENERAL STYLING
   --accent: #3bd16f;
   --accent-strong: #2a9a52;
   --accent-soft: #b8f5cd;
+  --accent-contrast: #ffffff;
+  --warning-accent: #c88717;
+  --warning-surface: rgba(200, 135, 23, 0.14);
   --border-color: #2c353d;
   --button-bg: #101713;
   --button-border: #3bd16f;
@@ -77,8 +80,11 @@ html[data-theme="light"] {
   --text-inverse: #ffffff;
   --link-color: #0f172a;
   --accent: #2563eb;
-  --accent-strong: #1d4ed8;
+  --accent-strong: #1e40af;
   --accent-soft: #dbeafe;
+  --accent-contrast: #ffffff;
+  --warning-accent: #92400e;
+  --warning-surface: rgba(146, 64, 14, 0.12);
   --border-color: #d6deea;
   --button-bg: #f8fbff;
   --button-border: #2563eb;
@@ -344,18 +350,11 @@ a:hover {
   box-shadow: var(--shadow-s), inset 0 0 0 1px rgba(59, 209, 111, 0.04);
   backdrop-filter: blur(10px);
   font-family: var(--font-mono);
-  cursor: text;
   transition:
     border-color 180ms ease,
     box-shadow 180ms ease,
     transform 180ms ease,
     background 180ms ease;
-}
-
-.terminal-section-header__command:focus-within {
-  border-color: color-mix(in srgb, var(--accent) 58%, var(--border-color));
-  box-shadow: var(--focus-ring), var(--shadow-m);
-  transform: translateY(-1px);
 }
 
 .terminal-section-header__prompt {
@@ -365,52 +364,21 @@ a:hover {
   font-weight: 700;
 }
 
-.terminal-section-header__input {
-  padding: 0;
-  border: 0;
-  background: transparent;
+.terminal-section-header__command-line {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex: 0 0 auto;
+}
+
+.terminal-section-header__value {
   color: var(--text-secondary);
   font-size: var(--type-command);
   font-weight: 700;
   letter-spacing: var(--tracking-command);
   text-transform: uppercase;
   font-family: inherit;
-  outline: none;
-  box-shadow: none;
-  cursor: text;
-}
-
-.terminal-section-header__input-shell {
-  flex: 0 0 auto;
-  display: inline-grid;
-  align-items: center;
-  min-width: 0;
-}
-
-.terminal-section-header__measure,
-.terminal-section-header__input {
-  grid-area: 1 / 1;
-  font-family: inherit;
-  font-size: var(--type-command);
-  font-weight: 700;
-  letter-spacing: var(--tracking-command);
-  text-transform: uppercase;
-}
-
-.terminal-section-header__measure {
-  visibility: hidden;
   white-space: pre;
-  pointer-events: none;
-}
-
-.terminal-section-header__input {
-  width: 100%;
-  min-width: 0;
-}
-
-.terminal-section-header__input::selection {
-  background: color-mix(in srgb, var(--accent) 28%, transparent);
-  color: var(--text-heading);
 }
 
 .terminal-section-header__caret {
@@ -421,11 +389,6 @@ a:hover {
   background: color-mix(in srgb, var(--accent) 86%, white 8%);
   box-shadow: 0 0 10px rgba(59, 209, 111, 0.22);
   animation: terminal-caret-blink 1.15s steps(1, end) infinite;
-}
-
-.terminal-section-header__command:focus-within .terminal-section-header__caret {
-  opacity: 0;
-  animation: none;
 }
 
 @keyframes terminal-caret-blink {
@@ -681,7 +644,7 @@ NAVBAR
 
 .navbar-b.navbar-reduce {
   transition: all .5s ease-in-out;
-  background-color: var(--nav-reduce-bg);
+  background-color: transparent;
   padding-top: 15px;
   padding-bottom: 15px;
 }
@@ -775,17 +738,6 @@ NAVBAR
   min-width: 0;
   width: min(980px, calc(100% - (var(--navbar-utility-width) * 2) - 28px));
   max-width: 980px;
-}
-
-.navbar-status-slot__eyebrow {
-  margin: 0 0 0.42rem 0.28rem;
-  color: var(--accent);
-  font-family: var(--font-mono);
-  font-size: 0.58rem;
-  font-weight: 700;
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
-  opacity: 0.92;
 }
 
 .navbar-status-toggle {
@@ -1459,6 +1411,33 @@ ABOUT
   text-transform: uppercase;
 }
 
+.about-dossier__lock-copy {
+  position: relative;
+  z-index: 1;
+  display: inline-grid;
+  place-items: center;
+  min-width: 80px;
+  min-height: 80px;
+}
+
+.about-dossier__lock-glyph {
+  position: absolute;
+  inset: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  height: auto;
+  color: color-mix(in srgb, var(--accent) 32%, white 8%);
+  opacity: 0.5;
+  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--accent) 18%, transparent));
+}
+
+.about-dossier__lock-glyph .app-icon {
+  width: 100%;
+  height: 100%;
+}
+
 .about-dossier.is-sealed .about-dossier__lock-ring--inner {
   animation: about-lock-idle 6s linear infinite;
 }
@@ -1515,8 +1494,9 @@ ABOUT
 }
 
 .about-dossier__chip--alert {
-  color: #f0b24a;
-  border-color: color-mix(in srgb, #f0b24a 42%, var(--border-color));
+  background: color-mix(in srgb, var(--warning-surface) 72%, var(--surface-2));
+  color: var(--warning-accent);
+  border-color: color-mix(in srgb, var(--warning-accent) 42%, var(--border-color));
 }
 
 .about-dossier__chip--active {
@@ -1818,8 +1798,9 @@ PORTFOLIO
 }
 
 .work-status-chip--locked {
-  border-color: color-mix(in srgb, #f0b24a 42%, var(--border-color));
-  color: #f0b24a;
+  border-color: color-mix(in srgb, var(--warning-accent) 42%, var(--border-color));
+  background: color-mix(in srgb, var(--warning-surface) 72%, var(--surface-2));
+  color: var(--warning-accent);
 }
 
 .work-status-chip--open {
@@ -1898,6 +1879,21 @@ PORTFOLIO
 .work-dossier__toggle:focus .work-dossier__toggle-icon {
   background: var(--accent);
   color: #fff;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .work-dossier__header:hover .work-dossier__toggle {
+    border-color: var(--accent);
+    background-color: color-mix(in srgb, var(--surface-hover) 92%, transparent);
+    color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-s);
+  }
+
+  .work-dossier__header:hover .work-dossier__toggle-icon {
+    background: var(--accent);
+    color: #fff;
+  }
 }
 
 .work-dossier__body {
@@ -2157,12 +2153,7 @@ PORTFOLIO
     padding: 0.8rem 0.9rem;
   }
 
-  .terminal-section-header__input {
-    font-size: 0.72rem;
-    letter-spacing: 0.12em;
-  }
-
-  .terminal-section-header__measure {
+  .terminal-section-header__value {
     font-size: 0.72rem;
     letter-spacing: 0.12em;
   }
@@ -3018,9 +3009,18 @@ BUTTON
   font-weight: 700;
 }
 
-.intro-command-bar__input {
+.intro-command-bar__command-line {
   flex: 1 1 auto;
   min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.intro-command-bar__input {
+  flex: 0 0 auto;
+  min-width: 1ch;
+  max-width: 100%;
   border: 0;
   background: transparent;
   color: var(--text-heading);
@@ -3200,6 +3200,19 @@ BUTTON
   background: color-mix(in srgb, var(--surface-1) 92%, transparent);
   border-color: color-mix(in srgb, var(--accent) 58%, var(--border-color));
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 26%, transparent), var(--shadow-s);
+}
+
+.system-status__item.is-active .system-status__label {
+  font-weight: 800;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--accent) 72%, transparent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.22em;
+}
+
+.system-status__item.is-active .system-status__index {
+  color: var(--accent);
+  opacity: 1;
 }
 
 .system-status__index {
@@ -3446,10 +3459,6 @@ BUTTON
     pointer-events: none;
   }
 
-  .navbar-status-slot__eyebrow {
-    display: none;
-  }
-
   .system-status--embedded {
     display: block;
     max-height: calc(100vh - 24px - env(safe-area-inset-top));
@@ -3620,6 +3629,7 @@ BUTTON
   .system-status__index {
     font-size: 0.58rem;
   }
+
 
   .system-status__label {
     font-size: 0.62rem;
@@ -3869,10 +3879,11 @@ BUTTON
 
 .emulator-game-button.is-active {
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--accent) 28%, var(--surface-1)), color-mix(in srgb, var(--accent) 14%, var(--surface-2))),
-    radial-gradient(circle at left center, color-mix(in srgb, var(--accent) 22%, transparent), transparent 58%);
-  border-color: color-mix(in srgb, var(--accent) 72%, var(--border-color));
-  color: #fff;
+    linear-gradient(180deg, color-mix(in srgb, var(--accent-strong) 88%, var(--surface-1)), color-mix(in srgb, var(--accent) 82%, var(--surface-2))),
+    radial-gradient(circle at left center, color-mix(in srgb, var(--accent-soft) 24%, transparent), transparent 58%);
+  border-color: color-mix(in srgb, var(--accent-strong) 80%, var(--border-color));
+  color: var(--accent-contrast);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 24%, transparent), var(--shadow-s);
 }
 
 .emulator-toolbar {
@@ -3917,10 +3928,11 @@ BUTTON
 
 .emulator-action.is-primary {
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--accent) 28%, var(--surface-1)), color-mix(in srgb, var(--accent) 14%, var(--surface-2))),
-    radial-gradient(circle at left center, color-mix(in srgb, var(--accent) 22%, transparent), transparent 58%);
-  border-color: color-mix(in srgb, var(--accent) 72%, var(--border-color));
-  color: #fff;
+    linear-gradient(180deg, color-mix(in srgb, var(--accent-strong) 88%, var(--surface-1)), color-mix(in srgb, var(--accent) 82%, var(--surface-2))),
+    radial-gradient(circle at left center, color-mix(in srgb, var(--accent-soft) 24%, transparent), transparent 58%);
+  border-color: color-mix(in srgb, var(--accent-strong) 80%, var(--border-color));
+  color: var(--accent-contrast);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 24%, transparent), var(--shadow-s);
 }
 
 .emulator-action.is-disabled,

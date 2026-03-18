@@ -179,9 +179,6 @@ const Navbar: React.FC = () => {
           className={`navbar-status-slot${isMobileStatusOpen ? " is-mobile-open" : ""}`}
           id="mobileStatusOverlay"
         >
-          <div className="navbar-status-slot__eyebrow" aria-hidden="true">
-            System Navigation Console
-          </div>
           {!isMobileStatusOpen ? (
             <button
               type="button"

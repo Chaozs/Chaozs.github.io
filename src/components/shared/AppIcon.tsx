@@ -3,6 +3,7 @@ import React from "react";
 type IconName =
   | "bars"
   | "download"
+  | "lock"
   | "sun"
   | "chevron-up"
   | "chevron-down"
@@ -38,6 +39,14 @@ const AppIcon: React.FC<AppIconProps> = ({ name, className }) => {
           <path {...strokeProps} d="M12 4v10" />
           <path {...strokeProps} d="m8 10 4 4 4-4" />
           <path {...strokeProps} d="M5 19h14" />
+        </svg>
+      );
+    case "lock":
+      return (
+        <svg className={`app-icon ${className ?? ""}`.trim()} viewBox="0 0 24 24" aria-hidden="true">
+          <rect {...strokeProps} x="5" y="10" width="14" height="10" rx="2.5" />
+          <path {...strokeProps} d="M8 10V7.8a4 4 0 0 1 8 0V10" />
+          <path {...strokeProps} d="M12 13.5v3" />
         </svg>
       );
     case "sun":

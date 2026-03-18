@@ -274,7 +274,14 @@ const Profile: React.FC = () => {
             <div className="about-dossier__lock-core" aria-hidden="true">
               <span className="about-dossier__lock-ring"></span>
               <span className="about-dossier__lock-ring about-dossier__lock-ring--inner"></span>
-              <span className="about-dossier__lock-icon">{accessState === "unlocking" ? "..." : "LOCK"}</span>
+              <span className="about-dossier__lock-copy">
+                {accessState !== "unlocking" ? (
+                  <span className="about-dossier__lock-glyph" aria-hidden="true">
+                    <AppIcon name="lock" />
+                  </span>
+                ) : null}
+                <span className="about-dossier__lock-icon">{accessState === "unlocking" ? "..." : "LOCK"}</span>
+              </span>
             </div>
             <div className="about-dossier__eyebrow">Classified Profile</div>
             <h3 className="about-dossier__title">

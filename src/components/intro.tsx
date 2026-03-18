@@ -61,6 +61,7 @@ const getCommandMatch = (input: string): (typeof HERO_COMMANDS)[number] | null =
 
 const Intro: React.FC = () => {
   const typedRef = useRef<HTMLSpanElement | null>(null);
+  const commandInputRef = useRef<HTMLInputElement | null>(null);
   const [displayName, setDisplayName] = useState("");
   const [isNameResolved, setIsNameResolved] = useState(false);
   const [themeLabel, setThemeLabel] = useState(getThemeLabel);
@@ -261,45 +262,57 @@ const Intro: React.FC = () => {
             <div className="pt-3 intro-stagger-item">
               <form className="intro-command-bar" onSubmit={handleCommandSubmit}>
                 <div className="intro-command-bar__label">Go To</div>
-                <div className="intro-command-bar__shell">
+                <div
+                  className="intro-command-bar__shell"
+                  onClick={(event) => {
+                    const target = event.target as HTMLElement | null;
+                    if (target?.closest(".intro-command-bar__hint")) {
+                      return;
+                    }
+                    commandInputRef.current?.focus();
+                  }}
+                >
                   <span className="intro-command-bar__prompt" aria-hidden="true">
                     &gt;
                   </span>
-                  <span className="intro-command-bar__cursor" aria-hidden="true"></span>
-                  <input
-                    id="hero-command-input"
-                    className="intro-command-bar__input"
-                    type="text"
-                    value={commandValue}
-                    onChange={(event) => {
-                      setCommandValue(event.target.value);
-                      if (commandError) {
-                        setCommandError("");
-                      }
-                    }}
-                    onKeyDown={(event) => {
-                      if (event.key !== "Tab") {
-                        return;
-                      }
+                  <span className="intro-command-bar__command-line">
+                    <input
+                      ref={commandInputRef}
+                      id="hero-command-input"
+                      className="intro-command-bar__input"
+                      type="text"
+                      value={commandValue}
+                      size={Math.max(commandValue.length, 1)}
+                      onChange={(event) => {
+                        setCommandValue(event.target.value);
+                        if (commandError) {
+                          setCommandError("");
+                        }
+                      }}
+                      onKeyDown={(event) => {
+                        if (event.key !== "Tab") {
+                          return;
+                        }
 
-                      const matchedCommand = getCommandMatch(commandValue);
-                      if (!matchedCommand) {
-                        return;
-                      }
+                        const matchedCommand = getCommandMatch(commandValue);
+                        if (!matchedCommand) {
+                          return;
+                        }
 
-                      event.preventDefault();
-                      setCommandValue(matchedCommand);
-                      if (commandError) {
-                        setCommandError("");
-                      }
-                    }}
-                    placeholder="profile | experiences | mission | contact"
-                    autoComplete="off"
-                    spellCheck={false}
-                    aria-label="Navigate to profile, experiences, mission, or contact"
-                    aria-invalid={Boolean(commandError)}
-                    aria-describedby={commandError ? "hero-command-error" : undefined}
-                  />
+                        event.preventDefault();
+                        setCommandValue(matchedCommand);
+                        if (commandError) {
+                          setCommandError("");
+                        }
+                      }}
+                      autoComplete="off"
+                      spellCheck={false}
+                      aria-label="Navigate to profile, experiences, mission, or contact"
+                      aria-invalid={Boolean(commandError)}
+                      aria-describedby={commandError ? "hero-command-error" : undefined}
+                    />
+                    <span className="intro-command-bar__cursor" aria-hidden="true"></span>
+                  </span>
                   <button type="submit" className="intro-command-bar__hint">
                     Enter
                   </button>
