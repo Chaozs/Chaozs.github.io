@@ -33,9 +33,6 @@ const EmulatorSection: React.FC = () => {
       <div className="row">
         <div className="col-sm-12">
           <SectionHeader command="initialize mission select" />
-          <p className="emulator-briefing">
-            Select a target from the roster and deploy into the sim.
-          </p>
         </div>
       </div>
       <SurfaceCard padding="16px">

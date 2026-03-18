@@ -1,5 +1,8 @@
 import React, { useCallback, useEffect, useRef } from "react";
 
+const isFirefoxBrowser = () =>
+  typeof navigator !== "undefined" && /firefox/i.test(navigator.userAgent) && !/seamonkey/i.test(navigator.userAgent);
+
 const MatrixBackground: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const animationFrameIdRef = useRef<number | null>(null);
@@ -46,6 +49,11 @@ const MatrixBackground: React.FC = () => {
     const cores = navigator.hardwareConcurrency || 0;
     const memory = (navigator as Navigator & { deviceMemory?: number }).deviceMemory || 0;
     const lowEnd = (cores && cores <= 4) || (memory && memory <= 4);
+    const isFirefox = isFirefoxBrowser();
+    if (isFirefox) {
+      targetFpsRef.current = lowEnd ? 12 : 18;
+      return;
+    }
     targetFpsRef.current = lowEnd ? 20 : 60;
   }, []);
 
@@ -62,6 +70,7 @@ const MatrixBackground: React.FC = () => {
   const animateMatrix = useCallback(() => {
     const ctx = ctxRef.current;
     if (!ctx) return;
+    const isFirefox = isFirefoxBrowser();
     const fontSize = getFontSize();
     const now = performance.now();
     const frameInterval = 1000 / targetFpsRef.current;
@@ -94,9 +103,11 @@ const MatrixBackground: React.FC = () => {
       const y = dropsRef.current[i] * fontSize;
       ctx.fillText(text, x, y);
       const trailText = chars.charAt(Math.floor(Math.random() * chars.length));
-      const trailText2 = chars.charAt(Math.floor(Math.random() * chars.length));
       ctx.fillText(trailText, x, y - fontSize * 2);
-      ctx.fillText(trailText2, x, y - fontSize * 4);
+      if (!isFirefox) {
+        const trailText2 = chars.charAt(Math.floor(Math.random() * chars.length));
+        ctx.fillText(trailText2, x, y - fontSize * 4);
+      }
 
       if (y > canvasHeightRef.current && Math.random() > 0.99) {
         dropsRef.current[i] = 0;
@@ -120,7 +131,8 @@ const MatrixBackground: React.FC = () => {
       return;
     }
 
-    dprRef.current = window.devicePixelRatio || 1;
+    const devicePixelRatio = window.devicePixelRatio || 1;
+    dprRef.current = isFirefoxBrowser() ? Math.min(devicePixelRatio, 1) : devicePixelRatio;
     canvas.width = width * dprRef.current;
     canvas.height = height * dprRef.current;
     canvas.style.width = `${width}px`;

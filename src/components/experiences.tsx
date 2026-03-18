@@ -21,10 +21,11 @@ const Experiences: React.FC = () => {
             logoStyle={experience.logoStyle}
             date={experience.date}
             role={experience.role}
+            categories={experience.categories}
             skills={experience.skills}
             summary={experience.summary}
             highlights={experience.highlights}
-            details={experience.details}
+            details={experience.details ?? []}
             iframeUrl={experience.iframeUrl}
           />
         ))}

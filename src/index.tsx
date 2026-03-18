@@ -21,6 +21,10 @@ const App: React.FC = () => {
     const [showMatrixBackground, setShowMatrixBackground] = useState(false);
 
     useEffect(() => {
+        const userAgent = window.navigator.userAgent;
+        const isFirefox = /firefox/i.test(userAgent) && !/seamonkey/i.test(userAgent);
+        document.documentElement.setAttribute("data-browser", isFirefox ? "firefox" : "default");
+
         let timeoutId: number | null = null;
         const frameId = window.requestAnimationFrame(() => {
             timeoutId = window.setTimeout(() => {
@@ -33,6 +37,7 @@ const App: React.FC = () => {
             if (timeoutId !== null) {
                 window.clearTimeout(timeoutId);
             }
+            document.documentElement.removeAttribute("data-browser");
         };
     }, []);
 

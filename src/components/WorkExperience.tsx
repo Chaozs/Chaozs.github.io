@@ -1,17 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ImageWithSkeleton from "./ImageWithSkeleton";
 import AppIcon from "./shared/AppIcon";
 import SurfaceCard from "./shared/SurfaceCard";
+
+const DECRYPT_HEADER_TEXT = "Decrypted Notes";
+const SCRAMBLE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*";
+const SUMMARY_SCRAMBLE_DURATION = 980;
+const SUMMARY_REVEAL_DURATION = 360;
+const HIGHLIGHT_TYPE_INTERVAL = 2;
 
 type WorkBoxProps = {
   title: string;
   logo: string;
   date: string;
   role: string;
+  categories: string;
   skills: string;
   summary?: string;
   highlights?: string[];
-  details: string[];
+  details?: string[];
   logoStyle?: React.CSSProperties;
   iframeUrl?: string;
 };
@@ -31,20 +38,30 @@ const getDelayStyle = (delay: number): React.CSSProperties => ({
   transitionDelay: `${delay}ms`,
 });
 
+const stripHtml = (value: string): string => value.replace(/<[^>]+>/g, "");
+
 const WorkBox: React.FC<WorkBoxProps> = ({
   title,
   logo,
   date,
   role,
+  categories,
   skills,
   summary,
   highlights,
-  details,
+  details = [],
   logoStyle,
   iframeUrl,
 }) => {
   const [showMore, setShowMore] = useState<boolean>(false);
   const [isEmbedActivated, setIsEmbedActivated] = useState<boolean>(false);
+  const [displaySummaryText, setDisplaySummaryText] = useState("");
+  const [isSummaryResolved, setIsSummaryResolved] = useState(true);
+  const [showHighlights, setShowHighlights] = useState(false);
+  const [typedHighlightsText, setTypedHighlightsText] = useState("");
+  const summaryIntervalRef = useRef<number | null>(null);
+  const highlightsTimerRef = useRef<number | null>(null);
+  const highlightTypeTimerRef = useRef<number | null>(null);
   const logoWidth = resolveDimension(logoStyle?.width) ?? 200;
   const logoHeight = resolveDimension(logoStyle?.height) ?? 120;
   const minLogoWidth = Math.min(140, Math.round(logoWidth * 0.6));
@@ -59,14 +76,153 @@ const WorkBox: React.FC<WorkBoxProps> = ({
     marginBottom: _logoMarginBottom,
     ...logoStyleRest
   } = logoStyle ?? {};
-  const summaryText = summary ?? details[0];
+  const summaryText = summary ?? details[0] ?? "";
+  const summaryPlainText = stripHtml(summaryText);
   const highlightItems = highlights ?? [];
+  const highlightTerminalText = highlightItems
+    .map((item, index) => `${(index + 1).toString().padStart(2, "0")} ${item}`)
+    .join("\n");
+  const typedHighlightLines = typedHighlightsText.length > 0
+    ? typedHighlightsText.replace(/\n$/, "").split("\n")
+    : [];
   const useStructuredDetails = Boolean(summary && highlights && highlights.length > 0);
   const detailBaseDelay = 70;
+  const summaryStartDelay = detailBaseDelay + 50;
+  const detailStartDelay = summaryStartDelay + SUMMARY_SCRAMBLE_DURATION + SUMMARY_REVEAL_DURATION;
   const embedDelay = Math.min(
-    detailBaseDelay + 180 + ((useStructuredDetails ? highlightItems.length + 2 : details.length) * 45),
-    520,
+    detailStartDelay + 180 + ((useStructuredDetails ? highlightItems.length + 2 : details.length) * 45),
+    1400,
   );
+
+  useEffect(() => {
+    if (summaryIntervalRef.current !== null) {
+      window.clearInterval(summaryIntervalRef.current);
+      summaryIntervalRef.current = null;
+    }
+    if (highlightsTimerRef.current !== null) {
+      window.clearTimeout(highlightsTimerRef.current);
+      highlightsTimerRef.current = null;
+    }
+    if (highlightTypeTimerRef.current !== null) {
+      window.clearTimeout(highlightTypeTimerRef.current);
+      highlightTypeTimerRef.current = null;
+    }
+
+    if (!showMore) {
+      setDisplaySummaryText(summaryPlainText);
+      setIsSummaryResolved(true);
+      setShowHighlights(false);
+      setTypedHighlightsText("");
+      return;
+    }
+
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (mediaQuery.matches) {
+      setDisplaySummaryText(summaryPlainText);
+      setIsSummaryResolved(true);
+      setTypedHighlightsText(highlightTerminalText);
+      setShowHighlights(true);
+      return;
+    }
+
+    setIsSummaryResolved(false);
+    setShowHighlights(false);
+    setTypedHighlightsText("");
+    if (useStructuredDetails) {
+      highlightsTimerRef.current = window.setTimeout(() => {
+        setTypedHighlightsText("");
+        setShowHighlights(true);
+        highlightsTimerRef.current = null;
+      }, summaryStartDelay);
+    }
+    let revealProgress = 0;
+    const revealStep = Math.max(summaryPlainText.replace(/\s/g, "").length / 22, 2);
+
+    summaryIntervalRef.current = window.setInterval(() => {
+      revealProgress += revealStep;
+      const lockedCount = Math.floor(revealProgress);
+
+      const scrambledText = summaryPlainText
+        .split("")
+        .map((char, index) => {
+          if (char === " ") {
+            return " ";
+          }
+          if (index < lockedCount) {
+            return summaryPlainText[index];
+          }
+          return SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
+        })
+        .join("");
+
+      setDisplaySummaryText(scrambledText);
+
+      if (lockedCount >= summaryPlainText.length) {
+        if (summaryIntervalRef.current !== null) {
+          window.clearInterval(summaryIntervalRef.current);
+          summaryIntervalRef.current = null;
+        }
+        setDisplaySummaryText(summaryPlainText);
+        setIsSummaryResolved(true);
+      }
+    }, 40);
+
+    return () => {
+      if (summaryIntervalRef.current !== null) {
+        window.clearInterval(summaryIntervalRef.current);
+        summaryIntervalRef.current = null;
+      }
+      if (highlightsTimerRef.current !== null) {
+        window.clearTimeout(highlightsTimerRef.current);
+        highlightsTimerRef.current = null;
+      }
+      if (highlightTypeTimerRef.current !== null) {
+        window.clearTimeout(highlightTypeTimerRef.current);
+        highlightTypeTimerRef.current = null;
+      }
+    };
+  }, [highlightTerminalText, showMore, summaryPlainText, useStructuredDetails]);
+
+  useEffect(() => {
+    if (highlightTypeTimerRef.current !== null) {
+      window.clearTimeout(highlightTypeTimerRef.current);
+      highlightTypeTimerRef.current = null;
+    }
+
+    if (!showHighlights || !useStructuredDetails) {
+      setTypedHighlightsText("");
+      return;
+    }
+
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (mediaQuery.matches) {
+      setTypedHighlightsText(highlightTerminalText);
+      return;
+    }
+
+    setTypedHighlightsText("");
+    let charIndex = 0;
+
+    const typeNext = () => {
+      if (charIndex >= highlightTerminalText.length) {
+        highlightTypeTimerRef.current = null;
+        return;
+      }
+
+      charIndex += 1;
+      setTypedHighlightsText(highlightTerminalText.slice(0, charIndex));
+      highlightTypeTimerRef.current = window.setTimeout(typeNext, HIGHLIGHT_TYPE_INTERVAL);
+    };
+
+    highlightTypeTimerRef.current = window.setTimeout(typeNext, 80);
+
+    return () => {
+      if (highlightTypeTimerRef.current !== null) {
+        window.clearTimeout(highlightTypeTimerRef.current);
+        highlightTypeTimerRef.current = null;
+      }
+    };
+  }, [highlightTerminalText, showHighlights, useStructuredDetails]);
 
   const handleToggle = (): void => {
     setShowMore((prevState) => {
@@ -83,6 +239,11 @@ const WorkBox: React.FC<WorkBoxProps> = ({
     handleToggle();
   };
 
+  const handleHeaderClick = (event: React.MouseEvent<HTMLDivElement>): void => {
+    event.stopPropagation();
+    handleToggle();
+  };
+
   const handleEmbedLaunch = (event: React.MouseEvent<HTMLButtonElement>): void => {
     event.stopPropagation();
     setIsEmbedActivated(true);
@@ -92,20 +253,24 @@ const WorkBox: React.FC<WorkBoxProps> = ({
     <article className="col-md-12 experience-entry">
       <div
         className={`work-box ${showMore ? "is-expanded" : "is-collapsed"}`}
-        onClick={handleToggle}
+        onClick={() => {
+          if (!showMore) {
+            handleToggle();
+          }
+        }}
       >
         <SurfaceCard className="work-dossier">
-          <div className="work-dossier__header">
+          <div className="work-dossier__header" onClick={handleHeaderClick}>
             <div className="work-dossier__identity">
               <div className="work-dossier__eyebrow">Classified Dossier</div>
               <h2 className="work-dossier__title">{title}</h2>
-              <div className="work-dossier__status-group work-dossier__status-group--inline">
-                <span className={`work-status-chip ${showMore ? "work-status-chip--open" : "work-status-chip--locked"}`}>
-                  {showMore ? "Decrypted" : "Restricted"}
-                </span>
-                <span className="work-date">{date}</span>
-                <span className="work-status-chip work-status-chip--role">{role}</span>
-              </div>
+                <div className="work-dossier__status-group work-dossier__status-group--inline">
+                  <span className={`work-status-chip ${showMore ? "work-status-chip--open" : "work-status-chip--locked"}`}>
+                    {showMore ? "Decrypted" : "Restricted"}
+                  </span>
+                  <span className="work-status-chip work-status-chip--role">{role}</span>
+                  <span className="work-date">{date}</span>
+                </div>
             </div>
             <button
               type="button"
@@ -124,7 +289,7 @@ const WorkBox: React.FC<WorkBoxProps> = ({
           {showMore ? (
             <div className="row work-dossier__body">
               <div className="col-sm-4 work-dossier__sidebar-col">
-                <div className="work-dossier__sidebar" onClick={handleToggleClick}>
+                <div className="work-dossier__sidebar">
                   <div className="work-dossier__media">
                     <ImageWithSkeleton
                       src={logo}
@@ -142,22 +307,26 @@ const WorkBox: React.FC<WorkBoxProps> = ({
                       }}
                     />
                   </div>
-                  <div className="work-dossier__sidebar-meta">
-                    <div className="work-meta-row work-meta-row--sidebar">
-                      <span className="work-meta-row__label">Period</span>
-                      <span className="work-meta-row__value">{date}</span>
-                    </div>
-                    <div className="work-meta-row work-meta-row--sidebar">
-                      <span className="work-meta-row__label">Role</span>
-                      <span className="work-meta-row__value">{role}</span>
-                    </div>
-                    <div className="work-meta-row work-meta-row--sidebar">
-                      <span className="work-meta-row__label">Skills</span>
-                      <span className="work-meta-row__value">{skills}</span>
+                    <div className="work-dossier__sidebar-meta">
+                      <div className="work-meta-row work-meta-row--sidebar">
+                        <span className="work-meta-row__label">Period</span>
+                        <span className="work-meta-row__value">{date}</span>
+                      </div>
+                      <div className="work-meta-row work-meta-row--sidebar">
+                        <span className="work-meta-row__label">Role</span>
+                        <span className="work-meta-row__value">{role}</span>
+                      </div>
+                      <div className="work-meta-row work-meta-row--sidebar">
+                        <span className="work-meta-row__label">Skills</span>
+                        <span className="work-meta-row__value">{skills}</span>
+                      </div>
+                      <div className="work-meta-row work-meta-row--sidebar">
+                        <span className="work-meta-row__label">Domain</span>
+                        <span className="work-meta-row__value">{categories}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
               <div className="col-sm-8 work-dossier__main-col">
                 <div
                   className="work-text"
@@ -171,37 +340,82 @@ const WorkBox: React.FC<WorkBoxProps> = ({
                     <div className={`work-dossier__stamp${showMore ? " is-visible" : ""}`}>Access Granted</div>
 
                     <div className="work-decrypt-header work-detail-item" style={getDelayStyle(detailBaseDelay)}>
-                      Decrypted Notes
+                      {DECRYPT_HEADER_TEXT}
                     </div>
 
                     {useStructuredDetails ? (
                       <>
                         <div
                           className="work-detail-item"
-                          style={getDelayStyle(detailBaseDelay + 50)}
+                          style={getDelayStyle(summaryStartDelay)}
                         >
-                          <p className="work-detail-copy work-detail-copy--summary" dangerouslySetInnerHTML={{ __html: summaryText }}></p>
+                          <p className="work-detail-copy work-detail-copy--summary">
+                            {isSummaryResolved ? (
+                              <span dangerouslySetInnerHTML={{ __html: summaryText }}></span>
+                            ) : (
+                              <span className="work-detail-copy__scramble-shell">
+                                <span className="work-detail-copy__measure" dangerouslySetInnerHTML={{ __html: summaryText }}></span>
+                                <span className="work-detail-copy__scramble">{displaySummaryText}</span>
+                              </span>
+                            )}
+                          </p>
                         </div>
-                        <div
-                          className="work-detail-item work-detail-highlights"
-                          style={getDelayStyle(detailBaseDelay + 100)}
-                        >
-                          Highlights:
-                        </div>
-                        <ul className="work-detail-list work-detail-list--highlights">
-                          {highlightItems.map((item: string, index: number) => (
-                            <li
-                              key={index}
-                              className="work-detail-item work-detail-item--highlight"
-                              style={{
-                                marginBottom: "0.5rem",
-                                ...getDelayStyle(Math.min(detailBaseDelay + 150 + (index * 45), 420)),
-                              }}
-                            >
-                              <p className="work-detail-copy" dangerouslySetInnerHTML={{ __html: item }}></p>
-                            </li>
-                          ))}
-                        </ul>
+                        {showHighlights ? (
+                          <div
+                            className="work-detail-item work-highlights-terminal"
+                            style={getDelayStyle(0)}
+                          >
+                            <div className="work-highlights-terminal__header">
+                              <span className="work-highlights-terminal__prompt" aria-hidden="true">
+                                &gt;
+                              </span>
+                              <span className="work-highlights-terminal__title">Highlights.log</span>
+                            </div>
+                            <div className="work-highlights-terminal__body">
+                              <div className="work-highlights-terminal__measure" aria-hidden="true">
+                                {highlightItems.map((item, index) => {
+                                  const lineIndex = (index + 1).toString().padStart(2, "0");
+
+                                  return (
+                                    <div key={`measure-${lineIndex}`} className="work-highlights-terminal__line">
+                                      <span className="work-highlights-terminal__index">{lineIndex}</span>
+                                      <span className="work-highlights-terminal__text">{item}</span>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                              <div className="work-highlights-terminal__typed">
+                                {highlightItems.map((item, index) => {
+                                  const line = typedHighlightLines[index] ?? "";
+                                  const match = line.match(/^(\d{2})\s?(.*)$/);
+                                  const lineIndex = match?.[1] ?? (index + 1).toString().padStart(2, "0");
+                                  const lineText = match?.[2] ?? "";
+                                  const isLineVisible = index < typedHighlightLines.length;
+                                  const isLastVisibleLine = index === typedHighlightLines.length - 1;
+                                  const isTypingActive =
+                                    typedHighlightsText.length > 0 &&
+                                    typedHighlightsText.length < highlightTerminalText.length;
+
+                                  return (
+                                    <div
+                                      key={`${lineIndex}-${index}`}
+                                      className={`work-highlights-terminal__line${isLineVisible ? " is-visible" : ""}`}
+                                      aria-hidden={!isLineVisible}
+                                    >
+                                      <span className="work-highlights-terminal__index">{lineIndex}</span>
+                                      <span className="work-highlights-terminal__text">
+                                        {isLineVisible ? lineText : item}
+                                        {isTypingActive && isLastVisibleLine ? (
+                                          <span className="work-highlights-terminal__cursor" aria-hidden="true"></span>
+                                        ) : null}
+                                      </span>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          </div>
+                        ) : null}
                       </>
                     ) : (
                       <ul className="work-detail-list">
@@ -212,10 +426,23 @@ const WorkBox: React.FC<WorkBoxProps> = ({
                             style={{
                               marginBottom: "0.5rem",
                               marginLeft: /^\s{3}/.test(item) ? "20px" : "0px",
-                              ...getDelayStyle(Math.min(detailBaseDelay + 50 + (index * 45), 420)),
+                              ...getDelayStyle(Math.min((index === 0 ? summaryStartDelay : detailStartDelay + (index * 45)), 1400)),
                             }}
                           >
-                            <p className="work-detail-copy" dangerouslySetInnerHTML={{ __html: item }}></p>
+                            {index === 0 ? (
+                              <p className="work-detail-copy work-detail-copy--summary">
+                                {isSummaryResolved ? (
+                                  <span dangerouslySetInnerHTML={{ __html: item }}></span>
+                                ) : (
+                                  <span className="work-detail-copy__scramble-shell">
+                                    <span className="work-detail-copy__measure" dangerouslySetInnerHTML={{ __html: item }}></span>
+                                    <span className="work-detail-copy__scramble">{displaySummaryText}</span>
+                                  </span>
+                                )}
+                              </p>
+                            ) : (
+                              <p className="work-detail-copy" dangerouslySetInnerHTML={{ __html: item }}></p>
+                            )}
                           </li>
                         ))}
                       </ul>
@@ -245,6 +472,20 @@ const WorkBox: React.FC<WorkBoxProps> = ({
                         )}
                       </div>
                     ) : null}
+
+                    <div className="work-dossier__footer work-detail-item" style={getDelayStyle(Math.min(embedDelay + 80, 1480))}>
+                      <button
+                        type="button"
+                        className="work-dossier__toggle work-dossier__toggle--footer"
+                        onClick={handleToggleClick}
+                        aria-label={`Collapse ${title} dossier`}
+                      >
+                        <span className="work-dossier__toggle-label">Seal File</span>
+                        <span className="work-dossier__toggle-icon is-open" aria-hidden="true">
+                          <AppIcon name="chevron-down" />
+                        </span>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
