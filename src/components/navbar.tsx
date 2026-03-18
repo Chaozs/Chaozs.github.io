@@ -57,6 +57,7 @@ const Navbar: React.FC = () => {
       if (!targetAttribute) {
         return;
       }
+      window.dispatchEvent(new Event("collapse-experiences"));
       const targetId = targetAttribute.slice(1);
       const revealEvents = revealEventsByTarget[targetId] ?? [];
       const scrollToTarget = () => {

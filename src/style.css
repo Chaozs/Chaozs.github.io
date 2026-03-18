@@ -2087,25 +2087,6 @@ PORTFOLIO
   overflow: hidden;
 }
 
-.work-detail-copy__scramble-shell {
-  position: relative;
-  display: block;
-  overflow: hidden;
-}
-
-.work-detail-copy__measure {
-  display: block;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.work-detail-copy__scramble {
-  position: absolute;
-  inset: 0;
-  display: block;
-  max-width: 100%;
-}
-
 .work-detail-highlights {
   margin: 0.5rem 0 0.7rem;
   color: var(--accent);

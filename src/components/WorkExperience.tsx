@@ -4,8 +4,6 @@ import AppIcon from "./shared/AppIcon";
 import SurfaceCard from "./shared/SurfaceCard";
 
 const DECRYPT_HEADER_TEXT = "Decrypted Notes";
-const SCRAMBLE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*";
-const SUMMARY_SCRAMBLE_DURATION = 980;
 const SUMMARY_REVEAL_DURATION = 360;
 const HIGHLIGHT_TYPE_INTERVAL = 2;
 
@@ -55,11 +53,8 @@ const WorkBox: React.FC<WorkBoxProps> = ({
 }) => {
   const [showMore, setShowMore] = useState<boolean>(false);
   const [isEmbedActivated, setIsEmbedActivated] = useState<boolean>(false);
-  const [displaySummaryText, setDisplaySummaryText] = useState("");
-  const [isSummaryResolved, setIsSummaryResolved] = useState(true);
   const [showHighlights, setShowHighlights] = useState(false);
   const [typedHighlightsText, setTypedHighlightsText] = useState("");
-  const summaryIntervalRef = useRef<number | null>(null);
   const highlightsTimerRef = useRef<number | null>(null);
   const highlightTypeTimerRef = useRef<number | null>(null);
   const logoWidth = resolveDimension(logoStyle?.width) ?? 200;
@@ -88,17 +83,13 @@ const WorkBox: React.FC<WorkBoxProps> = ({
   const useStructuredDetails = Boolean(summary && highlights && highlights.length > 0);
   const detailBaseDelay = 70;
   const summaryStartDelay = detailBaseDelay + 50;
-  const detailStartDelay = summaryStartDelay + SUMMARY_SCRAMBLE_DURATION + SUMMARY_REVEAL_DURATION;
+  const detailStartDelay = summaryStartDelay + SUMMARY_REVEAL_DURATION;
   const embedDelay = Math.min(
     detailStartDelay + 180 + ((useStructuredDetails ? highlightItems.length + 2 : details.length) * 45),
     1400,
   );
 
   useEffect(() => {
-    if (summaryIntervalRef.current !== null) {
-      window.clearInterval(summaryIntervalRef.current);
-      summaryIntervalRef.current = null;
-    }
     if (highlightsTimerRef.current !== null) {
       window.clearTimeout(highlightsTimerRef.current);
       highlightsTimerRef.current = null;
@@ -109,8 +100,6 @@ const WorkBox: React.FC<WorkBoxProps> = ({
     }
 
     if (!showMore) {
-      setDisplaySummaryText(summaryPlainText);
-      setIsSummaryResolved(true);
       setShowHighlights(false);
       setTypedHighlightsText("");
       return;
@@ -118,14 +107,11 @@ const WorkBox: React.FC<WorkBoxProps> = ({
 
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (mediaQuery.matches) {
-      setDisplaySummaryText(summaryPlainText);
-      setIsSummaryResolved(true);
       setTypedHighlightsText(highlightTerminalText);
       setShowHighlights(true);
       return;
     }
 
-    setIsSummaryResolved(false);
     setShowHighlights(false);
     setTypedHighlightsText("");
     if (useStructuredDetails) {
@@ -135,43 +121,8 @@ const WorkBox: React.FC<WorkBoxProps> = ({
         highlightsTimerRef.current = null;
       }, summaryStartDelay);
     }
-    let revealProgress = 0;
-    const revealStep = Math.max(summaryPlainText.replace(/\s/g, "").length / 22, 2);
-
-    summaryIntervalRef.current = window.setInterval(() => {
-      revealProgress += revealStep;
-      const lockedCount = Math.floor(revealProgress);
-
-      const scrambledText = summaryPlainText
-        .split("")
-        .map((char, index) => {
-          if (char === " ") {
-            return " ";
-          }
-          if (index < lockedCount) {
-            return summaryPlainText[index];
-          }
-          return SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
-        })
-        .join("");
-
-      setDisplaySummaryText(scrambledText);
-
-      if (lockedCount >= summaryPlainText.length) {
-        if (summaryIntervalRef.current !== null) {
-          window.clearInterval(summaryIntervalRef.current);
-          summaryIntervalRef.current = null;
-        }
-        setDisplaySummaryText(summaryPlainText);
-        setIsSummaryResolved(true);
-      }
-    }, 40);
 
     return () => {
-      if (summaryIntervalRef.current !== null) {
-        window.clearInterval(summaryIntervalRef.current);
-        summaryIntervalRef.current = null;
-      }
       if (highlightsTimerRef.current !== null) {
         window.clearTimeout(highlightsTimerRef.current);
         highlightsTimerRef.current = null;
@@ -181,7 +132,20 @@ const WorkBox: React.FC<WorkBoxProps> = ({
         highlightTypeTimerRef.current = null;
       }
     };
-  }, [highlightTerminalText, showMore, summaryPlainText, useStructuredDetails]);
+  }, [highlightTerminalText, showMore, useStructuredDetails]);
+
+  useEffect(() => {
+    const handleCollapse = () => {
+      setShowMore(false);
+      setIsEmbedActivated(false);
+    };
+
+    window.addEventListener("collapse-experiences", handleCollapse);
+
+    return () => {
+      window.removeEventListener("collapse-experiences", handleCollapse);
+    };
+  }, []);
 
   useEffect(() => {
     if (highlightTypeTimerRef.current !== null) {
@@ -350,14 +314,7 @@ const WorkBox: React.FC<WorkBoxProps> = ({
                           style={getDelayStyle(summaryStartDelay)}
                         >
                           <p className="work-detail-copy work-detail-copy--summary">
-                            {isSummaryResolved ? (
-                              <span dangerouslySetInnerHTML={{ __html: summaryText }}></span>
-                            ) : (
-                              <span className="work-detail-copy__scramble-shell">
-                                <span className="work-detail-copy__measure" dangerouslySetInnerHTML={{ __html: summaryText }}></span>
-                                <span className="work-detail-copy__scramble">{displaySummaryText}</span>
-                              </span>
-                            )}
+                            <span dangerouslySetInnerHTML={{ __html: summaryText }}></span>
                           </p>
                         </div>
                         {showHighlights ? (
@@ -428,19 +385,12 @@ const WorkBox: React.FC<WorkBoxProps> = ({
                               marginLeft: /^\s{3}/.test(item) ? "20px" : "0px",
                               ...getDelayStyle(Math.min((index === 0 ? summaryStartDelay : detailStartDelay + (index * 45)), 1400)),
                             }}
-                          >
-                            {index === 0 ? (
-                              <p className="work-detail-copy work-detail-copy--summary">
-                                {isSummaryResolved ? (
+                            >
+                              {index === 0 ? (
+                                <p className="work-detail-copy work-detail-copy--summary">
                                   <span dangerouslySetInnerHTML={{ __html: item }}></span>
-                                ) : (
-                                  <span className="work-detail-copy__scramble-shell">
-                                    <span className="work-detail-copy__measure" dangerouslySetInnerHTML={{ __html: item }}></span>
-                                    <span className="work-detail-copy__scramble">{displaySummaryText}</span>
-                                  </span>
-                                )}
-                              </p>
-                            ) : (
+                                </p>
+                              ) : (
                               <p className="work-detail-copy" dangerouslySetInnerHTML={{ __html: item }}></p>
                             )}
                           </li>
