@@ -36,8 +36,6 @@ const getDelayStyle = (delay: number): React.CSSProperties => ({
   transitionDelay: `${delay}ms`,
 });
 
-const stripHtml = (value: string): string => value.replace(/<[^>]+>/g, "");
-
 const WorkBox: React.FC<WorkBoxProps> = ({
   title,
   logo,
@@ -72,7 +70,6 @@ const WorkBox: React.FC<WorkBoxProps> = ({
     ...logoStyleRest
   } = logoStyle ?? {};
   const summaryText = summary ?? details[0] ?? "";
-  const summaryPlainText = stripHtml(summaryText);
   const highlightItems = highlights ?? [];
   const highlightTerminalText = highlightItems
     .map((item, index) => `${(index + 1).toString().padStart(2, "0")} ${item}`)
@@ -88,6 +85,10 @@ const WorkBox: React.FC<WorkBoxProps> = ({
     detailStartDelay + 180 + ((useStructuredDetails ? highlightItems.length + 2 : details.length) * 45),
     1400,
   );
+  const closeDossier = () => {
+    setShowMore(false);
+    setIsEmbedActivated(false);
+  };
 
   useEffect(() => {
     if (highlightsTimerRef.current !== null) {
@@ -135,15 +136,10 @@ const WorkBox: React.FC<WorkBoxProps> = ({
   }, [highlightTerminalText, showMore, useStructuredDetails]);
 
   useEffect(() => {
-    const handleCollapse = () => {
-      setShowMore(false);
-      setIsEmbedActivated(false);
-    };
-
-    window.addEventListener("collapse-experiences", handleCollapse);
+    window.addEventListener("collapse-experiences", closeDossier);
 
     return () => {
-      window.removeEventListener("collapse-experiences", handleCollapse);
+      window.removeEventListener("collapse-experiences", closeDossier);
     };
   }, []);
 
@@ -213,28 +209,30 @@ const WorkBox: React.FC<WorkBoxProps> = ({
     setIsEmbedActivated(true);
   };
 
+  const handleCardClick = (): void => {
+    if (!showMore) {
+      handleToggle();
+    }
+  };
+
   return (
     <article className="col-md-12 experience-entry">
       <div
         className={`work-box ${showMore ? "is-expanded" : "is-collapsed"}`}
-        onClick={() => {
-          if (!showMore) {
-            handleToggle();
-          }
-        }}
+        onClick={handleCardClick}
       >
         <SurfaceCard className="work-dossier">
           <div className="work-dossier__header" onClick={handleHeaderClick}>
             <div className="work-dossier__identity">
               <div className="work-dossier__eyebrow">Classified Dossier</div>
               <h2 className="work-dossier__title">{title}</h2>
-                <div className="work-dossier__status-group work-dossier__status-group--inline">
-                  <span className={`work-status-chip ${showMore ? "work-status-chip--open" : "work-status-chip--locked"}`}>
-                    {showMore ? "Decrypted" : "Restricted"}
-                  </span>
-                  <span className="work-status-chip work-status-chip--role">{role}</span>
-                  <span className="work-date">{date}</span>
-                </div>
+              <div className="work-dossier__status-group work-dossier__status-group--inline">
+                <span className={`work-status-chip ${showMore ? "work-status-chip--open" : "work-status-chip--locked"}`}>
+                  {showMore ? "Decrypted" : "Restricted"}
+                </span>
+                <span className="work-status-chip work-status-chip--role">{role}</span>
+                <span className="work-date">{date}</span>
+              </div>
             </div>
             <button
               type="button"
@@ -271,26 +269,26 @@ const WorkBox: React.FC<WorkBoxProps> = ({
                       }}
                     />
                   </div>
-                    <div className="work-dossier__sidebar-meta">
-                      <div className="work-meta-row work-meta-row--sidebar">
-                        <span className="work-meta-row__label">Period</span>
-                        <span className="work-meta-row__value">{date}</span>
-                      </div>
-                      <div className="work-meta-row work-meta-row--sidebar">
-                        <span className="work-meta-row__label">Role</span>
-                        <span className="work-meta-row__value">{role}</span>
-                      </div>
-                      <div className="work-meta-row work-meta-row--sidebar">
-                        <span className="work-meta-row__label">Skills</span>
-                        <span className="work-meta-row__value">{skills}</span>
-                      </div>
-                      <div className="work-meta-row work-meta-row--sidebar">
-                        <span className="work-meta-row__label">Domain</span>
-                        <span className="work-meta-row__value">{categories}</span>
-                      </div>
+                  <div className="work-dossier__sidebar-meta">
+                    <div className="work-meta-row work-meta-row--sidebar">
+                      <span className="work-meta-row__label">Period</span>
+                      <span className="work-meta-row__value">{date}</span>
+                    </div>
+                    <div className="work-meta-row work-meta-row--sidebar">
+                      <span className="work-meta-row__label">Role</span>
+                      <span className="work-meta-row__value">{role}</span>
+                    </div>
+                    <div className="work-meta-row work-meta-row--sidebar">
+                      <span className="work-meta-row__label">Skills</span>
+                      <span className="work-meta-row__value">{skills}</span>
+                    </div>
+                    <div className="work-meta-row work-meta-row--sidebar">
+                      <span className="work-meta-row__label">Domain</span>
+                      <span className="work-meta-row__value">{categories}</span>
                     </div>
                   </div>
                 </div>
+              </div>
               <div className="col-sm-8 work-dossier__main-col">
                 <div
                   className="work-text"
@@ -300,7 +298,7 @@ const WorkBox: React.FC<WorkBoxProps> = ({
                     }
                   }}
                 >
-                  <div className="extra-text">
+                  <div className="work-dossier__details">
                     <div className={`work-dossier__stamp${showMore ? " is-visible" : ""}`}>Access Granted</div>
 
                     <div className="work-decrypt-header work-detail-item" style={getDelayStyle(detailBaseDelay)}>
@@ -385,12 +383,12 @@ const WorkBox: React.FC<WorkBoxProps> = ({
                               marginLeft: /^\s{3}/.test(item) ? "20px" : "0px",
                               ...getDelayStyle(Math.min((index === 0 ? summaryStartDelay : detailStartDelay + (index * 45)), 1400)),
                             }}
-                            >
-                              {index === 0 ? (
-                                <p className="work-detail-copy work-detail-copy--summary">
-                                  <span dangerouslySetInnerHTML={{ __html: item }}></span>
-                                </p>
-                              ) : (
+                          >
+                            {index === 0 ? (
+                              <p className="work-detail-copy work-detail-copy--summary">
+                                <span dangerouslySetInnerHTML={{ __html: item }}></span>
+                              </p>
+                            ) : (
                               <p className="work-detail-copy" dangerouslySetInnerHTML={{ __html: item }}></p>
                             )}
                           </li>

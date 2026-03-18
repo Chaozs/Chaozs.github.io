@@ -1966,14 +1966,7 @@ PORTFOLIO
   transition: transform 500ms ease;
 }
 
-.work-dossier__lead-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.extra-text {
+.work-dossier__details {
   position: relative;
   overflow: hidden;
   max-height: 0;
@@ -1984,7 +1977,7 @@ PORTFOLIO
   margin-top: 0;
 }
 
-.work-box.is-expanded .extra-text {
+.work-box.is-expanded .work-dossier__details {
   max-height: 2600px;
   opacity: 1;
   transform: translateY(0);
@@ -2050,10 +2043,6 @@ PORTFOLIO
   margin: 0;
 }
 
-.work-detail-list--highlights {
-  margin-top: 0.15rem;
-}
-
 .work-detail-item {
   opacity: 0;
   transform: translateY(12px);
@@ -2085,16 +2074,6 @@ PORTFOLIO
     radial-gradient(circle at top left, color-mix(in srgb, var(--accent) 9%, transparent), transparent 58%);
   line-height: 1.8;
   overflow: hidden;
-}
-
-.work-detail-highlights {
-  margin: 0.5rem 0 0.7rem;
-  color: var(--accent);
-  font-family: var(--font-mono);
-  font-weight: 700;
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
-  font-size: 0.76rem;
 }
 
 .work-highlights-terminal {
@@ -2183,28 +2162,6 @@ PORTFOLIO
   vertical-align: -0.14em;
   background: var(--accent);
   animation: terminal-caret-blink 0.9s steps(1) infinite;
-}
-
-.work-detail-item--highlight {
-  position: relative;
-  padding-left: 1.15rem;
-}
-
-.work-detail-item--highlight::before {
-  content: "";
-  position: absolute;
-  left: 0.1rem;
-  top: 0.72rem;
-  width: 0.42rem;
-  height: 0.42rem;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 14%, transparent);
-}
-
-.work-detail-item--highlight .work-detail-copy {
-  display: block;
-  line-height: 1.7;
 }
 
 .work-box.is-expanded .work-detail-copy {
@@ -4282,7 +4239,7 @@ BUTTON
   .navbar-b.navbar-reduce .nav-link:after,
   .work-box,
   .work-dossier__media img,
-  .extra-text,
+  .work-dossier__details,
   .work-detail-item,
   .work-detail-copy,
   .work-dossier__stamp,
@@ -4355,7 +4312,6 @@ BUTTON
 [data-browser="firefox"] .intro-telemetry,
 [data-browser="firefox"] .work-box,
 [data-browser="firefox"] .about-dossier__seal-card,
-[data-browser="firefox"] .work-meta-grid__card,
 [data-browser="firefox"] .contact-dossier__card,
 [data-browser="firefox"] .emulator-start-overlay,
 [data-browser="firefox"] .resume-link {
