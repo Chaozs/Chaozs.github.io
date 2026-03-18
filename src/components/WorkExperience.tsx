@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import ImageWithSkeleton from "./ImageWithSkeleton";
 import SurfaceCard from "./shared/SurfaceCard";
 
@@ -11,7 +11,6 @@ type WorkBoxProps = {
   details: string[];
   logoStyle?: React.CSSProperties;
   iframeUrl?: string;
-  surfaceTone?: "base" | "alt";
 };
 
 const resolveDimension = (value?: React.CSSProperties["width"]): number | undefined => {
@@ -25,6 +24,22 @@ const resolveDimension = (value?: React.CSSProperties["width"]): number | undefi
   return undefined;
 };
 
+const getDossierCode = (title: string, date: string): string => {
+  const initials = title
+    .split(/\s+/)
+    .map((word) => word[0])
+    .join("")
+    .slice(0, 4)
+    .toUpperCase();
+  const years = date.match(/\d{4}/g) ?? [];
+  const compactYears = years
+    .slice(0, 2)
+    .map((year) => year.slice(-2))
+    .join("");
+
+  return `${initials || "FILE"}-${compactYears || "XX"}`;
+};
+
 const WorkBox: React.FC<WorkBoxProps> = ({
   title,
   logo,
@@ -34,69 +49,142 @@ const WorkBox: React.FC<WorkBoxProps> = ({
   details,
   logoStyle,
   iframeUrl,
-  surfaceTone = "base",
 }) => {
   const [showMore, setShowMore] = useState<boolean>(false);
+  const [isEmbedActivated, setIsEmbedActivated] = useState<boolean>(false);
   const logoWidth = resolveDimension(logoStyle?.width) ?? 200;
   const logoHeight = resolveDimension(logoStyle?.height) ?? 120;
   const minLogoWidth = Math.min(140, Math.round(logoWidth * 0.6));
   const responsiveLogoWidth = `clamp(${minLogoWidth}px, 28vw, ${logoWidth}px)`;
   const logoAspectRatio = `${logoWidth} / ${logoHeight}`;
-  const { width: _logoWidth, height: _logoHeight, ...logoStyleRest } = logoStyle ?? {};
-  const cardBackground = surfaceTone === "alt" ? "var(--surface-3)" : "var(--surface-2)";
+  const {
+    width: _logoWidth,
+    height: _logoHeight,
+    marginLeft: _logoMarginLeft,
+    marginRight: _logoMarginRight,
+    marginTop: _logoMarginTop,
+    marginBottom: _logoMarginBottom,
+    ...logoStyleRest
+  } = logoStyle ?? {};
+  const dossierCode = useMemo(() => getDossierCode(title, date), [title, date]);
 
-  const handleIconClick = (): void => {
-    setShowMore((prevState) => !prevState);
+  const metadataRows = [
+    { label: "File", value: dossierCode },
+    { label: "Period", value: date },
+    { label: "Role", value: role },
+    { label: "Stack", value: skills },
+  ];
+
+  const handleToggle = (): void => {
+    setShowMore((prevState) => {
+      const nextState = !prevState;
+      if (!nextState) {
+        setIsEmbedActivated(false);
+      }
+      return nextState;
+    });
   };
 
   const handleToggleClick = (event: React.MouseEvent<HTMLElement>): void => {
     event.stopPropagation();
-    handleIconClick();
+    handleToggle();
   };
 
-  const handleContainerClick = (): void => {
-    handleIconClick();
+  const handleEmbedLaunch = (event: React.MouseEvent<HTMLButtonElement>): void => {
+    event.stopPropagation();
+    setIsEmbedActivated(true);
   };
 
   return (
-    <div className="col-md-12" onClick={handleContainerClick} style={{ cursor: "pointer", marginBottom: "24px" }}>
-        <div className={`work-box ${showMore ? "is-expanded" : "is-collapsed"}`}>
-        <SurfaceCard className="work-content" background={cardBackground} style={{ marginTop: "15px" }}>
-            <div className="row">
-            <div className="col-sm-10">
-                <div style={{ display: "flex", justifyContent: "left", marginLeft: "15px" }}>
+    <article className="col-md-12 experience-entry">
+      <div
+        className={`work-box ${showMore ? "is-expanded" : "is-collapsed"}`}
+        onClick={handleToggle}
+      >
+        <SurfaceCard className="work-dossier">
+          <div className="work-dossier__header">
+            <div className="work-dossier__identity">
+              <div className="work-dossier__eyebrow">Classified Dossier</div>
+              <h2 className="work-dossier__title">{title}</h2>
+              <div className="work-dossier__status-group work-dossier__status-group--inline">
+                <span className={`work-status-chip ${showMore ? "work-status-chip--open" : "work-status-chip--locked"}`}>
+                  {showMore ? "Decrypted" : "Restricted"}
+                </span>
+                <span className="work-status-chip work-status-chip--code">{dossierCode}</span>
+              </div>
+            </div>
+            <button
+              type="button"
+              className="work-dossier__toggle"
+              onClick={handleToggleClick}
+              aria-expanded={showMore}
+              aria-label={showMore ? `Collapse ${title} dossier` : `Expand ${title} dossier`}
+            >
+              <span className="work-dossier__toggle-label">{showMore ? "Seal File" : "Open File"}</span>
+              <span className={`work-dossier__toggle-icon ${showMore ? "is-open" : ""}`} aria-hidden="true">
+                <span className="ion-ios-arrow-down"></span>
+              </span>
+            </button>
+          </div>
+
+          <div className="row work-dossier__body">
+            <div className="col-sm-4">
+              <div className="work-dossier__media" onClick={handleToggleClick}>
                 <ImageWithSkeleton
-                    src={logo}
-                    alt="logo"
-                    onClick={handleToggleClick}
-                    style={{
-                        width: responsiveLogoWidth,
-                        maxWidth: "100%",
-                        aspectRatio: logoAspectRatio,
-                    }}
-                    imgStyle={{
-                        marginBottom: "20px",
-                        borderRadius: "var(--radius-md)",
-                        marginLeft: "10px",
-                        ...logoStyleRest,
-                    }}
-                />
-                </div>
-                <div
-                  className="work-text"
-                  onClick={(event) => {
-                    if (showMore) {
-                      event.stopPropagation();
-                    }
+                  src={logo}
+                  alt={`${title} logo`}
+                  style={{
+                    width: responsiveLogoWidth,
+                    maxWidth: "100%",
+                    aspectRatio: logoAspectRatio,
                   }}
-                >
-                  {/* <h2 className="w-title" style={{ fontSize: "1.5rem", color: "#E4E4E4" }}>{title}</h2> */}
-                  <h2 className="w-title w-date" style={{ color: "var(--text-muted)" }}>{date}</h2>
-                  <h2 className="w-title w-role" style={{ color: "var(--text-primary)" }}>{role}</h2>
-                  <div className="w-more" style={{ marginLeft: "1rem", color: "var(--text-muted)" }}>
+                  imgStyle={{
+                    marginBottom: "0",
+                    borderRadius: "var(--radius-md)",
+                    marginLeft: "0",
+                    ...logoStyleRest,
+                  }}
+                />
+              </div>
+            </div>
+            <div className="col-sm-8">
+              <div
+                className="work-text"
+                onClick={(event) => {
+                  if (showMore) {
+                    event.stopPropagation();
+                  }
+                }}
+              >
+                <div className="work-dossier__lead-row">
+                  <span className="work-date">{date}</span>
+                  <span className="work-dossier__role">{role}</span>
+                </div>
+                <div className="work-dossier__skills">
                   <span>{skills}</span>
+                </div>
+
+                <div className="extra-text">
+                  <div className={`work-dossier__stamp${showMore ? " is-visible" : ""}`}>Access Granted</div>
+
+                  <div className="work-meta-grid">
+                    {metadataRows.map((row, index) => (
+                      <div
+                        key={row.label}
+                        className="work-meta-row work-detail-item"
+                        style={{ transitionDelay: `${Math.min(index * 55, 180)}ms` }}
+                      >
+                        <span className="work-meta-row__label">{row.label}</span>
+                        <span className="work-meta-row__value">{row.value}</span>
+                      </div>
+                    ))}
                   </div>
-                  <div className="extra-text" style={{ color: "var(--text-primary)" }}>
+
+                  <div className="work-decrypt-header work-detail-item" style={{ transitionDelay: `${Math.min(metadataRows.length * 55, 220)}ms` }}>
+                    Decrypted Notes
+                  </div>
+
+                  <ul className="work-detail-list">
                     {details.map((item: string, index: number) => (
                       <li
                         key={index}
@@ -104,15 +192,18 @@ const WorkBox: React.FC<WorkBoxProps> = ({
                         style={{
                           marginBottom: "0.5rem",
                           marginLeft: /^\s{3}/.test(item) ? "20px" : "0px",
-                          transitionDelay: `${Math.min(index * 45, 180)}ms`,
+                          transitionDelay: `${Math.min((index + metadataRows.length + 1) * 45, 420)}ms`,
                         }}
                       >
-                        <p dangerouslySetInnerHTML={{ __html: item }} style={{ display: "inline" }}></p>
+                        <p className="work-detail-copy" dangerouslySetInnerHTML={{ __html: item }}></p>
                       </li>
                     ))}
-                    {iframeUrl ? (
-                      <div className="work-embed work-detail-item" style={{ transitionDelay: `${Math.min(details.length * 45, 220)}ms` }}>
-                        <div className="work-embed-label">Iframe of skillfite.io</div>
+                  </ul>
+
+                  {showMore && iframeUrl ? (
+                    <div className="work-embed work-detail-item" style={{ transitionDelay: `${Math.min((details.length + metadataRows.length + 2) * 45, 520)}ms` }}>
+                      <div className="work-embed-label">Field Footage: skillfite.io</div>
+                      {isEmbedActivated ? (
                         <iframe
                           src={iframeUrl}
                           title={`${title} demo`}
@@ -120,20 +211,26 @@ const WorkBox: React.FC<WorkBoxProps> = ({
                           referrerPolicy="no-referrer-when-downgrade"
                           sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
                         ></iframe>
-                      </div>
-                    ) : null}
-                  </div>
+                      ) : (
+                        <button
+                          type="button"
+                          className="work-embed__launcher"
+                          onClick={handleEmbedLaunch}
+                          aria-label={`Load ${title} live demo`}
+                        >
+                          <span className="work-embed__launcher-title">Launch Field Footage</span>
+                          <span className="work-embed__launcher-copy">Click to load skillfite.io inside the dossier.</span>
+                        </button>
+                      )}
+                    </div>
+                  ) : null}
                 </div>
+              </div>
             </div>
-            <div className="col-sm-2">
-                <div className="w-like" onClick={handleToggleClick}>
-                {!showMore ? <span className="ion-ios-arrow-down"></span> : <span className="ion-ios-arrow-up"></span>}
-                </div>
-            </div>
-            </div>
+          </div>
         </SurfaceCard>
-        </div>
-    </div>
+      </div>
+    </article>
   );
 };
 

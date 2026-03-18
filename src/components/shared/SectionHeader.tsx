@@ -1,28 +1,38 @@
 import React from "react";
 
 type SectionHeaderProps = {
-  title: string;
-  align?: "center" | "left";
+  command: string;
+  className?: string;
   padding?: string;
-  marginTop?: string;
 };
 
-const SectionHeader: React.FC<SectionHeaderProps> = ({ title, align = "center", padding, marginTop }) => {
-  const titleStyle: React.CSSProperties = { color: "var(--text-heading)" };
-  if (marginTop) {
-    titleStyle.marginTop = marginTop;
-  }
-
+const SectionHeader: React.FC<SectionHeaderProps> = ({ command, className, padding }) => {
   return (
-    <div
-      className={`title-box${align === "center" ? " text-center" : ""}`}
+    <header
+      className={`terminal-section-header${className ? ` ${className}` : ""}`}
       style={padding ? { padding } : undefined}
     >
-      <h3 className="title-a" style={titleStyle}>
-        {title}
-      </h3>
-      <div className="line-mf"></div>
-    </div>
+      <div className="terminal-section-header__command">
+        <span className="terminal-section-header__prompt" aria-hidden="true">
+          &gt;
+        </span>
+        <span className="terminal-section-header__input-shell">
+          <span className="terminal-section-header__measure" aria-hidden="true">
+            {command}
+          </span>
+          <input
+            className="terminal-section-header__input"
+            type="text"
+            value={command}
+            readOnly
+            tabIndex={-1}
+            spellCheck={false}
+            aria-label={command}
+          />
+        </span>
+        <span className="terminal-section-header__caret" aria-hidden="true"></span>
+      </div>
+    </header>
   );
 };
 

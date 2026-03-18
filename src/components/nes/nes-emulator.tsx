@@ -311,13 +311,13 @@ const NesEmulator: React.FC<NesEmulatorProps> = ({ activePresetId }) => {
 
   const statusText = (() => {
     if (status === "loading") {
-      return "Loading ROM...";
+      return "Loading mission package...";
     }
     if (status === "error") {
       return errorMessage ?? "Something went wrong.";
     }
     if (!hasClickedStart) {
-      return "Click to start";
+      return "Click to deploy";
     }
     return "";
   })();
@@ -337,7 +337,7 @@ const NesEmulator: React.FC<NesEmulatorProps> = ({ activePresetId }) => {
       >
         <canvas className="emulator-nes-canvas" ref={canvasRef}></canvas>
       </EmulatorShell>
-      <p className="emulator-hint">Tip: Click the game to focus input. Controls live in the top-right overlay.</p>
+      <p className="emulator-hint">Tip: Click the mission window to focus input. Controls live in the top-right overlay.</p>
     </>
   );
 };

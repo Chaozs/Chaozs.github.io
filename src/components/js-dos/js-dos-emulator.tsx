@@ -115,14 +115,14 @@ const JSDosEmulator: React.FC<JSDosEmulatorProps> = ({ activeGame }) => {
   const statusText = isRunning
     ? ""
     : (hasClickedStart
-        ? (isReady ? `Loading ${activeGameLabel}...` : "Loading emulator...")
-        : "Click to start");
+        ? (isReady ? `Deploying ${activeGameLabel}...` : "Initializing mission console...")
+        : "Click to deploy");
 
   return (
     <>
       {activeGame === "doom" ? (
-        <p className="lead" style={{ color: "var(--text-primary)", textAlign: "center", marginBottom: "16px" }}>
-          Yes, this website CAN run {activeGameLabel}!
+        <p className="emulator-lead">
+          Mission briefing: this site can run {activeGameLabel}.
         </p>
       ) : null}
       <EmulatorShell
@@ -151,10 +151,10 @@ const JSDosEmulator: React.FC<JSDosEmulatorProps> = ({ activeGame }) => {
       </EmulatorShell>
       {isReady && activeGame === "doom" ? (
         <p className="emulator-instructions">
-          When the main menu loads, press <span className="emulator-key">Enter</span> to start the game.
+          When the main menu loads, press <span className="emulator-key">Enter</span> to begin the mission.
         </p>
       ) : null}
-      <p className="emulator-hint">Tip: Click the game to focus input. Controls live in the top-right overlay.</p>
+      <p className="emulator-hint">Tip: Click the mission window to focus input. Controls live in the top-right overlay.</p>
     </>
   );
 };

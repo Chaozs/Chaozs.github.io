@@ -53,7 +53,7 @@ const EmulatorShell: React.FC<EmulatorShellProps> = ({
         />
       ) : null}
     </div>
-    {showMobileNote ? <p className="emulator-mobile-note">Controls only work on desktop.</p> : null}
+    {showMobileNote ? <p className="emulator-mobile-note">Mission controls only work on desktop.</p> : null}
   </>
 );
 

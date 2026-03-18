@@ -24,8 +24,6 @@ const ImageWithSkeleton: React.FC<ImageWithSkeletonProps> = ({
   onClick,
 }) => {
   const [loaded, setLoaded] = useState(false);
-  const skeletonWidth = width ?? 200;
-  const skeletonHeight = height ?? 120;
 
   return (
     <div

@@ -18,11 +18,10 @@ import 'bootstrap/dist/js/bootstrap.min.js';
 import Navbar from './components/navbar';
 import MatrixBackground from './components/matrix-background';
 import Intro from './components/intro';
-import About from './components/about';
-import Portfolio from './components/portfolio';
+import Profile from './components/profile';
+import Experiences from './components/experiences';
 import EmulatorSection from './components/emulator/EmulatorSection';
 import Contact from './components/contact';
-import BackToTop from './components/back-top';
 import Preloader from './components/preloader';
 import LazySection from './components/LazySection';
 
@@ -34,15 +33,14 @@ if (root) {
             <div className="app-content">
                 <Navbar />
                 <Intro />
-                <LazySection minHeight={700}>
-                    <About />
+                <LazySection minHeight={700} revealOnEvent="reveal-profile">
+                    <Profile />
                 </LazySection>
-                <LazySection minHeight={900} revealOnEvent="reveal-portfolio">
-                    <Portfolio />
+                <LazySection minHeight={900} revealOnEvent="reveal-experiences">
+                    <Experiences />
                 </LazySection>
                 <EmulatorSection />
                 <Contact />
-                <BackToTop />
                 <Preloader />
             </div>
         </React.Fragment>

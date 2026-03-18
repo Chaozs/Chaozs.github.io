@@ -29,13 +29,17 @@ const EmulatorSection: React.FC = () => {
   const [activeGame, setActiveGame] = useState<CombinedGameId>("doom");
 
   return (
-    <SectionShell id="emulator" className="emulator-mf sect-pt4 route">
+    <SectionShell id="emulator" className="sect-pt4">
       <div className="row">
         <div className="col-sm-12">
-          <SectionHeader title="Play Retro Classics" marginTop="25px" />
+          <SectionHeader command="initialize mission select" />
+          <p className="emulator-briefing">
+            Select a target from the roster and deploy into the sim.
+          </p>
         </div>
       </div>
       <SurfaceCard padding="16px">
+        <div className="emulator-roster-label">Mission Roster</div>
         <div className="emulator-game-toggle">
           {GAME_OPTIONS.map((game) => (
             <button

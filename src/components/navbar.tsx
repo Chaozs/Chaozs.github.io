@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import resumePdf from "../ThienTrandinhResume.pdf";
-import * as bootstrap from 'bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import SystemStatusBar from "./SystemStatusBar";
 
 const getInitialTheme = (): "light" | "dark" => {
   if (typeof document === "undefined") {
@@ -10,6 +8,12 @@ const getInitialTheme = (): "light" | "dark" => {
   }
   const attrTheme = document.documentElement.getAttribute("data-theme");
   return attrTheme === "light" || attrTheme === "dark" ? attrTheme : "dark";
+};
+
+const revealEventsByTarget: Record<string, string[]> = {
+  about: ["reveal-profile"],
+  work: ["reveal-experiences"],
+  emulator: ["reveal-experiences"],
 };
 
 const Navbar: React.FC = () => {
@@ -24,28 +28,10 @@ const Navbar: React.FC = () => {
     setTheme(initialTheme);
     document.documentElement.setAttribute("data-theme", initialTheme);
 
-    const nav = document.querySelector<HTMLElement>("nav");
+    const nav = document.getElementById("mainNav");
     if (!nav) {
       return;
     }
-    // ScrollSpy initialization
-    const scrollSpy = new bootstrap.ScrollSpy(document.body, {
-      target: '#mainNav',
-      offset: nav.offsetHeight,
-    });
-
-    const collapseHandler = () => {
-      const navbarCollapse = document.querySelector<HTMLElement>(".navbar-collapse");
-      if (navbarCollapse) {
-        const collapseInstance = bootstrap.Collapse.getInstance(navbarCollapse) || new bootstrap.Collapse(navbarCollapse, { toggle: false });
-        collapseInstance.hide();
-      }
-    };
-
-    const scrollLinks = Array.from(document.querySelectorAll(".js-scroll"));
-    scrollLinks.forEach((link) => {
-      link.addEventListener("click", collapseHandler);
-    });
 
     const reduceHandler = () => {
       const navbar = document.querySelector<HTMLElement>(".navbar-expand-md");
@@ -73,6 +59,7 @@ const Navbar: React.FC = () => {
         return;
       }
       const targetId = targetAttribute.slice(1);
+      const revealEvents = revealEventsByTarget[targetId] ?? [];
       const scrollToTarget = () => {
         const target = document.getElementById(targetId);
         if (!target) {
@@ -85,13 +72,22 @@ const Navbar: React.FC = () => {
         return true;
       };
 
-      if (targetId === "work" || targetId === "emulator") {
-        window.dispatchEvent(new Event("reveal-portfolio"));
+      const attemptScrollToTarget = (remainingAttempts = 4) => {
+        if (scrollToTarget() || remainingAttempts <= 0) {
+          return;
+        }
+        window.setTimeout(() => {
+          attemptScrollToTarget(remainingAttempts - 1);
+        }, 150);
+      };
+
+      if (revealEvents.length > 0) {
+        revealEvents.forEach((eventName) => {
+          window.dispatchEvent(new Event(eventName));
+        });
         requestAnimationFrame(() => {
           requestAnimationFrame(() => {
-            if (!scrollToTarget()) {
-              window.setTimeout(scrollToTarget, 200);
-            }
+            attemptScrollToTarget();
           });
         });
         return;
@@ -105,10 +101,6 @@ const Navbar: React.FC = () => {
     });
 
     return () => {
-      scrollSpy.dispose();
-      scrollLinks.forEach((link) => {
-        link.removeEventListener("click", collapseHandler);
-      });
       smoothLinks.forEach((link) => {
         link.removeEventListener("click", smoothHandler);
       });
@@ -131,61 +123,32 @@ const Navbar: React.FC = () => {
       id="mainNav"
       style={{ borderRadius: "var(--radius-md)" }}
     >
-      <div className="container">
-        <div className="d-flex align-items-center theme-toggle-wrap">
+      <div className="container-fluid navbar-shell">
+        <div className="navbar-utility-spacer" aria-hidden="true"></div>
+
+        <div className="navbar-status-slot">
+          <SystemStatusBar embedded />
+        </div>
+
+        <div className="navbar-utility">
+          <a className="nav-link nav-resume-button" href={resumePdf} download>
+            <span className="nav-resume-button__icon" aria-hidden="true">
+              <i className="fa fa-download"></i>
+            </span>
+            <span className="nav-resume-button__content">
+              <span className="nav-resume-button__eyebrow">File</span>
+              <span className="nav-resume-button__label">Resume</span>
+            </span>
+          </a>
           <button
             type="button"
             className="theme-toggle"
             onClick={handleThemeToggle}
             aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+            title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
           >
-            {theme === "dark" ? "Light Mode" : "Dark Mode"}
+            <i className="fa fa-sun-o theme-toggle__icon" aria-hidden="true"></i>
           </button>
-        </div>
-        {/* <a className="navbar-brand js-scroll" href="#page-top">
-          <img
-            src={this.state.logo}
-            alt="logo"
-            style={{ maxWidth: "100px" }}
-          />
-        </a> */}
-
-        <div
-          className="navbar-collapse collapse justify-content-end"
-          id="navbarDefault"
-        >
-          <ul className="navbar-nav">
-            <li className="nav-item">
-              <a className="nav-link js-scroll active" href="#home">
-                Home
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link js-scroll" href="#about">
-                About
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link js-scroll" href="#work">
-                Work
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link js-scroll" href="#emulator">
-                Play DOOM and More!
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link js-scroll" href="#contact">
-                Contact
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link nav-resume-button" href={resumePdf} download>
-                Download Resume
-              </a>
-            </li>
-          </ul>
         </div>
       </div>
     </nav>

@@ -13,22 +13,12 @@ type SkillGridProps = {
 };
 
 const SkillGrid: React.FC<SkillGridProps> = ({ skills, title = "Skills:" }) => (
-  <SurfaceCard className="skill-mf" padding="15px" style={{ marginLeft: "-5px" }}>
+  <SurfaceCard className="skill-mf about-skills-card" padding="15px">
     <div className="skill-category">
-      <p className="title-s" style={{ color: "var(--text-muted)" }}>
+      <h3 className="title-s skill-category__title">
         {title}
-      </p>
-      <div
-        className="icons"
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(3, minmax(70px, 1fr))",
-          gap: "12px",
-          alignItems: "center",
-          justifyItems: "stretch",
-          width: "100%",
-        }}
-      >
+      </h3>
+      <div className="skill-grid">
         {skills.map((skill, index) => (
           <span key={index} className="skill-icon" data-tooltip={skill.alt}>
             <ImageWithSkeleton
