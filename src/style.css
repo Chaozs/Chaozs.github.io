@@ -30,18 +30,36 @@ GENERAL STYLING
   --accent-strong: #2a9a52;
   --accent-soft: #b8f5cd;
   --accent-contrast: #ffffff;
-  --warning-accent: #c88717;
-  --warning-surface: rgba(200, 135, 23, 0.14);
+  --action-accent: #d69024;
+  --action-accent-strong: #a96210;
+  --action-accent-soft: #f3cd7c;
+  --action-accent-contrast: #fff9ef;
+  --warning-accent: #a36853;
+  --warning-surface: rgba(163, 104, 83, 0.14);
+  --meta-chip-bg: color-mix(in srgb, var(--surface-3) 78%, transparent);
+  --meta-chip-border: color-mix(in srgb, var(--border-color) 86%, transparent);
+  --meta-chip-text: var(--text-muted);
+  --meta-card-bg:
+    linear-gradient(180deg, color-mix(in srgb, var(--surface-2) 72%, transparent), color-mix(in srgb, var(--surface-3) 82%, transparent));
+  --action-surface:
+    linear-gradient(180deg, color-mix(in srgb, var(--surface-1) 96%, transparent), color-mix(in srgb, var(--surface-2) 92%, transparent)),
+    radial-gradient(circle at left center, color-mix(in srgb, var(--action-accent) 16%, transparent), transparent 52%);
+  --action-surface-hover:
+    linear-gradient(180deg, color-mix(in srgb, var(--surface-1) 98%, transparent), color-mix(in srgb, var(--surface-2) 94%, transparent)),
+    radial-gradient(circle at left center, color-mix(in srgb, var(--action-accent) 24%, transparent), transparent 56%);
+  --action-border: color-mix(in srgb, var(--action-accent) 58%, var(--border-color));
+  --action-border-strong: color-mix(in srgb, var(--action-accent) 78%, var(--border-color));
+  --action-icon-bg: color-mix(in srgb, var(--action-accent) 22%, var(--surface-3));
   --tooltip-bg: rgba(8, 12, 16, 0.92);
   --tooltip-text: #f6f7f8;
   --tooltip-border: rgba(59, 209, 111, 0.22);
   --border-color: #2c353d;
-  --button-bg: #101713;
-  --button-border: #3bd16f;
-  --button-text: #3bd16f;
-  --button-bg-strong: #2a9a52;
-  --button-bg-hover: #1f7a3b;
-  --button-text-hover: #ffffff;
+  --button-bg: #17120a;
+  --button-border: var(--action-accent);
+  --button-text: var(--action-accent);
+  --button-bg-strong: var(--action-accent-strong);
+  --button-bg-hover: #8c4f0d;
+  --button-text-hover: var(--action-accent-contrast);
   --input-bg: #1a1f24;
   --input-text: #e6e7e9;
   --input-border: #2c353d;
@@ -87,18 +105,36 @@ html[data-theme="light"] {
   --accent-strong: #1e40af;
   --accent-soft: #dbeafe;
   --accent-contrast: #ffffff;
-  --warning-accent: #92400e;
-  --warning-surface: rgba(146, 64, 14, 0.12);
+  --action-accent: #c97716;
+  --action-accent-strong: #9a4f0f;
+  --action-accent-soft: #f3c27b;
+  --action-accent-contrast: #fffaf2;
+  --warning-accent: #9a4f39;
+  --warning-surface: rgba(154, 79, 57, 0.12);
+  --meta-chip-bg: color-mix(in srgb, var(--surface-3) 82%, transparent);
+  --meta-chip-border: color-mix(in srgb, var(--border-color) 88%, transparent);
+  --meta-chip-text: #5b6679;
+  --meta-card-bg:
+    linear-gradient(180deg, color-mix(in srgb, var(--surface-2) 84%, transparent), color-mix(in srgb, var(--surface-3) 90%, transparent));
+  --action-surface:
+    linear-gradient(180deg, color-mix(in srgb, #ffffff 94%, transparent), color-mix(in srgb, var(--surface-2) 92%, transparent)),
+    radial-gradient(circle at left center, color-mix(in srgb, var(--action-accent) 12%, transparent), transparent 56%);
+  --action-surface-hover:
+    linear-gradient(180deg, color-mix(in srgb, #ffffff 98%, transparent), color-mix(in srgb, var(--surface-2) 94%, transparent)),
+    radial-gradient(circle at left center, color-mix(in srgb, var(--action-accent) 18%, transparent), transparent 58%);
+  --action-border: color-mix(in srgb, var(--action-accent) 52%, var(--border-color));
+  --action-border-strong: color-mix(in srgb, var(--action-accent) 76%, var(--border-color));
+  --action-icon-bg: color-mix(in srgb, var(--action-accent) 14%, var(--surface-3));
   --tooltip-bg: rgba(255, 255, 255, 0.96);
   --tooltip-text: #0f172a;
   --tooltip-border: rgba(37, 99, 235, 0.24);
   --border-color: #d6deea;
-  --button-bg: #f8fbff;
-  --button-border: #2563eb;
-  --button-text: #2563eb;
-  --button-bg-strong: #2563eb;
-  --button-bg-hover: #1d4ed8;
-  --button-text-hover: #ffffff;
+  --button-bg: #fff9f1;
+  --button-border: var(--action-accent);
+  --button-text: var(--action-accent);
+  --button-bg-strong: var(--action-accent);
+  --button-bg-hover: var(--action-accent-strong);
+  --button-text-hover: var(--action-accent-contrast);
   --input-bg: #ffffff;
   --input-text: #1c2430;
   --input-border: #cfd9e6;
@@ -763,10 +799,8 @@ NAVBAR
   gap: 0.7rem;
   padding: 0.38rem 0.95rem 0.38rem 0.5rem;
   border-radius: 14px;
-  border: 1px solid color-mix(in srgb, var(--accent) 58%, var(--border-color));
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--surface-1) 94%, transparent), color-mix(in srgb, var(--surface-2) 92%, transparent)),
-    radial-gradient(circle at left center, color-mix(in srgb, var(--accent) 18%, transparent), transparent 48%);
+  border: 1px solid var(--action-border);
+  background: var(--action-surface);
   color: var(--text-heading) !important;
   white-space: nowrap;
   box-shadow: var(--shadow-s);
@@ -774,7 +808,7 @@ NAVBAR
 }
 
 .navbar-b .nav-resume-button {
-  border: 1px solid color-mix(in srgb, var(--accent) 58%, var(--border-color));
+  border: 1px solid var(--action-border);
 }
 
 .nav-resume-button:before {
@@ -789,8 +823,8 @@ NAVBAR
   width: 34px;
   height: 34px;
   border-radius: 10px;
-  background: color-mix(in srgb, var(--accent) 18%, var(--surface-3));
-  color: var(--accent);
+  background: var(--action-icon-bg);
+  color: var(--action-accent);
   font-size: 0.92rem;
   flex: 0 0 auto;
 }
@@ -824,28 +858,26 @@ NAVBAR
 .nav-resume-button:hover,
 .nav-resume-button:focus {
   transform: translateY(-2px);
-  border-color: var(--accent);
+  border-color: var(--action-border-strong);
   box-shadow: var(--focus-ring), var(--shadow-m);
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--surface-1) 98%, transparent), color-mix(in srgb, var(--surface-2) 94%, transparent)),
-    radial-gradient(circle at left center, color-mix(in srgb, var(--accent) 22%, transparent), transparent 52%);
+  background: var(--action-surface-hover);
   color: var(--text-heading) !important;
 }
 
 .nav-resume-button:hover .nav-resume-button__icon,
 .nav-resume-button:focus .nav-resume-button__icon {
-  background: var(--accent);
-  color: #fff;
+  background: var(--action-accent);
+  color: var(--action-accent-contrast);
 }
 
 .navbar-b.navbar-reduce .nav-resume-button {
   color: var(--text-heading) !important;
-  border: 1px solid color-mix(in srgb, var(--accent) 58%, var(--border-color));
+  border: 1px solid var(--action-border);
 }
 
 .navbar-b.navbar-reduce .nav-resume-button:hover,
 .navbar-b.navbar-reduce .nav-resume-button:focus {
-  border-color: var(--accent);
+  border-color: var(--action-border-strong);
   color: var(--text-heading) !important;
 }
 
@@ -1332,7 +1364,7 @@ ABOUT
 }
 
 .about-dossier__seal:focus-visible .about-dossier__seal-card {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--action-accent);
   outline-offset: 6px;
 }
 
@@ -1341,9 +1373,9 @@ ABOUT
   margin-top: 12px;
   padding: 1.6rem;
   border-radius: var(--radius-lg);
-  border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--border-color));
+  border: 1px solid color-mix(in srgb, var(--action-accent) 35%, var(--border-color));
   background: color-mix(in srgb, var(--surface-2) 92%, transparent);
-  box-shadow: var(--shadow-l), inset 0 0 0 1px rgba(59, 209, 111, 0.06);
+  box-shadow: var(--shadow-l), inset 0 0 0 1px color-mix(in srgb, var(--action-accent) 12%, transparent);
   text-align: center;
   backdrop-filter: blur(12px);
   position: relative;
@@ -1356,8 +1388,8 @@ ABOUT
 .about-dossier.is-sealed .about-dossier__seal-card:focus-visible {
   transform: translateY(-4px);
   background: color-mix(in srgb, var(--surface-hover) 92%, transparent);
-  border-color: color-mix(in srgb, var(--accent) 52%, var(--border-color));
-  box-shadow: var(--shadow-m), inset 0 0 0 1px rgba(59, 209, 111, 0.12), 0 0 28px rgba(59, 209, 111, 0.14);
+  border-color: color-mix(in srgb, var(--action-accent) 52%, var(--border-color));
+  box-shadow: var(--shadow-m), inset 0 0 0 1px color-mix(in srgb, var(--action-accent) 18%, transparent), 0 0 28px color-mix(in srgb, var(--action-accent) 18%, transparent);
 }
 
 .about-dossier__seal-card::before {
@@ -1368,8 +1400,8 @@ ABOUT
     linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0)),
     repeating-linear-gradient(
       180deg,
-      rgba(59, 209, 111, 0.035) 0px,
-      rgba(59, 209, 111, 0.035) 1px,
+      color-mix(in srgb, var(--action-accent) 18%, transparent) 0px,
+      color-mix(in srgb, var(--action-accent) 18%, transparent) 1px,
       rgba(0, 0, 0, 0) 3px,
       rgba(0, 0, 0, 0) 6px
     );
@@ -1383,7 +1415,7 @@ ABOUT
 .about-dossier.is-unlocked .about-dossier__seal-card {
   opacity: 0;
   transform: scale(1.08) translateY(-12px);
-  box-shadow: 0 0 0 1px rgba(59, 209, 111, 0), 0 0 60px rgba(59, 209, 111, 0), inset 0 0 0 1px rgba(59, 209, 111, 0);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--action-accent) 0%, transparent), 0 0 60px color-mix(in srgb, var(--action-accent) 0%, transparent), inset 0 0 0 1px color-mix(in srgb, var(--action-accent) 0%, transparent);
 }
 
 .about-dossier__lock-core {
@@ -1399,20 +1431,20 @@ ABOUT
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  border: 1px solid rgba(59, 209, 111, 0.24);
-  box-shadow: inset 0 0 0 1px rgba(59, 209, 111, 0.08);
+  border: 1px solid color-mix(in srgb, var(--action-accent) 34%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--action-accent) 14%, transparent);
 }
 
 .about-dossier__lock-ring--inner {
   inset: 14px;
   border-style: dashed;
-  border-color: rgba(59, 209, 111, 0.32);
+  border-color: color-mix(in srgb, var(--action-accent) 44%, transparent);
 }
 
 .about-dossier__lock-icon {
   position: relative;
   z-index: 1;
-  color: var(--accent);
+  color: var(--action-accent);
   font-size: 0.88rem;
   font-weight: 800;
   letter-spacing: 0.18em;
@@ -1436,9 +1468,9 @@ ABOUT
   justify-content: center;
   width: auto;
   height: auto;
-  color: color-mix(in srgb, var(--accent) 32%, white 8%);
+  color: color-mix(in srgb, var(--action-accent) 38%, white 8%);
   opacity: 0.5;
-  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--accent) 18%, transparent));
+  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--action-accent) 24%, transparent));
 }
 
 .about-dossier__lock-glyph .app-icon {
@@ -1463,7 +1495,7 @@ ABOUT
 }
 
 .about-dossier__eyebrow {
-  color: var(--accent);
+  color: var(--action-accent);
   font-size: 0.76rem;
   font-weight: 700;
   letter-spacing: 0.2em;
@@ -1508,8 +1540,8 @@ ABOUT
 }
 
 .about-dossier__chip--active {
-  color: var(--accent);
-  border-color: color-mix(in srgb, var(--accent) 55%, var(--border-color));
+  color: var(--action-accent);
+  border-color: color-mix(in srgb, var(--action-accent) 55%, var(--border-color));
 }
 
 .about-dossier__summary {
@@ -1521,7 +1553,7 @@ ABOUT
 
 .about-dossier__tap-hint {
   margin-top: 1rem;
-  color: var(--accent);
+  color: var(--action-accent);
   font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 0.14em;
@@ -1544,7 +1576,11 @@ ABOUT
   width: 24%;
   height: 100%;
   border-radius: inherit;
-  background: linear-gradient(90deg, rgba(59, 209, 111, 0.4), rgba(59, 209, 111, 1));
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--action-accent) 38%, transparent),
+    color-mix(in srgb, var(--action-accent) 92%, white 8%)
+  );
   transform: translateX(-120%);
   opacity: 0;
 }
@@ -1802,9 +1838,9 @@ PORTFOLIO
   justify-content: center;
   padding: 0.35rem 0.7rem;
   border-radius: 999px;
-  border: 1px solid var(--border-color);
-  background: color-mix(in srgb, var(--surface-3) 86%, transparent);
-  color: var(--text-muted);
+  border: 1px solid var(--meta-chip-border);
+  background: var(--meta-chip-bg);
+  color: var(--meta-chip-text);
   font-family: var(--font-mono);
   font-size: var(--type-label);
   font-weight: 700;
@@ -1829,8 +1865,8 @@ PORTFOLIO
   gap: 6px;
   padding: 4px 10px;
   border-radius: 999px;
-  border: 1px solid var(--border-color);
-  background-color: var(--surface-3);
+  border: 1px solid var(--meta-chip-border);
+  background: var(--meta-chip-bg);
   font-family: var(--font-mono);
   font-size: var(--type-label);
   letter-spacing: var(--tracking-label);
@@ -1839,11 +1875,9 @@ PORTFOLIO
 }
 
 .work-status-chip--role {
-  border-color: color-mix(in srgb, var(--accent) 22%, var(--border-color));
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--surface-2) 88%, transparent), color-mix(in srgb, var(--surface-3) 92%, transparent)),
-    radial-gradient(circle at top left, color-mix(in srgb, var(--accent) 10%, transparent), transparent 72%);
-  color: var(--text-heading);
+  border-color: color-mix(in srgb, var(--accent) 18%, var(--border-color));
+  background: color-mix(in srgb, var(--surface-2) 84%, transparent);
+  color: var(--text-primary);
   letter-spacing: 0.08em;
   text-transform: none;
 }
@@ -1852,10 +1886,10 @@ PORTFOLIO
   display: inline-flex;
   align-items: center;
   gap: 0.7rem;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--action-border);
   border-radius: 999px;
-  background: color-mix(in srgb, var(--surface-3) 84%, transparent);
-  color: var(--text-primary);
+  background: var(--action-surface);
+  color: var(--text-heading);
   padding: 0.45rem 0.85rem;
   font-family: var(--font-mono);
   font-size: 0.76rem;
@@ -1867,11 +1901,11 @@ PORTFOLIO
 
 .work-dossier__toggle:hover,
 .work-dossier__toggle:focus {
-  border-color: var(--accent);
-  background-color: color-mix(in srgb, var(--surface-hover) 92%, transparent);
-  color: var(--accent);
+  border-color: var(--action-border-strong);
+  background: var(--action-surface-hover);
+  color: var(--text-heading);
   transform: translateY(-2px);
-  box-shadow: var(--shadow-s);
+  box-shadow: var(--focus-ring), var(--shadow-m);
 }
 
 .work-dossier__toggle-icon {
@@ -1881,8 +1915,8 @@ PORTFOLIO
   width: 1.75rem;
   height: 1.75rem;
   border-radius: 10px;
-  background: color-mix(in srgb, var(--accent) 18%, var(--surface-3));
-  color: var(--accent);
+  background: var(--action-icon-bg);
+  color: var(--action-accent);
   transition: transform 220ms ease, background-color 180ms ease, color 180ms ease;
 }
 
@@ -1892,22 +1926,22 @@ PORTFOLIO
 
 .work-dossier__toggle:hover .work-dossier__toggle-icon,
 .work-dossier__toggle:focus .work-dossier__toggle-icon {
-  background: var(--accent);
-  color: #fff;
+  background: var(--action-accent);
+  color: var(--action-accent-contrast);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .work-dossier__header:hover .work-dossier__toggle {
-    border-color: var(--accent);
-    background-color: color-mix(in srgb, var(--surface-hover) 92%, transparent);
-    color: var(--accent);
+    border-color: var(--action-border-strong);
+    background: var(--action-surface-hover);
+    color: var(--text-heading);
     transform: translateY(-2px);
-    box-shadow: var(--shadow-s);
+    box-shadow: var(--focus-ring), var(--shadow-m);
   }
 
   .work-dossier__header:hover .work-dossier__toggle-icon {
-    background: var(--accent);
-    color: #fff;
+    background: var(--action-accent);
+    color: var(--action-accent-contrast);
   }
 }
 
@@ -2009,13 +2043,12 @@ PORTFOLIO
   grid-template-columns: 1fr;
   gap: 0.35rem;
   padding: 0.78rem 0.85rem;
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--surface-2) 84%, transparent), color-mix(in srgb, var(--surface-3) 92%, transparent)),
-    radial-gradient(circle at top left, color-mix(in srgb, var(--accent) 8%, transparent), transparent 70%);
+  border-color: color-mix(in srgb, var(--border-color) 82%, transparent);
+  background: var(--meta-card-bg);
 }
 
 .work-meta-row__label {
-  color: var(--accent);
+  color: color-mix(in srgb, var(--accent) 68%, var(--text-muted));
   font-family: var(--font-mono);
   font-size: var(--type-label);
   font-weight: 700;
@@ -2456,8 +2489,8 @@ PORTFOLIO
   border: 0;
   border-radius: 0;
   background:
-    linear-gradient(180deg, rgba(59, 209, 111, 0.12), rgba(6, 10, 12, 0.96)),
-    radial-gradient(circle at top, rgba(59, 209, 111, 0.18), transparent 55%);
+    linear-gradient(180deg, color-mix(in srgb, var(--action-accent) 16%, transparent), rgba(6, 10, 12, 0.96)),
+    radial-gradient(circle at top, color-mix(in srgb, var(--action-accent) 24%, transparent), transparent 55%);
   color: var(--text-primary);
   display: flex;
   flex-direction: column;
@@ -2473,14 +2506,14 @@ PORTFOLIO
 .work-embed__launcher:hover,
 .work-embed__launcher:focus-visible {
   background:
-    linear-gradient(180deg, rgba(59, 209, 111, 0.18), rgba(6, 10, 12, 0.98)),
-    radial-gradient(circle at top, rgba(59, 209, 111, 0.26), transparent 60%);
+    linear-gradient(180deg, color-mix(in srgb, var(--action-accent) 22%, transparent), rgba(6, 10, 12, 0.98)),
+    radial-gradient(circle at top, color-mix(in srgb, var(--action-accent) 32%, transparent), transparent 60%);
   transform: translateY(-2px);
   box-shadow: var(--shadow-m);
 }
 
 .work-embed__launcher:focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--action-accent);
   outline-offset: -4px;
 }
 
@@ -2714,10 +2747,8 @@ CONTACT
   height: 56px;
   padding: 0 0.8rem 0 1rem;
   border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--accent) 36%, var(--border-color));
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--surface-2) 94%, transparent), color-mix(in srgb, var(--surface-3) 90%, transparent)),
-    radial-gradient(circle at left center, color-mix(in srgb, var(--accent) 10%, transparent), transparent 52%);
+  border: 1px solid var(--action-border);
+  background: var(--action-surface);
   color: var(--text-heading);
   box-shadow: var(--shadow-s);
   text-decoration: none;
@@ -2729,7 +2760,8 @@ CONTACT
   color: var(--text-heading);
   text-decoration: none;
   transform: translateY(-2px);
-  border-color: color-mix(in srgb, var(--accent) 60%, var(--border-color));
+  border-color: var(--action-border-strong);
+  background: var(--action-surface-hover);
   box-shadow: var(--focus-ring), var(--shadow-m);
 }
 
@@ -2749,17 +2781,17 @@ CONTACT
   width: 36px;
   height: 36px;
   border-radius: 10px;
-  background: color-mix(in srgb, var(--accent) 18%, var(--surface-3));
-  border: 1px solid color-mix(in srgb, var(--accent) 32%, transparent);
-  color: var(--accent);
+  background: var(--action-icon-bg);
+  border: 1px solid color-mix(in srgb, var(--action-accent) 32%, transparent);
+  color: var(--action-accent);
   font-size: 1.1rem;
   transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease;
 }
 
 .contact-relay-link:hover .contact-relay-link__icon,
 .contact-relay-link:focus .contact-relay-link__icon {
-  background: var(--accent);
-  color: #fff;
+  background: var(--action-accent);
+  color: var(--action-accent-contrast);
 }
 
 .contact-panel-heading__content {
@@ -2895,10 +2927,8 @@ CONTACT
   min-height: 58px;
   padding: 0.55rem 0.8rem 0.55rem 1rem;
   border-radius: 16px;
-  border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--border-color));
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--surface-2) 94%, transparent), color-mix(in srgb, var(--surface-3) 90%, transparent)),
-    radial-gradient(circle at left center, color-mix(in srgb, var(--accent) 14%, transparent), transparent 54%);
+  border: 1px solid var(--action-border);
+  background: var(--action-surface);
   color: var(--text-heading);
   box-shadow: var(--shadow-s);
   text-decoration: none;
@@ -2909,7 +2939,8 @@ CONTACT
 .contact-submit-button:hover,
 .contact-submit-button:focus {
   transform: translateY(-2px);
-  border-color: color-mix(in srgb, var(--accent) 64%, var(--border-color));
+  border-color: var(--action-border-strong);
+  background: var(--action-surface-hover);
   box-shadow: var(--focus-ring), var(--shadow-m);
   color: var(--text-heading);
 }
@@ -2924,10 +2955,10 @@ CONTACT
   justify-content: center;
   padding: 0.34rem 0.62rem;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--accent) 14%, transparent);
-  border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+  background: color-mix(in srgb, var(--action-accent) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--action-accent) 28%, transparent);
   font-family: var(--font-mono);
-  color: var(--accent);
+  color: var(--action-accent);
   font-size: var(--type-label);
   font-weight: 700;
   letter-spacing: var(--tracking-label);
@@ -2952,16 +2983,16 @@ CONTACT
   width: 34px;
   height: 34px;
   border-radius: 10px;
-  background: color-mix(in srgb, var(--accent) 18%, var(--surface-3));
-  color: var(--accent);
+  background: var(--action-icon-bg);
+  color: var(--action-accent);
   font-size: 1rem;
   flex: 0 0 auto;
 }
 
 .contact-submit-button:hover .contact-submit-button__icon,
 .contact-submit-button:focus .contact-submit-button__icon {
-  background: var(--accent);
-  color: #fff;
+  background: var(--action-accent);
+  color: var(--action-accent-contrast);
 }
 
 @media (max-width: 767px) {
@@ -3143,10 +3174,10 @@ BUTTON
   min-width: 54px;
   padding: 0.36rem 0.58rem;
   border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--accent) 24%, transparent);
-  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--action-accent) 24%, transparent);
+  background: color-mix(in srgb, var(--action-accent) 12%, transparent);
   font-family: var(--font-mono);
-  color: var(--accent);
+  color: var(--action-accent);
   font-size: var(--type-label);
   font-weight: 700;
   letter-spacing: var(--tracking-label);
@@ -3159,8 +3190,8 @@ BUTTON
 .intro-command-bar__hint:hover,
 .intro-command-bar__hint:focus {
   transform: translateY(-1px);
-  border-color: color-mix(in srgb, var(--accent) 42%, transparent);
-  background: color-mix(in srgb, var(--accent) 18%, transparent);
+  border-color: color-mix(in srgb, var(--action-accent) 42%, transparent);
+  background: color-mix(in srgb, var(--action-accent) 18%, transparent);
   color: var(--text-heading);
   outline: none;
 }
@@ -3238,7 +3269,7 @@ BUTTON
   position: absolute;
   inset: 0;
   width: var(--status-progress, 0%);
-  background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 22%, transparent), color-mix(in srgb, var(--accent) 10%, transparent));
+  background: linear-gradient(90deg, color-mix(in srgb, var(--action-accent) 24%, transparent), color-mix(in srgb, var(--action-accent) 10%, transparent));
   transition: width 260ms ease;
   pointer-events: none;
 }
@@ -3254,42 +3285,43 @@ BUTTON
   border-radius: 11px;
   color: var(--text-muted);
   text-decoration: none;
-  background: transparent;
-  border: 1px solid transparent;
+  background: color-mix(in srgb, var(--surface-1) 44%, transparent);
+  border: 1px solid color-mix(in srgb, var(--action-accent) 12%, var(--border-color));
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--surface-1) 55%, transparent);
   transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease, transform 180ms ease, box-shadow 200ms ease;
 }
 
 .system-status__item:hover,
 .system-status__item:focus-visible {
   color: var(--text-heading);
-  background: color-mix(in srgb, var(--surface-1) 72%, transparent);
-  border-color: color-mix(in srgb, var(--accent) 38%, var(--border-color));
+  background: color-mix(in srgb, var(--surface-1) 84%, transparent);
+  border-color: color-mix(in srgb, var(--action-accent) 46%, var(--border-color));
   transform: translateY(-2px);
-  box-shadow: var(--focus-ring), var(--shadow-m);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--action-accent) 18%, transparent), var(--shadow-m);
   outline: none;
 }
 
 .system-status__item.is-complete {
-  color: color-mix(in srgb, var(--accent) 62%, var(--text-muted));
+  color: color-mix(in srgb, var(--action-accent) 58%, var(--text-muted));
 }
 
 .system-status__item.is-active {
   color: var(--text-heading);
   background: color-mix(in srgb, var(--surface-1) 92%, transparent);
-  border-color: color-mix(in srgb, var(--accent) 58%, var(--border-color));
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 26%, transparent), var(--shadow-s);
+  border-color: color-mix(in srgb, var(--action-accent) 58%, var(--border-color));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--action-accent) 26%, transparent), var(--shadow-s);
 }
 
 .system-status__item.is-active .system-status__label {
   font-weight: 800;
   text-decoration: underline;
-  text-decoration-color: color-mix(in srgb, var(--accent) 72%, transparent);
+  text-decoration-color: color-mix(in srgb, var(--action-accent) 72%, transparent);
   text-decoration-thickness: 2px;
   text-underline-offset: 0.22em;
 }
 
 .system-status__item.is-active .system-status__index {
-  color: var(--accent);
+  color: var(--action-accent);
   opacity: 1;
 }
 
@@ -3434,10 +3466,8 @@ BUTTON
 }
 
 .theme-toggle {
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--surface-1) 96%, transparent), color-mix(in srgb, var(--surface-2) 92%, transparent)),
-    radial-gradient(circle at 30% 30%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 55%);
-  border: 1px solid color-mix(in srgb, var(--accent) 58%, var(--border-color));
+  background: var(--action-surface);
+  border: 1px solid var(--action-border);
   color: var(--text-heading);
   display: inline-flex;
   align-items: center;
@@ -3460,25 +3490,24 @@ BUTTON
 .theme-toggle:hover,
 .theme-toggle:focus-visible {
   transform: translateY(-2px);
-  background-color: var(--accent);
-  color: #fff;
+  background: var(--action-surface-hover);
+  border-color: var(--action-border-strong);
+  color: var(--text-heading);
   box-shadow: var(--focus-ring), var(--shadow-m);
   outline: none;
 }
 
 .navbar-b.navbar-reduce .theme-toggle {
   color: var(--text-heading);
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--surface-1) 96%, transparent), color-mix(in srgb, var(--surface-2) 92%, transparent)),
-    radial-gradient(circle at 30% 30%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 55%);
-  border-color: color-mix(in srgb, var(--accent) 58%, var(--border-color));
+  background: var(--action-surface);
+  border-color: var(--action-border);
 }
 
 .navbar-b.navbar-reduce .theme-toggle:hover,
 .navbar-b.navbar-reduce .theme-toggle:focus-visible {
-  background-color: var(--accent);
-  border-color: var(--accent);
-  color: #fff;
+  background: var(--action-surface-hover);
+  border-color: var(--action-border-strong);
+  color: var(--text-heading);
   outline: none;
 }
 
@@ -3607,10 +3636,8 @@ BUTTON
     gap: 0.5rem;
     padding: 0.48rem 0.68rem;
     border-radius: 14px;
-    border: 1px solid color-mix(in srgb, var(--accent) 54%, var(--border-color));
-    background:
-      linear-gradient(180deg, color-mix(in srgb, var(--surface-1) 94%, transparent), color-mix(in srgb, var(--surface-2) 90%, transparent)),
-      radial-gradient(circle at left center, color-mix(in srgb, var(--accent) 15%, transparent), transparent 48%);
+    border: 1px solid var(--action-border);
+    background: var(--action-surface);
     color: var(--text-heading);
     box-shadow: var(--shadow-s);
     text-decoration: none;
@@ -3620,7 +3647,8 @@ BUTTON
   .nav-mobile-action:hover,
   .nav-mobile-action:focus-visible {
     transform: translateY(-2px);
-    border-color: var(--accent);
+    border-color: var(--action-border-strong);
+    background: var(--action-surface-hover);
     box-shadow: var(--focus-ring), var(--shadow-m);
     color: var(--text-heading);
     text-decoration: none;
@@ -3634,8 +3662,8 @@ BUTTON
     width: 28px;
     height: 28px;
     border-radius: 9px;
-    background: color-mix(in srgb, var(--accent) 18%, var(--surface-3));
-    color: var(--accent);
+    background: var(--action-icon-bg);
+    color: var(--action-accent);
     font-size: 0.82rem;
     flex: 0 0 auto;
   }
@@ -3690,7 +3718,7 @@ BUTTON
     inset: 0 0 auto 0;
     width: 100%;
     height: var(--status-progress, 0%);
-    background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 14%, transparent), color-mix(in srgb, var(--accent) 26%, transparent));
+    background: linear-gradient(180deg, color-mix(in srgb, var(--action-accent) 14%, transparent), color-mix(in srgb, var(--action-accent) 26%, transparent));
     transition: height 260ms ease;
   }
 
@@ -3731,10 +3759,8 @@ BUTTON
     height: 44px;
     padding: 0;
     border-radius: 50%;
-    border: 1px solid color-mix(in srgb, var(--accent) 52%, var(--border-color));
-    background:
-      linear-gradient(180deg, color-mix(in srgb, var(--surface-1) 94%, transparent), color-mix(in srgb, var(--surface-2) 90%, transparent)),
-      radial-gradient(circle at left center, color-mix(in srgb, var(--accent) 16%, transparent), transparent 48%);
+    border: 1px solid var(--action-border);
+    background: var(--action-surface);
     color: var(--text-heading);
     box-shadow: var(--shadow-s);
     pointer-events: auto;
@@ -3746,15 +3772,15 @@ BUTTON
   .navbar-status-toggle:focus,
   .navbar-status-toggle.is-active {
     transform: translateY(-2px);
-    border-color: var(--accent);
+    border-color: var(--action-border-strong);
     box-shadow: var(--focus-ring), var(--shadow-m);
     color: var(--text-heading);
   }
 
   .navbar-status-toggle.is-active {
     background:
-      linear-gradient(180deg, color-mix(in srgb, var(--accent) 18%, var(--surface-1)), color-mix(in srgb, var(--accent) 10%, var(--surface-2))),
-      radial-gradient(circle at center, color-mix(in srgb, var(--accent) 24%, transparent), transparent 60%);
+      linear-gradient(180deg, color-mix(in srgb, var(--action-accent) 18%, var(--surface-1)), color-mix(in srgb, var(--action-accent) 10%, var(--surface-2))),
+      radial-gradient(circle at center, color-mix(in srgb, var(--action-accent) 24%, transparent), transparent 60%);
   }
 
   .navbar-status-toggle__icon {
@@ -3764,15 +3790,15 @@ BUTTON
     width: 30px;
     height: 30px;
     border-radius: 10px;
-    background: color-mix(in srgb, var(--accent) 18%, var(--surface-3));
-    color: var(--accent);
+    background: var(--action-icon-bg);
+    color: var(--action-accent);
     font-size: 0.85rem;
   }
 
   .navbar-status-toggle.is-active .navbar-status-toggle__icon {
-    background: var(--accent);
-    color: #fff;
-    box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 30%, transparent);
+    background: var(--action-accent);
+    color: var(--action-accent-contrast);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--action-accent) 30%, transparent);
   }
 }
 
@@ -3929,10 +3955,8 @@ BUTTON
 }
 
 .emulator-game-button {
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--surface-2) 94%, transparent), color-mix(in srgb, var(--surface-3) 90%, transparent)),
-    radial-gradient(circle at left center, color-mix(in srgb, var(--accent) 10%, transparent), transparent 52%);
-  border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--border-color));
+  background: var(--action-surface);
+  border: 1px solid var(--action-border);
   color: var(--text-heading);
   padding: 0.62rem 1rem;
   border-radius: 999px;
@@ -3946,10 +3970,8 @@ BUTTON
 
 .emulator-game-button:hover,
 .emulator-game-button:focus {
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--surface-2) 98%, transparent), color-mix(in srgb, var(--surface-3) 94%, transparent)),
-    radial-gradient(circle at left center, color-mix(in srgb, var(--accent) 16%, transparent), transparent 56%);
-  border-color: color-mix(in srgb, var(--accent) 60%, var(--border-color));
+  background: var(--action-surface-hover);
+  border-color: var(--action-border-strong);
   color: var(--text-heading);
   transform: translateY(-2px);
   box-shadow: var(--focus-ring), var(--shadow-m);
@@ -3957,11 +3979,11 @@ BUTTON
 
 .emulator-game-button.is-active {
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--accent-strong) 88%, var(--surface-1)), color-mix(in srgb, var(--accent) 82%, var(--surface-2))),
-    radial-gradient(circle at left center, color-mix(in srgb, var(--accent-soft) 24%, transparent), transparent 58%);
-  border-color: color-mix(in srgb, var(--accent-strong) 80%, var(--border-color));
-  color: var(--accent-contrast);
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 24%, transparent), var(--shadow-s);
+    linear-gradient(180deg, color-mix(in srgb, var(--action-accent-strong) 88%, var(--surface-1)), color-mix(in srgb, var(--action-accent) 82%, var(--surface-2))),
+    radial-gradient(circle at left center, color-mix(in srgb, var(--action-accent-soft) 24%, transparent), transparent 58%);
+  border-color: color-mix(in srgb, var(--action-accent-strong) 80%, var(--border-color));
+  color: var(--action-accent-contrast);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--action-accent) 24%, transparent), var(--shadow-s);
 }
 
 .emulator-toolbar {
@@ -3973,10 +3995,8 @@ BUTTON
 }
 
 .emulator-action {
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--surface-2) 94%, transparent), color-mix(in srgb, var(--surface-3) 90%, transparent)),
-    radial-gradient(circle at left center, color-mix(in srgb, var(--accent) 10%, transparent), transparent 52%);
-  border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--border-color));
+  background: var(--action-surface);
+  border: 1px solid var(--action-border);
   color: var(--text-heading);
   padding: 0.52rem 0.95rem;
   border-radius: 999px;
@@ -3995,10 +4015,8 @@ BUTTON
 
 .emulator-action:hover,
 .emulator-action:focus {
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--surface-2) 98%, transparent), color-mix(in srgb, var(--surface-3) 94%, transparent)),
-    radial-gradient(circle at left center, color-mix(in srgb, var(--accent) 16%, transparent), transparent 56%);
-  border-color: color-mix(in srgb, var(--accent) 60%, var(--border-color));
+  background: var(--action-surface-hover);
+  border-color: var(--action-border-strong);
   color: var(--text-heading);
   transform: translateY(-2px);
   box-shadow: var(--focus-ring), var(--shadow-m);
@@ -4006,11 +4024,11 @@ BUTTON
 
 .emulator-action.is-primary {
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--accent-strong) 88%, var(--surface-1)), color-mix(in srgb, var(--accent) 82%, var(--surface-2))),
-    radial-gradient(circle at left center, color-mix(in srgb, var(--accent-soft) 24%, transparent), transparent 58%);
-  border-color: color-mix(in srgb, var(--accent-strong) 80%, var(--border-color));
-  color: var(--accent-contrast);
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 24%, transparent), var(--shadow-s);
+    linear-gradient(180deg, color-mix(in srgb, var(--action-accent-strong) 88%, var(--surface-1)), color-mix(in srgb, var(--action-accent) 82%, var(--surface-2))),
+    radial-gradient(circle at left center, color-mix(in srgb, var(--action-accent-soft) 24%, transparent), transparent 58%);
+  border-color: color-mix(in srgb, var(--action-accent-strong) 80%, var(--border-color));
+  color: var(--action-accent-contrast);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--action-accent) 24%, transparent), var(--shadow-s);
 }
 
 .emulator-action.is-disabled,
@@ -4192,9 +4210,9 @@ BUTTON
 .emulator-controls-toggle {
   padding: 4px 10px;
   border-radius: 999px;
-  border: 1px solid var(--border-color);
-  background: var(--surface-3);
-  color: var(--text-primary);
+  border: 1px solid var(--action-border);
+  background: var(--action-surface);
+  color: var(--text-heading);
   font-size: 0.65rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -4202,15 +4220,17 @@ BUTTON
   align-items: center;
   justify-content: center;
   gap: 6px;
-  transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease;
+  transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease, transform 150ms ease, box-shadow 200ms ease;
   pointer-events: auto;
 }
 
 .emulator-controls-toggle:hover,
 .emulator-controls-toggle:focus {
-  background: var(--accent);
-  color: #fff;
-  border-color: var(--accent);
+  background: var(--action-surface-hover);
+  color: var(--text-heading);
+  border-color: var(--action-border-strong);
+  transform: translateY(-2px);
+  box-shadow: var(--focus-ring), var(--shadow-m);
 }
 
 .emulator-mobile-note {
