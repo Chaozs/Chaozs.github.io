@@ -50,6 +50,7 @@ GENERAL STYLING
   --matrix-bg: #000000;
   --matrix-trail: rgba(0, 0, 0, 0.06);
   --matrix-char: #3bd16f;
+  --matrix-glow: #a6ffc1;
   --matrix-opacity: 1;
   --skeleton-bg: rgba(255, 255, 255, 0.06);
   --skeleton-border: rgba(230, 231, 233, 0.5);
@@ -106,6 +107,7 @@ html[data-theme="light"] {
   --matrix-bg: #f5f8fc;
   --matrix-trail: rgba(255, 255, 255, 0.56);
   --matrix-char: rgba(37, 99, 235, 0.18);
+  --matrix-glow: rgba(96, 165, 250, 0.78);
   --matrix-opacity: 0.24;
   --skeleton-bg: rgba(0, 0, 0, 0.06);
   --skeleton-border: rgba(28, 36, 48, 0.18);

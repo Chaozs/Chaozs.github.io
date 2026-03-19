@@ -3,11 +3,28 @@ import React, { useCallback, useEffect, useRef } from "react";
 const isFirefoxBrowser = () =>
   typeof navigator !== "undefined" && /firefox/i.test(navigator.userAgent) && !/seamonkey/i.test(navigator.userAgent);
 
+const MATRIX_COLUMN_SPACING = 0.56;
+const MATRIX_BASE_SPEED = 0.07;
+const MATRIX_SPEED_VARIANTS = [0.7, 1.25] as const;
+const MATRIX_GLOW_VARIANTS = [0.85, 1.2] as const;
+const MATRIX_TRAIL_STEP = 1.85;
+const MATRIX_MAX_TRAIL_LENGTH = 6;
+const MATRIX_CHARS = "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜｦﾝ";
+const MATRIX_FONT_STACK = '"MS Gothic", "Noto Sans JP", "Yu Gothic UI", monospace';
+
+const randomMatrixChar = (): string =>
+  MATRIX_CHARS.charAt(Math.floor(Math.random() * MATRIX_CHARS.length));
+
 const MatrixBackground: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const animationFrameIdRef = useRef<number | null>(null);
   const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
   const dropsRef = useRef<number[]>([]);
+  const dropSpeedsRef = useRef<number[]>([]);
+  const dropGlowRef = useRef<number[]>([]);
+  const dropProgressRef = useRef<number[]>([]);
+  const dropCharsRef = useRef<string[][]>([]);
+  const dropCharHoldRef = useRef<number[][]>([]);
   const dprRef = useRef<number>(1);
   const canvasWidthRef = useRef<number>(0);
   const canvasHeightRef = useRef<number>(0);
@@ -17,19 +34,19 @@ const MatrixBackground: React.FC = () => {
   const targetFpsRef = useRef<number>(60);
   const baseOpacityRef = useRef<number>(1);
   const scrollFrameRef = useRef<number | null>(null);
-  const columnSpacing = 0.65;
-  const speed = 0.15;
   const matrixColorsRef = useRef({
-    trail: "rgba(0, 0, 0, 0.06)",
+    trail: "rgba(0, 0, 0, 0.12)",
     char: "#3bd16f",
+    glow: "#9dffbf",
   });
 
   const readMatrixColors = useCallback(() => {
     const styles = getComputedStyle(document.documentElement);
     const trail = styles.getPropertyValue("--matrix-trail").trim() || "rgba(0, 0, 0, 0.06)";
     const char = styles.getPropertyValue("--matrix-char").trim() || "#3bd16f";
+    const glow = styles.getPropertyValue("--matrix-glow").trim() || "#9dffbf";
     const opacity = Number.parseFloat(styles.getPropertyValue("--matrix-opacity").trim() || "1");
-    matrixColorsRef.current = { trail, char };
+    matrixColorsRef.current = { trail, char, glow };
     baseOpacityRef.current = Number.isFinite(opacity) ? opacity : 1;
   }, []);
 
@@ -59,12 +76,12 @@ const MatrixBackground: React.FC = () => {
 
   const getFontSize = useCallback(() => {
     if (window.innerWidth <= 480) {
-      return 22;
+      return 18;
     }
     if (window.innerWidth <= 767.98) {
-      return 28;
+      return 22;
     }
-    return 39;
+    return 31;
   }, []);
 
   const animateMatrix = useCallback(() => {
@@ -92,32 +109,95 @@ const MatrixBackground: React.FC = () => {
     ctx.fillRect(0, 0, canvasWidthRef.current, canvasHeightRef.current);
 
     ctx.fillStyle = matrixColorsRef.current.char;
-    ctx.font = `${fontSize}px monospace`;
+    ctx.font = `${fontSize}px ${MATRIX_FONT_STACK}`;
 
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*";
     ctx.save();
-    ctx.setTransform(-dprRef.current, 0, 0, dprRef.current, canvasWidthRef.current * dprRef.current, 0);
+    ctx.setTransform(dprRef.current, 0, 0, dprRef.current, 0, 0);
     for (let i = 0; i < dropsRef.current.length; i += 1) {
-      const text = chars.charAt(Math.floor(Math.random() * chars.length));
-      const x = i * fontSize * columnSpacing;
+      const x = i * fontSize * MATRIX_COLUMN_SPACING;
       const y = dropsRef.current[i] * fontSize;
-      ctx.fillText(text, x, y);
-      const trailText = chars.charAt(Math.floor(Math.random() * chars.length));
-      ctx.fillText(trailText, x, y - fontSize * 2);
-      if (!isFirefox) {
-        const trailText2 = chars.charAt(Math.floor(Math.random() * chars.length));
-        ctx.fillText(trailText2, x, y - fontSize * 4);
+      const trailLength = isFirefox ? 4 : MATRIX_MAX_TRAIL_LENGTH;
+      const columnChars = dropCharsRef.current[i] ?? [];
+      const columnHolds = dropCharHoldRef.current[i] ?? [];
+      const glowVariant = dropGlowRef.current[i] ?? 1;
+
+      for (let trailIndex = 0; trailIndex < trailLength; trailIndex += 1) {
+        const nextHold = Math.max(0, (columnHolds[trailIndex] ?? 0) - deltaMs);
+        columnHolds[trailIndex] = nextHold;
+
+        const isHead = trailIndex === 0;
+        const headChangeChance = isFirefox ? 0.25 : 0.4;
+        const trailChangeChance = Math.max(0.02, 0.10 - trailIndex * 0.02);
+        const shouldRefresh = isHead
+          ? Math.random() < headChangeChance
+          : nextHold <= 0 && Math.random() < trailChangeChance;
+
+        if (!columnChars[trailIndex] || shouldRefresh) {
+          columnChars[trailIndex] = randomMatrixChar();
+          columnHolds[trailIndex] = isHead
+            ? 20 + Math.random() * 35
+            : 90 + trailIndex * 55 + Math.random() * 180;
+        }
       }
+
+      dropCharsRef.current[i] = columnChars;
+      dropCharHoldRef.current[i] = columnHolds;
+
+      for (let trailIndex = trailLength - 1; trailIndex >= 0; trailIndex -= 1) {
+        const text = columnChars[trailIndex] ?? randomMatrixChar();
+        const trailY = y - fontSize * MATRIX_TRAIL_STEP * trailIndex;
+        const flowStrength = 1 - trailIndex / Math.max(trailLength - 1, 1);
+        const glowStrength = Math.pow(flowStrength, 1.15);
+        const fillAlpha = 0.14 + glowStrength * 0.86;
+        const blurStrength = isFirefox
+          ? fontSize * (0.04 + glowStrength * 0.22) * glowVariant
+          : fontSize * (0.08 + glowStrength * 0.42) * glowVariant;
+
+        ctx.fillStyle = matrixColorsRef.current.char;
+        ctx.globalAlpha = Math.min(fillAlpha, 0.96);
+        ctx.shadowBlur = blurStrength;
+        ctx.shadowColor = matrixColorsRef.current.glow;
+        ctx.fillText(text, x, trailY);
+
+        if (trailIndex === 0) {
+          ctx.globalAlpha = 1;
+          ctx.shadowBlur = 0;
+          ctx.fillText(text, x, trailY);
+        }
+      }
+
+      ctx.globalAlpha = 1;
+      ctx.shadowBlur = 0;
 
       if (y > canvasHeightRef.current && Math.random() > 0.99) {
         dropsRef.current[i] = 0;
+        dropProgressRef.current[i] = 0;
+        dropGlowRef.current[i] = MATRIX_GLOW_VARIANTS[Math.floor(Math.random() * MATRIX_GLOW_VARIANTS.length)];
+        dropCharsRef.current[i] = Array.from({ length: MATRIX_MAX_TRAIL_LENGTH }, randomMatrixChar);
+        dropCharHoldRef.current[i] = Array.from(
+          { length: MATRIX_MAX_TRAIL_LENGTH },
+          (_, index) => (index === 0 ? 0 : 110 + index * 45 + Math.random() * 120),
+        );
       }
-      dropsRef.current[i] += speed * frameMultiplier;
+      dropProgressRef.current[i] += (dropSpeedsRef.current[i] ?? MATRIX_BASE_SPEED) * frameMultiplier;
+      if (dropProgressRef.current[i] >= 1) {
+        const steps = Math.floor(dropProgressRef.current[i]);
+        dropsRef.current[i] += steps;
+        dropProgressRef.current[i] -= steps;
+        for (let stepIndex = 0; stepIndex < steps; stepIndex += 1) {
+          const nextChars = [randomMatrixChar(), ...(dropCharsRef.current[i] ?? [])];
+          dropCharsRef.current[i] = nextChars.slice(0, MATRIX_MAX_TRAIL_LENGTH);
+          const nextHolds = [0, ...(dropCharHoldRef.current[i] ?? [])];
+          dropCharHoldRef.current[i] = nextHolds.slice(0, MATRIX_MAX_TRAIL_LENGTH);
+        }
+      }
     }
+    ctx.shadowBlur = 0;
+    ctx.globalAlpha = 1;
     ctx.restore();
 
     animationFrameIdRef.current = requestAnimationFrame(animateMatrix);
-  }, [columnSpacing, getFontSize, speed]);
+  }, [getFontSize]);
 
   const initMatrix = useCallback((restart = false) => {
     const canvas = canvasRef.current;
@@ -150,17 +230,37 @@ const MatrixBackground: React.FC = () => {
 
     const fontSize = getFontSize();
     // Overdraw slightly so edge columns still cover the viewport after transform/rounding.
-    const columns = Math.ceil(width / (fontSize * columnSpacing)) + 1;
+    const columns = Math.ceil(width / (fontSize * MATRIX_COLUMN_SPACING)) + 1;
     const initialRows = Math.ceil(height / fontSize);
     // Seed each column at a different off-screen row so the first visible frame is already staggered.
-    dropsRef.current = Array.from({ length: columns }, () => -Math.random() * initialRows);
+    dropsRef.current = Array.from({ length: columns }, () => -Math.floor(Math.random() * initialRows));
+    dropSpeedsRef.current = Array.from(
+      { length: columns },
+      () => MATRIX_BASE_SPEED * MATRIX_SPEED_VARIANTS[Math.floor(Math.random() * MATRIX_SPEED_VARIANTS.length)],
+    );
+    dropGlowRef.current = Array.from(
+      { length: columns },
+      () => MATRIX_GLOW_VARIANTS[Math.floor(Math.random() * MATRIX_GLOW_VARIANTS.length)],
+    );
+    dropProgressRef.current = Array.from({ length: columns }, () => 0);
+    dropCharsRef.current = Array.from(
+      { length: columns },
+      () => Array.from({ length: MATRIX_MAX_TRAIL_LENGTH }, randomMatrixChar),
+    );
+    dropCharHoldRef.current = Array.from(
+      { length: columns },
+      () => Array.from(
+        { length: MATRIX_MAX_TRAIL_LENGTH },
+        (_, index) => (index === 0 ? 0 : 100 + index * 45 + Math.random() * 140),
+      ),
+    );
     lastFrameTimeRef.current = 0;
 
     if (restart && animationFrameIdRef.current) {
       cancelAnimationFrame(animationFrameIdRef.current);
     }
     animateMatrix();
-  }, [animateMatrix, columnSpacing, getFontSize, readMatrixColors]);
+  }, [animateMatrix, getFontSize, readMatrixColors]);
 
   const deferInit = useCallback(() => {
     const requestIdle = (window as Window & { requestIdleCallback?: (callback: () => void, options?: { timeout?: number }) => number })
