@@ -5,6 +5,7 @@ import type { GameId } from "../js-dos/types";
 import SectionHeader from "../shared/SectionHeader";
 import SectionShell from "../shared/SectionShell";
 import SurfaceCard from "../shared/SurfaceCard";
+import AppIcon from "../shared/AppIcon";
 
 type CombinedGameId = GameId | "final-fantasy" | "dragon-quest";
 
@@ -45,7 +46,10 @@ const EmulatorSection: React.FC = () => {
               className={`emulator-game-button${activeGame === game.id ? " is-active" : ""}`}
               onClick={() => setActiveGame(game.id)}
             >
-              {game.label}
+              <span className="emulator-game-button__label">{game.label}</span>
+              <span className="emulator-game-button__icon" aria-hidden="true">
+                <AppIcon name="chevron-right" />
+              </span>
             </button>
           ))}
         </div>

@@ -7,7 +7,9 @@ type IconName =
   | "sun"
   | "chevron-up"
   | "chevron-down"
+  | "chevron-right"
   | "paper-plane"
+  | "arrow-right"
   | "linkedin"
   | "github"
   | "youtube";
@@ -68,11 +70,24 @@ const AppIcon: React.FC<AppIconProps> = ({ name, className }) => {
           <path {...strokeProps} d="m6 10 6 6 6-6" />
         </svg>
       );
+    case "chevron-right":
+      return (
+        <svg className={`app-icon ${className ?? ""}`.trim()} viewBox="0 0 24 24" aria-hidden="true">
+          <path {...strokeProps} d="m10 6 6 6-6 6" />
+        </svg>
+      );
     case "paper-plane":
       return (
         <svg className={`app-icon ${className ?? ""}`.trim()} viewBox="0 0 24 24" aria-hidden="true">
           <path {...strokeProps} d="M21 3 10 14" />
           <path {...strokeProps} d="m21 3-7 18-4-7-7-4Z" />
+        </svg>
+      );
+    case "arrow-right":
+      return (
+        <svg className={`app-icon ${className ?? ""}`.trim()} viewBox="0 0 24 24" aria-hidden="true">
+          <path {...strokeProps} d="M5 12h14" />
+          <path {...strokeProps} d="m13 6 6 6-6 6" />
         </svg>
       );
     case "linkedin":

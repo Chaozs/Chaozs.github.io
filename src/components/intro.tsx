@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Typed from "typed.js";
+import AppIcon from "./shared/AppIcon";
 
 const FINAL_NAME = "Thien Trandinh";
 const SCRAMBLE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*";
@@ -436,7 +437,10 @@ const Intro: React.FC = () => {
                     <span className="intro-command-bar__cursor" aria-hidden="true"></span>
                   </span>
                   <button type="submit" className="intro-command-bar__hint">
-                    Enter
+                    <span className="intro-command-bar__hint-label">Enter</span>
+                    <span className="intro-command-bar__hint-icon" aria-hidden="true">
+                      <AppIcon name="arrow-right" />
+                    </span>
                   </button>
                 </div>
                 {commandError ? (

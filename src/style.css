@@ -862,6 +862,7 @@ NAVBAR
   box-shadow: var(--focus-ring), var(--shadow-m);
   background: var(--action-surface-hover);
   color: var(--text-heading) !important;
+  outline: none;
 }
 
 .nav-resume-button:hover .nav-resume-button__icon,
@@ -1363,9 +1364,14 @@ ABOUT
   pointer-events: none;
 }
 
-.about-dossier__seal:focus-visible .about-dossier__seal-card {
+.about-dossier__seal-card:focus {
+  outline: none;
+}
+
+.about-dossier__seal-card:focus-visible {
   outline: 2px solid var(--action-accent);
   outline-offset: 6px;
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--action-accent) 18%, transparent), var(--shadow-l);
 }
 
 .about-dossier__seal-card {
@@ -1896,7 +1902,9 @@ PORTFOLIO
   font-weight: 700;
   letter-spacing: var(--tracking-label);
   text-transform: uppercase;
-  transition: border-color 180ms ease, background-color 180ms ease, transform 180ms ease, color 180ms ease;
+  cursor: pointer;
+  box-shadow: var(--shadow-s);
+  transition: border-color 180ms ease, background-color 180ms ease, transform 180ms ease, color 180ms ease, box-shadow 200ms ease;
 }
 
 .work-dossier__toggle:hover,
@@ -1906,6 +1914,7 @@ PORTFOLIO
   color: var(--text-heading);
   transform: translateY(-2px);
   box-shadow: var(--focus-ring), var(--shadow-m);
+  outline: none;
 }
 
 .work-dossier__toggle-icon {
@@ -2774,6 +2783,7 @@ CONTACT
   border-color: var(--action-border-strong);
   background: var(--action-surface-hover);
   box-shadow: var(--focus-ring), var(--shadow-m);
+  outline: none;
 }
 
 .contact-relay-link__label {
@@ -3054,6 +3064,7 @@ BUTTON
   font-weight: 600;
   border-radius: 999px;
   border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-s);
   transition: transform 150ms ease, box-shadow 200ms ease, background-color 200ms ease, color 200ms ease;
   cursor: pointer;
 }
@@ -3238,34 +3249,58 @@ BUTTON
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 0.5rem;
   min-width: 86px;
   min-height: 44px;
-  padding: 0.46rem 0.92rem;
+  padding: 0.38rem 0.5rem 0.38rem 0.85rem;
   border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--action-accent) 34%, var(--border-color));
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--action-accent) 16%, transparent), color-mix(in srgb, var(--action-accent) 10%, transparent));
-  font-family: var(--font-mono);
-  color: var(--action-accent);
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  border: 1px solid var(--action-border);
+  background: var(--action-surface);
+  color: var(--text-heading);
   appearance: none;
   cursor: pointer;
   box-shadow: var(--shadow-s);
-  transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease, color 180ms ease, box-shadow 200ms ease;
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, color 180ms ease, box-shadow 200ms ease;
+}
+
+.intro-command-bar__hint-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-heading);
+  white-space: nowrap;
+}
+
+.intro-command-bar__hint-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: var(--action-icon-bg);
+  color: var(--action-accent);
+  font-size: 0.8rem;
+  flex: 0 0 auto;
+  transition: background-color 180ms ease, color 180ms ease;
 }
 
 .intro-command-bar__hint:hover,
 .intro-command-bar__hint:focus {
   transform: translateY(-1px);
-  border-color: color-mix(in srgb, var(--action-accent) 52%, var(--border-color));
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--action-accent) 22%, transparent), color-mix(in srgb, var(--action-accent) 14%, transparent));
+  border-color: var(--action-border-strong);
+  background: var(--action-surface-hover);
   color: var(--text-heading);
   box-shadow: var(--focus-ring), var(--shadow-m);
   outline: none;
+}
+
+.intro-command-bar__hint:hover .intro-command-bar__hint-icon,
+.intro-command-bar__hint:focus .intro-command-bar__hint-icon {
+  background: var(--action-accent);
+  color: var(--action-accent-contrast);
 }
 
 .intro-command-bar__error {
@@ -4021,7 +4056,7 @@ BUTTON
 .emulator-game-toggle {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: center;
   gap: 10px;
   margin-bottom: 14px;
   padding: 0.4rem;
@@ -4039,30 +4074,42 @@ BUTTON
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 0.48rem;
+  justify-content: space-between;
+  gap: 0.7rem;
   min-height: 46px;
-  min-width: 150px;
-  background: color-mix(in srgb, var(--surface-1) 44%, transparent);
-  border: 1px solid color-mix(in srgb, var(--action-accent) 12%, var(--border-color));
-  color: var(--text-muted);
-  padding: 0.72rem 0.9rem;
-  border-radius: 11px;
+  min-width: 140px;
+  background: var(--action-surface);
+  border: 1px solid var(--action-border);
+  color: var(--text-heading);
+  padding: 0.45rem 0.5rem 0.45rem 0.85rem;
+  border-radius: 14px;
+  cursor: pointer;
+  box-shadow: var(--shadow-s);
+  transition: background 200ms ease, color 200ms ease, border-color 200ms ease, transform 150ms ease, box-shadow 200ms ease;
+}
+
+.emulator-game-button__label {
   font-family: var(--font-mono);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  text-align: left;
-  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--surface-1) 55%, transparent);
-  transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease, transform 150ms ease, box-shadow 200ms ease;
+  color: var(--text-heading);
+  white-space: nowrap;
 }
 
-.emulator-game-button::before {
-  content: ">";
+.emulator-game-button__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 9px;
+  background: var(--action-icon-bg);
+  color: var(--action-accent);
+  font-size: 0.72rem;
   flex: 0 0 auto;
-  color: color-mix(in srgb, var(--action-accent) 58%, var(--text-muted));
-  font-size: 0.88rem;
-  line-height: 1;
+  transition: background-color 180ms ease, color 180ms ease;
 }
 
 .emulator-game-button:hover,
@@ -4075,20 +4122,22 @@ BUTTON
   outline: none;
 }
 
-.emulator-game-button:hover::before,
-.emulator-game-button:focus-visible::before {
-  color: var(--action-accent);
+.emulator-game-button:hover .emulator-game-button__icon,
+.emulator-game-button:focus-visible .emulator-game-button__icon {
+  background: var(--action-accent);
+  color: var(--action-accent-contrast);
 }
 
 .emulator-game-button.is-active {
-  background: color-mix(in srgb, var(--surface-1) 92%, transparent);
-  border-color: color-mix(in srgb, var(--action-accent) 58%, var(--border-color));
+  background: var(--action-surface-hover);
+  border-color: var(--action-border-strong);
   color: var(--text-heading);
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--action-accent) 26%, transparent), var(--shadow-s);
 }
 
-.emulator-game-button.is-active::before {
-  color: var(--action-accent);
+.emulator-game-button.is-active .emulator-game-button__icon {
+  background: var(--action-accent);
+  color: var(--action-accent-contrast);
 }
 
 .emulator-toolbar {
@@ -4125,6 +4174,7 @@ BUTTON
   color: var(--text-heading);
   transform: translateY(-2px);
   box-shadow: var(--focus-ring), var(--shadow-m);
+  outline: none;
 }
 
 .emulator-action.is-primary {
@@ -4325,6 +4375,8 @@ BUTTON
   align-items: center;
   justify-content: center;
   gap: 6px;
+  cursor: pointer;
+  box-shadow: var(--shadow-s);
   transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease, transform 150ms ease, box-shadow 200ms ease;
   pointer-events: auto;
 }
@@ -4336,6 +4388,7 @@ BUTTON
   border-color: var(--action-border-strong);
   transform: translateY(-2px);
   box-shadow: var(--focus-ring), var(--shadow-m);
+  outline: none;
 }
 
 .emulator-mobile-note {
@@ -4351,6 +4404,60 @@ BUTTON
   text-align: center;
   font-size: 0.85rem;
   color: var(--text-subtle);
+}
+
+/* ── Button idle glow animation ── */
+@keyframes btn-idle-glow {
+  0%, 100% {
+    box-shadow: var(--shadow-s);
+  }
+
+  52% {
+    box-shadow: var(--shadow-s), 0 0 18px 6px color-mix(in srgb, var(--action-accent) 50%, transparent);
+  }
+}
+
+.nav-resume-button              { animation: btn-idle-glow 3.8s ease-in-out 0s      infinite; }
+.theme-toggle                   { animation: btn-idle-glow 3.8s ease-in-out -0.95s  infinite; }
+.work-dossier__toggle           { animation: btn-idle-glow 3.8s ease-in-out -1.9s   infinite; }
+.contact-submit-button          { animation: btn-idle-glow 3.8s ease-in-out -0.5s   infinite; }
+.contact-relay-link             { animation: btn-idle-glow 3.8s ease-in-out -2.85s  infinite; }
+.emulator-action:not(.is-primary):not(.is-disabled):not(:disabled) { animation: btn-idle-glow 3.8s ease-in-out -1.4s infinite; }
+.emulator-controls-toggle       { animation: btn-idle-glow 3.8s ease-in-out -3.3s   infinite; }
+.intro-command-bar__hint        { animation: btn-idle-glow 3.8s ease-in-out -0.7s   infinite; }
+.button-a                       { animation: btn-idle-glow 3.8s ease-in-out -2.1s   infinite; }
+.navbar-status-toggle           { animation: btn-idle-glow 3.8s ease-in-out -1.2s   infinite; }
+.nav-mobile-action              { animation: btn-idle-glow 3.8s ease-in-out -2.5s   infinite; }
+.emulator-game-button:not(.is-active) { animation: btn-idle-glow 3.8s ease-in-out -3.6s infinite; }
+
+.nav-resume-button:hover,
+.nav-resume-button:focus,
+.theme-toggle:hover,
+.theme-toggle:focus-visible,
+.work-dossier__toggle:hover,
+.work-dossier__toggle:focus,
+.contact-submit-button:hover,
+.contact-submit-button:focus,
+.contact-relay-link:hover,
+.contact-relay-link:focus,
+.emulator-action:hover,
+.emulator-action:focus,
+.emulator-controls-toggle:hover,
+.emulator-controls-toggle:focus,
+.intro-command-bar__hint:hover,
+.intro-command-bar__hint:focus,
+.button-a:hover,
+.button:hover,
+.navbar-status-toggle:hover,
+.navbar-status-toggle:focus,
+.navbar-status-toggle.is-active,
+.nav-mobile-action:hover,
+.nav-mobile-action:focus-visible,
+.work-dossier__header:hover .work-dossier__toggle,
+.emulator-game-button:hover,
+.emulator-game-button:focus-visible,
+.emulator-game-button.is-active {
+  animation: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -4390,7 +4497,19 @@ BUTTON
   .emulator-frame-wrap,
   .emulator-start-overlay,
   .emulator-start-text,
-  .emulator-nes-canvas {
+  .emulator-nes-canvas,
+  .nav-resume-button,
+  .theme-toggle,
+  .work-dossier__toggle,
+  .contact-submit-button,
+  .contact-relay-link,
+  .emulator-action,
+  .emulator-controls-toggle,
+  .intro-command-bar__hint,
+  .button-a,
+  .navbar-status-toggle,
+  .nav-mobile-action,
+  .emulator-game-button {
     transition: none !important;
     animation: none !important;
   }
