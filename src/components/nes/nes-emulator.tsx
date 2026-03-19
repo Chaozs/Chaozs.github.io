@@ -1,28 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import EmulatorShell from "../emulator/EmulatorShell";
-import { ensureJsNes } from "../emulator/externalAssets";
+import { NES, Controller } from "jsnes";
 import type { ControlSection } from "../js-dos/controls";
 
 type NesStatus = "idle" | "loading" | "running" | "paused" | "error";
-
-type JsNesGlobal = {
-  NES: new (options: { onFrame: (frameBuffer: number[]) => void; onAudioSample?: (left: number, right: number) => void }) => {
-    loadROM: (rom: string) => void;
-    frame: () => void;
-    buttonDown: (player: number, button: number) => void;
-    buttonUp: (player: number, button: number) => void;
-  };
-  Controller: {
-    BUTTON_A: number;
-    BUTTON_B: number;
-    BUTTON_SELECT: number;
-    BUTTON_START: number;
-    BUTTON_UP: number;
-    BUTTON_DOWN: number;
-    BUTTON_LEFT: number;
-    BUTTON_RIGHT: number;
-  };
-};
 
 const NES_CONTROLS: ControlSection[] = [
   {
@@ -68,7 +49,7 @@ type NesEmulatorProps = {
 
 const NesEmulator: React.FC<NesEmulatorProps> = ({ activePresetId }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const nesRef = useRef<InstanceType<JsNesGlobal["NES"]> | null>(null);
+  const nesRef = useRef<InstanceType<typeof NES> | null>(null);
   const rendererRef = useRef<{ ctx: CanvasRenderingContext2D; imageData: ImageData } | null>(null);
   const animationRef = useRef<number | null>(null);
   const lastFrameRef = useRef(0);
@@ -80,11 +61,6 @@ const NesEmulator: React.FC<NesEmulatorProps> = ({ activePresetId }) => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [showControls, setShowControls] = useState(true);
   const [hasClickedStart, setHasClickedStart] = useState(false);
-
-  const getJsNes = (): JsNesGlobal | null => {
-    const jsnes = (window as Window & { jsnes?: JsNesGlobal }).jsnes;
-    return jsnes?.NES ? jsnes : null;
-  };
 
   const ensureRenderer = useCallback(() => {
     if (rendererRef.current) {
@@ -106,7 +82,7 @@ const NesEmulator: React.FC<NesEmulatorProps> = ({ activePresetId }) => {
   }, []);
 
   const drawFrame = useCallback(
-    (frameBuffer: number[]) => {
+    (frameBuffer: Uint32Array) => {
       const renderer = ensureRenderer();
       if (!renderer) {
         return;
@@ -164,8 +140,8 @@ const NesEmulator: React.FC<NesEmulatorProps> = ({ activePresetId }) => {
   }, []);
 
   const startRom = useCallback(
-    (romData: string, name: string, jsnes: JsNesGlobal) => {
-      const nesInstance = new jsnes.NES({
+    (romData: string, name: string) => {
+      const nesInstance = new NES({
         onFrame: drawFrame,
         onAudioSample: () => undefined,
       });
@@ -189,24 +165,6 @@ const NesEmulator: React.FC<NesEmulatorProps> = ({ activePresetId }) => {
       stopLoop();
 
       try {
-        await ensureJsNes();
-      } catch (error) {
-        if (!isMountedRef.current) {
-          return;
-        }
-        setStatus("error");
-        setErrorMessage(error instanceof Error ? error.message : "Failed to load jsnes.");
-        return;
-      }
-
-      const jsnes = getJsNes();
-      if (!jsnes) {
-        setStatus("error");
-        setErrorMessage("jsnes failed to load.");
-        return;
-      }
-
-      try {
         const response = await fetch(`${import.meta.env.BASE_URL}nes/${preset.fileName}?v=20260218`);
         if (!response.ok) {
           throw new Error("Failed to fetch ROM.");
@@ -216,7 +174,7 @@ const NesEmulator: React.FC<NesEmulatorProps> = ({ activePresetId }) => {
           return;
         }
         const romData = bufferToBinaryString(buffer);
-        startRom(romData, preset.displayName, jsnes);
+        startRom(romData, preset.displayName);
       } catch (error) {
         if (!isMountedRef.current) {
           return;
@@ -268,21 +226,16 @@ const NesEmulator: React.FC<NesEmulatorProps> = ({ activePresetId }) => {
       return undefined;
     }
 
-    const jsnes = getJsNes();
-    if (!jsnes) {
-      return undefined;
-    }
-
     const keyMap: Record<string, number> = {
-      ArrowUp: jsnes.Controller.BUTTON_UP,
-      ArrowDown: jsnes.Controller.BUTTON_DOWN,
-      ArrowLeft: jsnes.Controller.BUTTON_LEFT,
-      ArrowRight: jsnes.Controller.BUTTON_RIGHT,
-      Space: jsnes.Controller.BUTTON_A,
-      KeyZ: jsnes.Controller.BUTTON_B,
-      Enter: jsnes.Controller.BUTTON_START,
-      ShiftLeft: jsnes.Controller.BUTTON_SELECT,
-      ShiftRight: jsnes.Controller.BUTTON_SELECT,
+      ArrowUp: Controller.BUTTON_UP,
+      ArrowDown: Controller.BUTTON_DOWN,
+      ArrowLeft: Controller.BUTTON_LEFT,
+      ArrowRight: Controller.BUTTON_RIGHT,
+      Space: Controller.BUTTON_A,
+      KeyZ: Controller.BUTTON_B,
+      Enter: Controller.BUTTON_START,
+      ShiftLeft: Controller.BUTTON_SELECT,
+      ShiftRight: Controller.BUTTON_SELECT,
     };
 
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -298,7 +251,7 @@ const NesEmulator: React.FC<NesEmulatorProps> = ({ activePresetId }) => {
         return;
       }
       event.preventDefault();
-      nesRef.current.buttonDown(1, button);
+      nesRef.current.buttonDown(1, button as import("jsnes").ButtonKey);
     };
 
     const handleKeyUp = (event: KeyboardEvent) => {
@@ -310,7 +263,7 @@ const NesEmulator: React.FC<NesEmulatorProps> = ({ activePresetId }) => {
         return;
       }
       event.preventDefault();
-      nesRef.current.buttonUp(1, button);
+      nesRef.current.buttonUp(1, button as import("jsnes").ButtonKey);
     };
 
     window.addEventListener("keydown", handleKeyDown);

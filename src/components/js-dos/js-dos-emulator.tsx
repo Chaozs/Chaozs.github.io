@@ -32,8 +32,13 @@ type JSDosEmulatorProps = {
   activeGame: GameId;
 };
 
+const MOUSE_SENSITIVE_GAMES = new Set<GameId>(["doom", "wolf3d"]);
+
 const JSDosEmulator: React.FC<JSDosEmulatorProps> = ({ activeGame }) => {
   const [showControls, setShowControls] = useState(true);
+  const [mouseSensitivity, setMouseSensitivity] = useState(0.6);
+  const mouseSensitivityRef = useRef(0.6);
+  mouseSensitivityRef.current = mouseSensitivity;
   const dosboxContainerRef = useRef<HTMLDivElement | null>(null);
   const { isReady, isRunning, hasClickedStart, mouseEnabled, loadError, handleStart, stopAndReset } =
     useDosPlayer({
@@ -63,8 +68,6 @@ const JSDosEmulator: React.FC<JSDosEmulatorProps> = ({ activeGame }) => {
       return;
     }
 
-    const MOUSE_SENSITIVITY = 0.6;
-
     const handleMouseMove = (event: MouseEvent) => {
       if (!event.isTrusted) {
         return;
@@ -80,7 +83,7 @@ const JSDosEmulator: React.FC<JSDosEmulatorProps> = ({ activeGame }) => {
           clientY: event.clientY,
           screenX: event.screenX,
           screenY: event.screenY,
-          movementX: Math.round(event.movementX * MOUSE_SENSITIVITY),
+          movementX: Math.round(event.movementX * mouseSensitivityRef.current),
           movementY: 0,
           buttons: event.buttons,
           button: event.button,
@@ -137,6 +140,8 @@ const JSDosEmulator: React.FC<JSDosEmulatorProps> = ({ activeGame }) => {
         controls={GAME_CONTROLS[activeGame]}
         onToggleControls={() => setShowControls((current) => !current)}
         showControlsOverlay={hasClickedStart}
+        mouseSensitivity={MOUSE_SENSITIVE_GAMES.has(activeGame) ? mouseSensitivity : undefined}
+        onSensitivityChange={MOUSE_SENSITIVE_GAMES.has(activeGame) ? setMouseSensitivity : undefined}
       >
         <div
           id="dosbox"

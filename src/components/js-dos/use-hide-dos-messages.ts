@@ -26,15 +26,15 @@ export const useHideDosMessages = (
       });
     };
 
+    // Run immediately and then keep running for the entire session so that
+    // overlays injected by the js-dos player (e.g. the ClickToLock / sensitivity
+    // hint that appears once DOOM requests mouse capture) stay suppressed even
+    // after the game has fully loaded.
     hideUi();
-    const intervalId = window.setInterval(hideUi, 500);
-    const timeoutId = window.setTimeout(() => {
-      window.clearInterval(intervalId);
-    }, 4000);
+    const intervalId = window.setInterval(hideUi, 100);
 
     return () => {
       window.clearInterval(intervalId);
-      window.clearTimeout(timeoutId);
     };
   }, [containerRef, enabled]);
 };

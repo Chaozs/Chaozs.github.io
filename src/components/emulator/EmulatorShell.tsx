@@ -13,6 +13,8 @@ type EmulatorShellProps = {
   onToggleControls?: () => void;
   showControlsOverlay?: boolean;
   showMobileNote?: boolean;
+  mouseSensitivity?: number;
+  onSensitivityChange?: (value: number) => void;
   children: React.ReactNode;
 };
 
@@ -27,6 +29,8 @@ const EmulatorShell: React.FC<EmulatorShellProps> = ({
   onToggleControls,
   showControlsOverlay,
   showMobileNote = true,
+  mouseSensitivity,
+  onSensitivityChange,
   children,
 }) => {
   const handleOverlayKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -65,6 +69,8 @@ const EmulatorShell: React.FC<EmulatorShellProps> = ({
             sections={controls}
             showControls={showControls ?? true}
             onToggle={onToggleControls}
+            mouseSensitivity={mouseSensitivity}
+            onSensitivityChange={onSensitivityChange}
           />
         ) : null}
       </div>
