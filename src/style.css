@@ -67,8 +67,8 @@ GENERAL STYLING
   --input-focus-bg: #20262c;
   --matrix-bg: #000000;
   --matrix-trail: rgba(0, 0, 0, 0.06);
-  --matrix-char: #3bd16f;
-  --matrix-glow: #a6ffc1;
+  --matrix-char: #00ff41;
+  --matrix-glow: #aaffaa;
   --matrix-opacity: 1;
   --skeleton-bg: rgba(255, 255, 255, 0.06);
   --skeleton-border: rgba(230, 231, 233, 0.5);

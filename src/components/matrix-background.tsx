@@ -7,9 +7,10 @@ const MATRIX_COLUMN_SPACING = 0.56;
 const MATRIX_BASE_SPEED = 0.07;
 const MATRIX_SPEED_VARIANTS = [0.7, 1.25] as const;
 const MATRIX_GLOW_VARIANTS = [0.85, 1.2] as const;
-const MATRIX_TRAIL_STEP = 1.85;
-const MATRIX_MAX_TRAIL_LENGTH = 6;
-const MATRIX_CHARS = "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜｦﾝ";
+const MATRIX_TRAIL_STEP = 1.0;
+const MATRIX_MAX_TRAIL_LENGTH = 18;
+const MATRIX_MIN_TRAIL_LENGTH = 4;
+const MATRIX_CHARS = "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜｦﾝ0123456789";
 const MATRIX_FONT_STACK = '"MS Gothic", "Noto Sans JP", "Yu Gothic UI", monospace';
 
 const randomMatrixChar = (): string =>
@@ -25,6 +26,7 @@ const MatrixBackground: React.FC = () => {
   const dropProgressRef = useRef<number[]>([]);
   const dropCharsRef = useRef<string[][]>([]);
   const dropCharHoldRef = useRef<number[][]>([]);
+  const dropTrailLengthRef = useRef<number[]>([]);
   const dprRef = useRef<number>(1);
   const canvasWidthRef = useRef<number>(0);
   const canvasHeightRef = useRef<number>(0);
@@ -36,8 +38,8 @@ const MatrixBackground: React.FC = () => {
   const scrollFrameRef = useRef<number | null>(null);
   const matrixColorsRef = useRef({
     trail: "rgba(0, 0, 0, 0.12)",
-    char: "#3bd16f",
-    glow: "#9dffbf",
+    char: "#00ff41",
+    glow: "#aaffaa",
   });
 
   const readMatrixColors = useCallback(() => {
@@ -116,7 +118,7 @@ const MatrixBackground: React.FC = () => {
     for (let i = 0; i < dropsRef.current.length; i += 1) {
       const x = i * fontSize * MATRIX_COLUMN_SPACING;
       const y = dropsRef.current[i] * fontSize;
-      const trailLength = isFirefox ? 4 : MATRIX_MAX_TRAIL_LENGTH;
+      const trailLength = isFirefox ? 4 : (dropTrailLengthRef.current[i] ?? MATRIX_MAX_TRAIL_LENGTH);
       const columnChars = dropCharsRef.current[i] ?? [];
       const columnHolds = dropCharHoldRef.current[i] ?? [];
       const glowVariant = dropGlowRef.current[i] ?? 1;
@@ -143,6 +145,15 @@ const MatrixBackground: React.FC = () => {
       dropCharsRef.current[i] = columnChars;
       dropCharHoldRef.current[i] = columnHolds;
 
+      // The effective head is the lowest character still on screen.
+      // When y > canvasHeight the true head is off-screen; we promote
+      // the next visible character so every visible stream has a white leader.
+      const headOverflow = Math.max(0, y - canvasHeightRef.current);
+      const effectiveHeadIndex = Math.min(
+        Math.ceil(headOverflow / fontSize),
+        trailLength - 1,
+      );
+
       for (let trailIndex = trailLength - 1; trailIndex >= 0; trailIndex -= 1) {
         const text = columnChars[trailIndex] ?? randomMatrixChar();
         const trailY = y - fontSize * MATRIX_TRAIL_STEP * trailIndex;
@@ -159,10 +170,13 @@ const MatrixBackground: React.FC = () => {
         ctx.shadowColor = matrixColorsRef.current.glow;
         ctx.fillText(text, x, trailY);
 
-        if (trailIndex === 0) {
+        if (trailIndex === effectiveHeadIndex) {
+          ctx.fillStyle = "#c8ffd8";
           ctx.globalAlpha = 1;
-          ctx.shadowBlur = 0;
+          ctx.shadowBlur = fontSize * 0.55 * glowVariant;
+          ctx.shadowColor = "#aaffcc";
           ctx.fillText(text, x, trailY);
+          ctx.fillStyle = matrixColorsRef.current.char;
         }
       }
 
@@ -172,6 +186,7 @@ const MatrixBackground: React.FC = () => {
       if (y > canvasHeightRef.current && Math.random() > 0.99) {
         dropsRef.current[i] = 0;
         dropProgressRef.current[i] = 0;
+        dropTrailLengthRef.current[i] = MATRIX_MIN_TRAIL_LENGTH + Math.floor(Math.random() * (MATRIX_MAX_TRAIL_LENGTH - MATRIX_MIN_TRAIL_LENGTH + 1));
         dropGlowRef.current[i] = MATRIX_GLOW_VARIANTS[Math.floor(Math.random() * MATRIX_GLOW_VARIANTS.length)];
         dropCharsRef.current[i] = Array.from({ length: MATRIX_MAX_TRAIL_LENGTH }, randomMatrixChar);
         dropCharHoldRef.current[i] = Array.from(
@@ -253,6 +268,10 @@ const MatrixBackground: React.FC = () => {
         { length: MATRIX_MAX_TRAIL_LENGTH },
         (_, index) => (index === 0 ? 0 : 100 + index * 45 + Math.random() * 140),
       ),
+    );
+    dropTrailLengthRef.current = Array.from(
+      { length: columns },
+      () => MATRIX_MIN_TRAIL_LENGTH + Math.floor(Math.random() * (MATRIX_MAX_TRAIL_LENGTH - MATRIX_MIN_TRAIL_LENGTH + 1)),
     );
     lastFrameTimeRef.current = 0;
 
