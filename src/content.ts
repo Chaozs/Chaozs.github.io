@@ -13,16 +13,20 @@ export type AboutContent = {
 
 export type WorkExperience = {
   title: string;
-  logo: string;
+  logo?: string;
   logoStyle?: CSSProperties;
-  date: string;
-  role: string;
+  date?: string;
+  role?: string;
   categories: string;
   skills: string;
   summary?: string;
   highlights?: string[];
   details?: string[];
   iframeUrl?: string;
+  eyebrow?: string;
+  liveUrl?: string;
+  repoUrl?: string;
+  demoUrl?: string;
 };
 
 export const aboutContent: AboutContent[] = [
@@ -55,6 +59,64 @@ export const aboutContent: AboutContent[] = [
 
 export const aboutFooterContent =
   "I also enjoy playing piano (I used to both teach and perform part-time before starting my tech career), check out my youtube piano covers by clicking the icon below!";
+
+export type EducationDegree = {
+  degree: string;
+  field: string;
+  date: string;
+  thesisUrl?: string;
+};
+
+export type Education = {
+  institution: string;
+  degrees: EducationDegree[];
+  highlights?: string[];
+};
+
+export type Certification = {
+  name: string;
+  issuer: string;
+  date: string;
+  credentialId?: string;
+  credentialUrl?: string;
+};
+
+export const educationContent: Education[] = [
+  {
+    institution: "McMaster University",
+    degrees: [
+      { degree: "MASc", field: "Software Engineering", date: "2019 – 2022", thesisUrl: "https://macsphere.mcmaster.ca/items/f302fd7c-c4ee-4c2a-a5db-7b60c8ed24ac" },
+      { degree: "Bachelor", field: "Software Engineering", date: "2014 – 2019" },
+    ],
+  },
+];
+
+export const certifications: Certification[] = [
+  {
+    name: "Microsoft Azure Fundamentals",
+    issuer: "Microsoft",
+    date: "2024",
+    credentialId: "A2FEN4-CD9AFE",
+  },
+];
+
+export const personalProjects: WorkExperience[] = [
+  {
+    title: "Mewgenics Breeding Planner",
+    eyebrow: "Personal Project",
+    categories: "Game Tooling · AI Integration",
+    skills: "React · TypeScript · Node.js · Vite · OpenAI API",
+    summary: "Fan-made tool to import, organize, and analyze Mewgenics (A cat-sim+tactical Video Game) breeding data — with an AI-powered planner for parsing and recommendations.",
+    highlights: [
+      "React + TypeScript frontend with a TypeScript Node.js server for screenshot parsing and AI-powered planner recommendations.",
+      "Import spreadsheet-style cat data, edit inline, filter, drag to reorder, and manage Cats.",
+      "AI-powered integration for screenshot parsing and customizable, structured AI-generated breeding recommendations with streamed output.",
+      "Dynamically generates actionable Apply/Undo buttons from AI response output, allowing move and delete recommendations to be executed directly from result cards.",
+    ],
+    repoUrl: "https://github.com/Chaozs/Mewgenics-breeding-planner",
+    demoUrl: "https://raw.githubusercontent.com/Chaozs/Mewgenics-breeding-planner/master/Docs/demo.gif",
+  },
+];
 
 export const workExperiences: WorkExperience[] = [
   {

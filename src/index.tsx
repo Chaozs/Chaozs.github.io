@@ -13,6 +13,7 @@ import MatrixBackground from './components/matrix-background';
 import Intro from './components/intro';
 import Profile from './components/profile';
 import Experiences from './components/experiences';
+import ProjectsSection from './components/projects/ProjectsSection';
 import EmulatorSection from './components/emulator/EmulatorSection';
 import Contact from './components/contact';
 import LazySection from './components/LazySection';
@@ -56,6 +57,9 @@ const App: React.FC = () => {
                     </LazySection>
                     <LazySection minHeight={900} revealOnEvent="reveal-experiences">
                         <Experiences />
+                    </LazySection>
+                    <LazySection minHeight={400} revealOnEvent="reveal-projects">
+                        <ProjectsSection />
                     </LazySection>
                     <EmulatorSection />
                     <Contact />

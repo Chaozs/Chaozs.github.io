@@ -19,6 +19,7 @@ const getInitialTheme = (): "light" | "dark" => {
 const revealEventsByTarget: Record<string, string[]> = {
   about: ["reveal-profile"],
   work: ["reveal-experiences"],
+  projects: ["reveal-experiences", "reveal-projects"],
   emulator: ["reveal-experiences"],
 };
 

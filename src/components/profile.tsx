@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { aboutContent, aboutFooterContent } from "../content";
+import { aboutContent, aboutFooterContent, educationContent, certifications } from "../content";
 import cat from "../img/Kiwi.webp";
 import logo1 from "../img/ProfilePic.webp";
 import cat2 from "../img/kiki.webp";
@@ -22,10 +22,7 @@ import SectionShell from "./shared/SectionShell";
 import SkillGrid from "./shared/SkillGrid";
 import SurfaceCard from "./shared/SurfaceCard";
 
-type Skill = {
-  icon: string;
-  alt: string;
-};
+type Skill = { icon: string; alt: string };
 
 const skills: Skill[] = [
   { icon: cSharp, alt: "C#" },
@@ -166,7 +163,7 @@ const Profile: React.FC = () => {
             className={`row about-layout about-dossier__content${accessState === "unlocked" ? " is-unlocked" : ""}`}
             aria-hidden={accessState !== "unlocked"}
           >
-            <div className="col-md-6 about-top-photo-col about-dossier__panel">
+            <div className="col-md-5 about-top-photo-col about-dossier__panel">
               <div className="about-reveal-item about-reveal-item--name">
                 <div className="profile-nameplate">
                   <div className="profile-nameplate__eyebrow">Profile Subject</div>
@@ -186,9 +183,50 @@ const Profile: React.FC = () => {
                 />
               </div>
             </div>
-            <div className="col-md-6 about-top-skills-col about-dossier__panel">
+            <div className="col-md-7 about-top-skills-col about-dossier__panel">
               <div className="about-reveal-item about-reveal-item--skills">
-                <SkillGrid skills={skills} />
+                <SkillGrid skills={skills} columns={4} iconSize={76} />
+              </div>
+              <div className="about-reveal-item about-reveal-item--credentials">
+                {educationContent.map((edu) => (
+                  <div key={edu.institution} className="profile-cred-card">
+                    <div className="profile-cred-card__eyebrow">Education</div>
+                    <div className="profile-nameplate__edu-name">{edu.institution}</div>
+                    {edu.degrees.map((d) => (
+                      <div key={`${d.degree}-${d.date}`} className="profile-cred-card__degree-row">
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem" }}>
+                          <span className="profile-cred-card__sub">{d.degree} &mdash; {d.field}</span>
+                          {d.thesisUrl && (
+                            <a
+                              href={d.thesisUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="profile-cred-card__link"
+                              style={{ margin: 0, fontSize: "0.68rem" }}
+                            >
+                              thesis ↗
+                            </a>
+                          )}
+                        </span>
+                        <span className="work-date profile-cred-card__date">{d.date}</span>
+                      </div>
+                    ))}
+                  </div>
+                ))}
+                {certifications.map((cert) => (
+                  <div key={cert.name} className="profile-cred-card">
+                    <div className="profile-cred-card__eyebrow">{cert.name}</div>
+                    <div className="profile-cred-card__meta">
+                      <span className="work-date profile-cred-card__date">{cert.issuer} &mdash; {cert.date}</span>
+                      {cert.credentialId && (
+                        <span className="profile-cred-card__id">
+                          <span className="profile-cred-card__id-label">ID</span>
+                          {cert.credentialId}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
             <div className="col-12 about-bottom-col about-dossier__panel">

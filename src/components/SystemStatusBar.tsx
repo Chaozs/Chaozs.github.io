@@ -9,6 +9,7 @@ const SECTION_TARGETS: SectionTarget[] = [
   { id: "home", label: "START" },
   { id: "about", label: "PROFILE" },
   { id: "work", label: "EXPERIENCES" },
+  { id: "projects", label: "PROJECTS" },
   { id: "emulator", label: "MISSION" },
   { id: "contact", label: "CONTACT" },
 ];
@@ -66,6 +67,7 @@ const SystemStatusBar: React.FC<SystemStatusBarProps> = ({ embedded = false, onN
     window.addEventListener("hashchange", scheduleUpdate);
     window.addEventListener("reveal-profile", scheduleUpdate);
     window.addEventListener("reveal-experiences", scheduleUpdate);
+    window.addEventListener("reveal-projects", scheduleUpdate);
 
     scheduleUpdate();
 
@@ -77,6 +79,7 @@ const SystemStatusBar: React.FC<SystemStatusBarProps> = ({ embedded = false, onN
       window.removeEventListener("hashchange", scheduleUpdate);
       window.removeEventListener("reveal-profile", scheduleUpdate);
       window.removeEventListener("reveal-experiences", scheduleUpdate);
+      window.removeEventListener("reveal-projects", scheduleUpdate);
       if (frameId !== 0) {
         window.cancelAnimationFrame(frameId);
       }

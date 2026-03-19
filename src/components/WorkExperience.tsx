@@ -9,9 +9,9 @@ const HIGHLIGHT_TYPE_INTERVAL = 2;
 
 type WorkBoxProps = {
   title: string;
-  logo: string;
-  date: string;
-  role: string;
+  logo?: string;
+  date?: string;
+  role?: string;
   categories: string;
   skills: string;
   summary?: string;
@@ -19,6 +19,10 @@ type WorkBoxProps = {
   details?: string[];
   logoStyle?: React.CSSProperties;
   iframeUrl?: string;
+  eyebrow?: string;
+  liveUrl?: string;
+  repoUrl?: string;
+  demoUrl?: string;
 };
 
 const resolveDimension = (value?: React.CSSProperties["width"]): number | undefined => {
@@ -48,6 +52,10 @@ const WorkBox: React.FC<WorkBoxProps> = ({
   details = [],
   logoStyle,
   iframeUrl,
+  eyebrow,
+  liveUrl,
+  repoUrl,
+  demoUrl,
 }) => {
   const [showMore, setShowMore] = useState<boolean>(false);
   const [isEmbedActivated, setIsEmbedActivated] = useState<boolean>(false);
@@ -224,14 +232,14 @@ const WorkBox: React.FC<WorkBoxProps> = ({
         <SurfaceCard className="work-dossier">
           <div className="work-dossier__header" onClick={handleHeaderClick}>
             <div className="work-dossier__identity">
-              <div className="work-dossier__eyebrow">Classified Dossier</div>
+              <div className="work-dossier__eyebrow">{eyebrow ?? "Classified Dossier"}</div>
               <h2 className="work-dossier__title">{title}</h2>
               <div className="work-dossier__status-group work-dossier__status-group--inline">
                 <span className={`work-status-chip ${showMore ? "work-status-chip--open" : "work-status-chip--locked"}`}>
                   {showMore ? "Decrypted" : "Restricted"}
                 </span>
-                <span className="work-status-chip work-status-chip--role">{role}</span>
-                <span className="work-date">{date}</span>
+                {role && <span className="work-status-chip work-status-chip--role">{role}</span>}
+                {date && <span className="work-date">{date}</span>}
               </div>
             </div>
             <button
@@ -249,35 +257,45 @@ const WorkBox: React.FC<WorkBoxProps> = ({
           </div>
 
           {showMore ? (
+            <>
             <div className="row work-dossier__body">
               <div className="col-sm-4 work-dossier__sidebar-col">
                 <div className="work-dossier__sidebar">
-                  <div className="work-dossier__media">
-                    <ImageWithSkeleton
-                      src={logo}
-                      alt={`${title} logo`}
-                      style={{
-                        width: responsiveLogoWidth,
-                        maxWidth: "100%",
-                        aspectRatio: logoAspectRatio,
-                      }}
-                      imgStyle={{
-                        marginBottom: "0",
-                        borderRadius: "var(--radius-md)",
-                        marginLeft: "0",
-                        ...logoStyleRest,
-                      }}
-                    />
-                  </div>
+                  {logo && (
+                    <div className="work-dossier__media">
+                      <ImageWithSkeleton
+                        src={logo}
+                        alt={`${title} logo`}
+                        style={{
+                          width: responsiveLogoWidth,
+                          maxWidth: "100%",
+                          aspectRatio: logoAspectRatio,
+                        }}
+                        imgStyle={{
+                          marginBottom: "0",
+                          borderRadius: "var(--radius-md)",
+                          marginLeft: "0",
+                          ...logoStyleRest,
+                        }}
+                      />
+                    </div>
+                  )}
+                  {!logo && (
+                    <div className={`work-dossier__stamp work-dossier__stamp--sidebar${showMore ? " is-visible" : ""}`}>Access Granted</div>
+                  )}
                   <div className="work-dossier__sidebar-meta">
-                    <div className="work-meta-row work-meta-row--sidebar">
-                      <span className="work-meta-row__label">Period</span>
-                      <span className="work-meta-row__value">{date}</span>
-                    </div>
-                    <div className="work-meta-row work-meta-row--sidebar">
-                      <span className="work-meta-row__label">Role</span>
-                      <span className="work-meta-row__value">{role}</span>
-                    </div>
+                    {date && (
+                      <div className="work-meta-row work-meta-row--sidebar">
+                        <span className="work-meta-row__label">Period</span>
+                        <span className="work-meta-row__value">{date}</span>
+                      </div>
+                    )}
+                    {role && (
+                      <div className="work-meta-row work-meta-row--sidebar">
+                        <span className="work-meta-row__label">Role</span>
+                        <span className="work-meta-row__value">{role}</span>
+                      </div>
+                    )}
                     <div className="work-meta-row work-meta-row--sidebar">
                       <span className="work-meta-row__label">Skills</span>
                       <span className="work-meta-row__value">{skills}</span>
@@ -286,6 +304,22 @@ const WorkBox: React.FC<WorkBoxProps> = ({
                       <span className="work-meta-row__label">Domain</span>
                       <span className="work-meta-row__value">{categories}</span>
                     </div>
+                    {liveUrl && (
+                      <div className="work-meta-row work-meta-row--sidebar">
+                        <span className="work-meta-row__label">Live</span>
+                        <span className="work-meta-row__value">
+                          <a href={liveUrl} target="_blank" rel="noopener noreferrer" className="work-meta-link">Visit ↗</a>
+                        </span>
+                      </div>
+                    )}
+                    {repoUrl && (
+                      <div className="work-meta-row work-meta-row--sidebar">
+                        <span className="work-meta-row__label">Repo</span>
+                        <span className="work-meta-row__value">
+                          <a href={repoUrl} target="_blank" rel="noopener noreferrer" className="work-meta-link">View Repository ↗</a>
+                        </span>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -299,7 +333,9 @@ const WorkBox: React.FC<WorkBoxProps> = ({
                   }}
                 >
                   <div className="work-dossier__details">
-                    <div className={`work-dossier__stamp${showMore ? " is-visible" : ""}`}>Access Granted</div>
+                    {logo && (
+                      <div className={`work-dossier__stamp${showMore ? " is-visible" : ""}`}>Access Granted</div>
+                    )}
 
                     <div className="work-decrypt-header work-detail-item" style={getDelayStyle(detailBaseDelay)}>
                       {DECRYPT_HEADER_TEXT}
@@ -421,7 +457,41 @@ const WorkBox: React.FC<WorkBoxProps> = ({
                       </div>
                     ) : null}
 
-                    <div className="work-dossier__footer work-detail-item" style={getDelayStyle(Math.min(embedDelay + 80, 1480))}>
+                    {(!demoUrl || !!logo) && (
+                      <div className="work-dossier__footer work-detail-item" style={getDelayStyle(Math.min(embedDelay + 80, 1480))}>
+                        <button
+                          type="button"
+                          className="work-dossier__toggle work-dossier__toggle--footer"
+                          onClick={handleToggleClick}
+                          aria-label={`Collapse ${title} dossier`}
+                        >
+                          <span className="work-dossier__toggle-label">Seal File</span>
+                          <span className="work-dossier__toggle-icon is-open" aria-hidden="true">
+                            <AppIcon name="chevron-down" />
+                          </span>
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+            {demoUrl && !logo && (
+              <>
+                <div className="row work-dossier__demo-row">
+                  <div className="col-12">
+                    <div className="work-dossier__demo work-dossier__demo--banner">
+                      <img
+                        src={demoUrl}
+                        alt={`${title} demo`}
+                        className="work-dossier__demo-gif"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-12">
+                    <div className="work-dossier__footer work-dossier__footer--fullwidth work-detail-item" style={getDelayStyle(Math.min(embedDelay + 80, 1480))}>
                       <button
                         type="button"
                         className="work-dossier__toggle work-dossier__toggle--footer"
@@ -436,8 +506,9 @@ const WorkBox: React.FC<WorkBoxProps> = ({
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
+              </>
+            )}
+            </>
           ) : null}
         </SurfaceCard>
       </div>
