@@ -6,6 +6,7 @@ const SCRAMBLE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*";
 const CREATOR_TIME_ZONE = "America/Toronto";
 const CREATOR_NODE = "Toronto";
 const HERO_COMMANDS = ["profile", "experiences", "mission", "contact"] as const;
+const HERO_COMMAND_PREFIX = "cd ";
 
 const heroTargetMap: Record<(typeof HERO_COMMANDS)[number], string> = {
   profile: "about",
@@ -18,6 +19,52 @@ const heroRevealEvents: Partial<Record<string, string[]>> = {
   about: ["reveal-profile"],
   work: ["reveal-experiences"],
   emulator: ["reveal-experiences"],
+};
+
+const clampCommandSelection = (input: HTMLInputElement | null) => {
+  if (!input) {
+    return;
+  }
+
+  const prefixLength = HERO_COMMAND_PREFIX.length;
+  const nextStart = Math.max(input.selectionStart ?? prefixLength, prefixLength);
+  const nextEnd = Math.max(input.selectionEnd ?? nextStart, prefixLength);
+
+  if (nextStart !== input.selectionStart || nextEnd !== input.selectionEnd) {
+    input.setSelectionRange(nextStart, nextEnd);
+  }
+};
+
+const scheduleCommandSelectionClamp = (input: HTMLInputElement | null) => {
+  requestAnimationFrame(() => {
+    clampCommandSelection(input);
+  });
+};
+
+const coerceHeroCommandValue = (rawValue: string): string => {
+  const trimmedValue = rawValue.trim();
+  if (!trimmedValue) {
+    return HERO_COMMAND_PREFIX;
+  }
+
+  if (rawValue.toLowerCase().startsWith(HERO_COMMAND_PREFIX)) {
+    return `${HERO_COMMAND_PREFIX}${rawValue.slice(HERO_COMMAND_PREFIX.length)}`;
+  }
+
+  return `${HERO_COMMAND_PREFIX}${normalizeHeroCommand(rawValue)}`;
+};
+
+const normalizeHeroCommand = (input: string): string => {
+  const normalizedInput = input.trim().toLowerCase();
+  if (!normalizedInput) {
+    return "";
+  }
+
+  if (normalizedInput.startsWith(HERO_COMMAND_PREFIX)) {
+    return normalizedInput.slice(HERO_COMMAND_PREFIX.length).trimStart();
+  }
+
+  return normalizedInput;
 };
 
 const formatUptime = (totalSeconds: number): string => {
@@ -51,12 +98,28 @@ const getTelemetrySnapshot = () => {
 };
 
 const getCommandMatch = (input: string): (typeof HERO_COMMANDS)[number] | null => {
-  const normalizedInput = input.trim().toLowerCase();
+  const normalizedInput = normalizeHeroCommand(input);
   if (!normalizedInput) {
     return null;
   }
 
   return HERO_COMMANDS.find((command) => command.startsWith(normalizedInput)) ?? null;
+};
+
+const getCommandSuggestion = (input: string): string => {
+  const trimmedInput = input.trimStart().toLowerCase();
+  if (!trimmedInput.startsWith(HERO_COMMAND_PREFIX)) {
+    return "";
+  }
+
+  const normalizedInput = normalizeHeroCommand(input);
+  const matchedCommand = getCommandMatch(input);
+
+  if (!normalizedInput || !matchedCommand || matchedCommand === normalizedInput) {
+    return "";
+  }
+
+  return matchedCommand.slice(normalizedInput.length);
 };
 
 const Intro: React.FC = () => {
@@ -67,8 +130,9 @@ const Intro: React.FC = () => {
   const [themeLabel, setThemeLabel] = useState(getThemeLabel);
   const [uptimeSeconds, setUptimeSeconds] = useState(0);
   const [telemetrySnapshot, setTelemetrySnapshot] = useState(getTelemetrySnapshot);
-  const [commandValue, setCommandValue] = useState("experiences");
+  const [commandValue, setCommandValue] = useState(`${HERO_COMMAND_PREFIX}experiences`);
   const [commandError, setCommandError] = useState("");
+  const commandSuggestion = getCommandSuggestion(commandValue);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -158,7 +222,7 @@ const Intro: React.FC = () => {
 
   const handleCommandSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const normalizedCommand = commandValue.trim().toLowerCase() as (typeof HERO_COMMANDS)[number];
+    const normalizedCommand = normalizeHeroCommand(commandValue) as (typeof HERO_COMMANDS)[number];
     const targetId = heroTargetMap[normalizedCommand];
 
     if (!targetId) {
@@ -276,41 +340,99 @@ const Intro: React.FC = () => {
                     &gt;
                   </span>
                   <span className="intro-command-bar__command-line">
-                    <input
-                      ref={commandInputRef}
-                      id="hero-command-input"
-                      className="intro-command-bar__input"
-                      type="text"
-                      value={commandValue}
-                      size={Math.max(commandValue.length, 1)}
-                      onChange={(event) => {
-                        setCommandValue(event.target.value);
-                        if (commandError) {
-                          setCommandError("");
-                        }
-                      }}
-                      onKeyDown={(event) => {
-                        if (event.key !== "Tab") {
-                          return;
-                        }
+                    <span className="intro-command-bar__input-wrap">
+                      <span className="intro-command-bar__input-measure" aria-hidden="true">
+                        {commandValue || "\u00a0"}
+                      </span>
+                      <input
+                        ref={commandInputRef}
+                        id="hero-command-input"
+                        className="intro-command-bar__input"
+                        type="text"
+                        value={commandValue}
+                        size={Math.max(commandValue.length, 1)}
+                        onChange={(event) => {
+                          setCommandValue(coerceHeroCommandValue(event.target.value));
+                          if (commandError) {
+                            setCommandError("");
+                          }
+                          scheduleCommandSelectionClamp(commandInputRef.current);
+                        }}
+                        onKeyDown={(event) => {
+                          const input = event.currentTarget;
+                          const prefixLength = HERO_COMMAND_PREFIX.length;
+                          const selectionStart = input.selectionStart ?? prefixLength;
+                          const selectionEnd = input.selectionEnd ?? selectionStart;
+                          const hasSelection = selectionEnd > selectionStart;
 
-                        const matchedCommand = getCommandMatch(commandValue);
-                        if (!matchedCommand) {
-                          return;
-                        }
+                          if (event.key === "Home") {
+                            event.preventDefault();
+                            input.setSelectionRange(prefixLength, prefixLength);
+                            return;
+                          }
 
-                        event.preventDefault();
-                        setCommandValue(matchedCommand);
-                        if (commandError) {
-                          setCommandError("");
-                        }
-                      }}
-                      autoComplete="off"
-                      spellCheck={false}
-                      aria-label="Navigate to profile, experiences, mission, or contact"
-                      aria-invalid={Boolean(commandError)}
-                      aria-describedby={commandError ? "hero-command-error" : undefined}
-                    />
+                          if (event.key === "ArrowLeft" && !event.shiftKey && selectionStart <= prefixLength) {
+                            event.preventDefault();
+                            input.setSelectionRange(prefixLength, prefixLength);
+                            return;
+                          }
+
+                          if (
+                            (event.key === "Backspace" &&
+                              selectionStart <= prefixLength &&
+                              (!hasSelection || selectionEnd <= prefixLength)) ||
+                            (event.key === "Delete" &&
+                              selectionStart < prefixLength &&
+                              (!hasSelection || selectionEnd <= prefixLength))
+                          ) {
+                            event.preventDefault();
+                            input.setSelectionRange(prefixLength, prefixLength);
+                            return;
+                          }
+
+                          if (event.key !== "Tab") {
+                            return;
+                          }
+
+                          const matchedCommand = getCommandMatch(commandValue);
+                          if (!matchedCommand) {
+                            return;
+                          }
+
+                          event.preventDefault();
+                          setCommandValue(`${HERO_COMMAND_PREFIX}${matchedCommand}`);
+                          if (commandError) {
+                            setCommandError("");
+                          }
+                          scheduleCommandSelectionClamp(commandInputRef.current);
+                        }}
+                        onKeyUp={() => {
+                          scheduleCommandSelectionClamp(commandInputRef.current);
+                        }}
+                        onFocus={() => {
+                          scheduleCommandSelectionClamp(commandInputRef.current);
+                        }}
+                        onClick={() => {
+                          scheduleCommandSelectionClamp(commandInputRef.current);
+                        }}
+                        onMouseUp={() => {
+                          scheduleCommandSelectionClamp(commandInputRef.current);
+                        }}
+                        onSelect={() => {
+                          scheduleCommandSelectionClamp(commandInputRef.current);
+                        }}
+                        autoComplete="off"
+                        spellCheck={false}
+                        aria-label="Navigate to profile, experiences, mission, or contact"
+                        aria-invalid={Boolean(commandError)}
+                        aria-describedby={commandError ? "hero-command-error" : undefined}
+                      />
+                      {commandSuggestion ? (
+                        <span className="intro-command-bar__ghost" aria-hidden="true">
+                          {commandSuggestion}
+                        </span>
+                      ) : null}
+                    </span>
                     <span className="intro-command-bar__cursor" aria-hidden="true"></span>
                   </span>
                   <button type="submit" className="intro-command-bar__hint">

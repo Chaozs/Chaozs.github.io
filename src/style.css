@@ -30,12 +30,12 @@ GENERAL STYLING
   --accent-strong: #2a9a52;
   --accent-soft: #b8f5cd;
   --accent-contrast: #ffffff;
-  --action-accent: #d69024;
-  --action-accent-strong: #a96210;
-  --action-accent-soft: #f3cd7c;
-  --action-accent-contrast: #fff9ef;
-  --warning-accent: #a36853;
-  --warning-surface: rgba(163, 104, 83, 0.14);
+  --action-accent: var(--accent);
+  --action-accent-strong: var(--accent-strong);
+  --action-accent-soft: var(--accent-soft);
+  --action-accent-contrast: var(--accent-contrast);
+  --warning-accent: #c88717;
+  --warning-surface: rgba(200, 135, 23, 0.14);
   --meta-chip-bg: color-mix(in srgb, var(--surface-3) 78%, transparent);
   --meta-chip-border: color-mix(in srgb, var(--border-color) 86%, transparent);
   --meta-chip-text: var(--text-muted);
@@ -54,12 +54,12 @@ GENERAL STYLING
   --tooltip-text: #f6f7f8;
   --tooltip-border: rgba(59, 209, 111, 0.22);
   --border-color: #2c353d;
-  --button-bg: #17120a;
-  --button-border: var(--action-accent);
-  --button-text: var(--action-accent);
-  --button-bg-strong: var(--action-accent-strong);
-  --button-bg-hover: #8c4f0d;
-  --button-text-hover: var(--action-accent-contrast);
+  --button-bg: #101713;
+  --button-border: #3bd16f;
+  --button-text: #3bd16f;
+  --button-bg-strong: #2a9a52;
+  --button-bg-hover: #1f7a3b;
+  --button-text-hover: #ffffff;
   --input-bg: #1a1f24;
   --input-text: #e6e7e9;
   --input-border: #2c353d;
@@ -105,12 +105,12 @@ html[data-theme="light"] {
   --accent-strong: #1e40af;
   --accent-soft: #dbeafe;
   --accent-contrast: #ffffff;
-  --action-accent: #c97716;
-  --action-accent-strong: #9a4f0f;
-  --action-accent-soft: #f3c27b;
-  --action-accent-contrast: #fffaf2;
-  --warning-accent: #9a4f39;
-  --warning-surface: rgba(154, 79, 57, 0.12);
+  --action-accent: var(--accent);
+  --action-accent-strong: var(--accent-strong);
+  --action-accent-soft: var(--accent-soft);
+  --action-accent-contrast: var(--accent-contrast);
+  --warning-accent: #92400e;
+  --warning-surface: rgba(146, 64, 14, 0.12);
   --meta-chip-bg: color-mix(in srgb, var(--surface-3) 82%, transparent);
   --meta-chip-border: color-mix(in srgb, var(--border-color) 88%, transparent);
   --meta-chip-text: #5b6679;
@@ -129,12 +129,12 @@ html[data-theme="light"] {
   --tooltip-text: #0f172a;
   --tooltip-border: rgba(37, 99, 235, 0.24);
   --border-color: #d6deea;
-  --button-bg: #fff9f1;
-  --button-border: var(--action-accent);
-  --button-text: var(--action-accent);
-  --button-bg-strong: var(--action-accent);
-  --button-bg-hover: var(--action-accent-strong);
-  --button-text-hover: var(--action-accent-contrast);
+  --button-bg: #f8fbff;
+  --button-border: #2563eb;
+  --button-text: #2563eb;
+  --button-bg-strong: #2563eb;
+  --button-bg-hover: #1d4ed8;
+  --button-text-hover: #ffffff;
   --input-bg: #ffffff;
   --input-text: #1c2430;
   --input-border: #cfd9e6;
@@ -2274,6 +2274,11 @@ PORTFOLIO
     gap: 0.55rem;
   }
 
+  .intro-command-bar__command-line {
+    min-height: 40px;
+    padding: 0.5rem 0.65rem;
+  }
+
   .intro-command-bar__label {
     margin-bottom: 0.38rem;
     font-size: 0.64rem;
@@ -2290,10 +2295,16 @@ PORTFOLIO
     height: 1rem;
   }
 
+  .intro-command-bar__ghost {
+    font-size: 0.76rem;
+    letter-spacing: 0.08em;
+  }
+
   .intro-command-bar__hint {
-    min-width: 46px;
-    padding: 0.32rem 0.46rem;
-    font-size: 0.6rem;
+    min-width: 70px;
+    min-height: 40px;
+    padding: 0.36rem 0.62rem;
+    font-size: 0.62rem;
   }
 
   .about-dossier__relock {
@@ -3093,7 +3104,7 @@ BUTTON
   gap: 0.7rem;
   width: 100%;
   min-height: 62px;
-  padding: 0.8rem 1rem;
+  padding: 0.7rem 0.8rem;
   border-radius: 20px;
   border: 1px solid color-mix(in srgb, var(--accent) 34%, var(--border-color));
   background:
@@ -3121,24 +3132,66 @@ BUTTON
 .intro-command-bar__command-line {
   flex: 1 1 auto;
   min-width: 0;
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 0.25rem;
+  min-height: 44px;
+  padding: 0.58rem 0.78rem;
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--border-color));
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--surface-1) 72%, transparent), color-mix(in srgb, var(--surface-3) 88%, transparent));
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--surface-1) 55%, transparent);
+  transition: border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
 }
 
-.intro-command-bar__input {
+.intro-command-bar__shell:focus-within .intro-command-bar__command-line {
+  border-color: color-mix(in srgb, var(--accent) 46%, var(--border-color));
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--surface-1) 62%, transparent),
+    0 0 0 3px color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+.intro-command-bar__input-wrap {
+  position: relative;
+  display: inline-grid;
   flex: 0 0 auto;
+  align-items: center;
+  width: fit-content;
   min-width: 1ch;
   max-width: 100%;
-  border: 0;
-  background: transparent;
+}
+
+.intro-command-bar__input-measure,
+.intro-command-bar__input {
+  min-width: 1ch;
+  max-width: 100%;
   color: var(--text-heading);
   font-family: var(--font-mono);
   font-size: var(--type-command);
   font-weight: 700;
   letter-spacing: var(--tracking-command);
-  text-transform: uppercase;
+  white-space: pre;
+  grid-area: 1 / 1;
+  box-sizing: border-box;
+  padding-left: 0.12em;
+  padding-right: 0.08em;
+}
+
+.intro-command-bar__input-measure {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.intro-command-bar__input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  border: 0;
+  background: transparent;
   outline: none;
+  min-width: 0;
+  max-width: none;
 }
 
 .intro-command-bar__input::placeholder {
@@ -3166,33 +3219,52 @@ BUTTON
   animation: none;
 }
 
+.intro-command-bar__ghost {
+  position: absolute;
+  left: calc(100% + 0.18rem);
+  top: 50%;
+  transform: translateY(-50%);
+  color: color-mix(in srgb, var(--text-muted) 78%, transparent);
+  font-family: var(--font-mono);
+  font-size: var(--type-command);
+  font-weight: 700;
+  letter-spacing: var(--tracking-command);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
 .intro-command-bar__hint {
   flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 54px;
-  padding: 0.36rem 0.58rem;
+  min-width: 86px;
+  min-height: 44px;
+  padding: 0.46rem 0.92rem;
   border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--action-accent) 24%, transparent);
-  background: color-mix(in srgb, var(--action-accent) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--action-accent) 34%, var(--border-color));
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--action-accent) 16%, transparent), color-mix(in srgb, var(--action-accent) 10%, transparent));
   font-family: var(--font-mono);
   color: var(--action-accent);
-  font-size: var(--type-label);
+  font-size: 0.68rem;
   font-weight: 700;
-  letter-spacing: var(--tracking-label);
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   appearance: none;
   cursor: pointer;
-  transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease, color 180ms ease;
+  box-shadow: var(--shadow-s);
+  transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease, color 180ms ease, box-shadow 200ms ease;
 }
 
 .intro-command-bar__hint:hover,
 .intro-command-bar__hint:focus {
   transform: translateY(-1px);
-  border-color: color-mix(in srgb, var(--action-accent) 42%, transparent);
-  background: color-mix(in srgb, var(--action-accent) 18%, transparent);
+  border-color: color-mix(in srgb, var(--action-accent) 52%, var(--border-color));
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--action-accent) 22%, transparent), color-mix(in srgb, var(--action-accent) 14%, transparent));
   color: var(--text-heading);
+  box-shadow: var(--focus-ring), var(--shadow-m);
   outline: none;
 }
 
@@ -3949,41 +4021,74 @@ BUTTON
 .emulator-game-toggle {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 10px;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
+  padding: 0.4rem;
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--action-accent) 18%, var(--border-color));
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--surface-3) 96%, transparent), color-mix(in srgb, #000 18%, var(--surface-3))),
+    radial-gradient(circle at top left, color-mix(in srgb, var(--action-accent) 10%, transparent), transparent 58%);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, white 6%, transparent),
+    inset 0 0 0 1px color-mix(in srgb, #000 18%, transparent);
 }
 
 .emulator-game-button {
-  background: var(--action-surface);
-  border: 1px solid var(--action-border);
-  color: var(--text-heading);
-  padding: 0.62rem 1rem;
-  border-radius: 999px;
-  font-size: 0.7rem;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.48rem;
+  min-height: 46px;
+  min-width: 150px;
+  background: color-mix(in srgb, var(--surface-1) 44%, transparent);
+  border: 1px solid color-mix(in srgb, var(--action-accent) 12%, var(--border-color));
+  color: var(--text-muted);
+  padding: 0.72rem 0.9rem;
+  border-radius: 11px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  box-shadow: var(--shadow-s);
+  text-align: left;
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--surface-1) 55%, transparent);
   transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease, transform 150ms ease, box-shadow 200ms ease;
 }
 
+.emulator-game-button::before {
+  content: ">";
+  flex: 0 0 auto;
+  color: color-mix(in srgb, var(--action-accent) 58%, var(--text-muted));
+  font-size: 0.88rem;
+  line-height: 1;
+}
+
 .emulator-game-button:hover,
-.emulator-game-button:focus {
+.emulator-game-button:focus-visible {
   background: var(--action-surface-hover);
   border-color: var(--action-border-strong);
   color: var(--text-heading);
   transform: translateY(-2px);
   box-shadow: var(--focus-ring), var(--shadow-m);
+  outline: none;
+}
+
+.emulator-game-button:hover::before,
+.emulator-game-button:focus-visible::before {
+  color: var(--action-accent);
 }
 
 .emulator-game-button.is-active {
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--action-accent-strong) 88%, var(--surface-1)), color-mix(in srgb, var(--action-accent) 82%, var(--surface-2))),
-    radial-gradient(circle at left center, color-mix(in srgb, var(--action-accent-soft) 24%, transparent), transparent 58%);
-  border-color: color-mix(in srgb, var(--action-accent-strong) 80%, var(--border-color));
-  color: var(--action-accent-contrast);
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--action-accent) 24%, transparent), var(--shadow-s);
+  background: color-mix(in srgb, var(--surface-1) 92%, transparent);
+  border-color: color-mix(in srgb, var(--action-accent) 58%, var(--border-color));
+  color: var(--text-heading);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--action-accent) 26%, transparent), var(--shadow-s);
+}
+
+.emulator-game-button.is-active::before {
+  color: var(--action-accent);
 }
 
 .emulator-toolbar {
