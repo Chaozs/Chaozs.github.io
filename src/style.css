@@ -3884,6 +3884,134 @@ BUTTON
   outline: none;
 }
 
+/* Version Picker */
+.version-picker {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.version-picker__trigger {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 10px;
+  background: var(--action-surface);
+  border: 1px solid var(--action-border);
+  border-radius: 8px;
+  color: var(--text-body);
+  font-size: 0.72rem;
+  font-family: 'Fira Code', monospace;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 180ms ease, background-color 200ms ease, color 200ms ease, border-color 200ms ease, box-shadow 220ms ease;
+}
+
+.version-picker__trigger:hover,
+.version-picker__trigger:focus-visible {
+  transform: translateY(-2px);
+  background: var(--action-surface-hover);
+  border-color: var(--action-border-strong);
+  color: var(--text-heading);
+  box-shadow: var(--focus-ring), var(--shadow-m);
+  outline: none;
+}
+
+.version-picker__icon {
+  width: 0.9em;
+  height: 0.9em;
+  flex-shrink: 0;
+}
+
+.version-picker__chevron {
+  width: 0.8em;
+  height: 0.8em;
+  flex-shrink: 0;
+  transition: transform 200ms ease;
+}
+
+.version-picker.is-open .version-picker__chevron {
+  transform: rotate(180deg);
+}
+
+.version-picker__menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 180px;
+  padding: 6px;
+  margin: 0;
+  list-style: none;
+  background:
+    linear-gradient(160deg, color-mix(in srgb, var(--surface-1) 94%, transparent), var(--surface-2)),
+    radial-gradient(circle at top right, color-mix(in srgb, var(--accent) 12%, transparent), transparent 60%);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: var(--shadow-l);
+  backdrop-filter: blur(12px);
+  z-index: 1040;
+  animation: vp-reveal 140ms ease forwards;
+}
+
+@keyframes vp-reveal {
+  from { opacity: 0; transform: translateY(-6px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)    scale(1);    }
+}
+
+.version-picker__heading {
+  padding: 4px 10px 6px;
+  font-size: 0.65rem;
+  font-family: 'Fira Code', monospace;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-body);
+  opacity: 0.6;
+}
+
+.version-picker__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 7px 10px;
+  border-radius: 8px;
+  color: var(--text-body);
+  text-decoration: none;
+  font-size: 0.78rem;
+  font-family: 'Fira Code', monospace;
+  transition: background 150ms ease, color 150ms ease;
+}
+
+.version-picker__item:hover {
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  color: var(--text-heading);
+}
+
+.version-picker__item-label {
+  font-weight: 600;
+}
+
+.version-picker__item-date {
+  font-size: 0.68rem;
+  opacity: 0.65;
+  white-space: nowrap;
+}
+
+.navbar-b.navbar-reduce .version-picker__trigger {
+  color: var(--text-heading);
+  background: var(--action-surface);
+  border-color: var(--action-border);
+}
+
+.navbar-b.navbar-reduce .version-picker__trigger:hover,
+.navbar-b.navbar-reduce .version-picker__trigger:focus-visible {
+  background: var(--action-surface-hover);
+  border-color: var(--action-border-strong);
+  color: var(--text-heading);
+  outline: none;
+}
+
 @media (max-width: 767.98px) {
   .navbar-b,
   .navbar-b.navbar-reduce {
@@ -3923,7 +4051,8 @@ BUTTON
   }
 
   .navbar-utility > .nav-resume-button,
-  .navbar-utility > .theme-toggle {
+  .navbar-utility > .theme-toggle,
+  .navbar-utility > .version-picker {
     display: none !important;
   }
 
@@ -4747,6 +4876,7 @@ BUTTON
 
 .nav-resume-button              { animation: btn-idle-glow 3.8s ease-in-out 0s infinite; }
 .theme-toggle                   { animation: btn-idle-glow 3.8s ease-in-out 0s infinite; }
+.version-picker__trigger        { animation: btn-idle-glow 3.8s ease-in-out 0s infinite; }
 .work-dossier__toggle           { animation: btn-idle-glow 3.8s ease-in-out 0s infinite; }
 .contact-submit-button          { animation: btn-idle-glow 3.8s ease-in-out 0s infinite; }
 .contact-relay-link             { animation: btn-idle-glow 3.8s ease-in-out 0s infinite; }

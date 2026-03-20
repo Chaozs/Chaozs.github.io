@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import resumePdf from "../ThienTrandinhResume.pdf";
 import AppIcon from "./shared/AppIcon";
 import SystemStatusBar from "./SystemStatusBar";
+import VersionPicker from "./VersionPicker";
 
 const MOBILE_BREAKPOINT = 767.98;
 const NAVBAR_REDUCE_OFFSET = 50;
@@ -211,6 +212,7 @@ const Navbar: React.FC = () => {
                   </span>
                   <span className="nav-mobile-action__label">Resume</span>
                 </a>
+                <VersionPicker variant="mobile" onNavigate={() => setIsMobileStatusOpen(false)} />
                 <div className="system-status__utility-actions">
                   <button
                     type="button"
@@ -249,6 +251,7 @@ const Navbar: React.FC = () => {
               <span className="nav-resume-button__label">Resume</span>
             </span>
           </a>
+          <VersionPicker />
           <button
             type="button"
             className="theme-toggle"

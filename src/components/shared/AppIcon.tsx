@@ -12,7 +12,8 @@ type IconName =
   | "arrow-right"
   | "linkedin"
   | "github"
-  | "youtube";
+  | "youtube"
+  | "history";
 
 type AppIconProps = {
   name: IconName;
@@ -112,6 +113,13 @@ const AppIcon: React.FC<AppIconProps> = ({ name, className }) => {
             fill="currentColor"
             d="M21.58 7.2a2.95 2.95 0 0 0-2.08-2.09C17.66 4.6 12 4.6 12 4.6s-5.66 0-7.5.5A2.95 2.95 0 0 0 2.42 7.2C1.9 9.04 1.9 12 1.9 12s0 2.96.52 4.8a2.95 2.95 0 0 0 2.08 2.09c1.84.5 7.5.5 7.5.5s5.66 0 7.5-.5a2.95 2.95 0 0 0 2.08-2.09c.52-1.84.52-4.8.52-4.8s0-2.96-.52-4.8M10.2 15.02V8.98L15.42 12z"
           />
+        </svg>
+      );
+    case "history":
+      return (
+        <svg className={`app-icon ${className ?? ""}`.trim()} viewBox="0 0 24 24" aria-hidden="true">
+          <circle {...strokeProps} cx="12" cy="12" r="9" />
+          <path {...strokeProps} d="M12 7v5l3 2" />
         </svg>
       );
     default:
