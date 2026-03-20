@@ -326,7 +326,6 @@ const Intro: React.FC = () => {
             </div>
             <div className="pt-3 intro-stagger-item">
               <form className="intro-command-bar" onSubmit={handleCommandSubmit}>
-                <div className="intro-command-bar__label">Go To</div>
                 <div
                   className="intro-command-bar__shell"
                   onClick={(event) => {
@@ -337,6 +336,10 @@ const Intro: React.FC = () => {
                     commandInputRef.current?.focus();
                   }}
                 >
+                  <div className="intro-command-bar__titlebar">
+                    <span className="intro-command-bar__titlebar-comment">// </span>Go to
+                  </div>
+                  <div className="intro-command-bar__body">
                   <span className="intro-command-bar__prompt" aria-hidden="true">
                     &gt;
                   </span>
@@ -442,6 +445,7 @@ const Intro: React.FC = () => {
                       <AppIcon name="arrow-right" />
                     </span>
                   </button>
+                  </div>
                 </div>
                 {commandError ? (
                   <div id="hero-command-error" className="intro-command-bar__error">

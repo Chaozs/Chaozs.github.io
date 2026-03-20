@@ -3,8 +3,8 @@ import React, { useCallback, useEffect, useRef } from "react";
 const isFirefoxBrowser = () =>
   typeof navigator !== "undefined" && /firefox/i.test(navigator.userAgent) && !/seamonkey/i.test(navigator.userAgent);
 
-const MATRIX_COLUMN_SPACING = 0.56;
-const MATRIX_BASE_SPEED = 0.07;
+const MATRIX_COLUMN_SPACING = 0.42;
+const MATRIX_BASE_SPEED = 0.105;
 const MATRIX_SPEED_VARIANTS = [0.7, 1.25] as const;
 const MATRIX_GLOW_VARIANTS = [0.85, 1.2] as const;
 const MATRIX_TRAIL_STEP = 1.0;
@@ -78,12 +78,12 @@ const MatrixBackground: React.FC = () => {
 
   const getFontSize = useCallback(() => {
     if (window.innerWidth <= 480) {
-      return 18;
+      return 13;
     }
     if (window.innerWidth <= 767.98) {
-      return 22;
+      return 16;
     }
-    return 31;
+    return 22;
   }, []);
 
   const animateMatrix = useCallback(() => {
@@ -145,15 +145,6 @@ const MatrixBackground: React.FC = () => {
       dropCharsRef.current[i] = columnChars;
       dropCharHoldRef.current[i] = columnHolds;
 
-      // The effective head is the lowest character still on screen.
-      // When y > canvasHeight the true head is off-screen; we promote
-      // the next visible character so every visible stream has a white leader.
-      const headOverflow = Math.max(0, y - canvasHeightRef.current);
-      const effectiveHeadIndex = Math.min(
-        Math.ceil(headOverflow / fontSize),
-        trailLength - 1,
-      );
-
       for (let trailIndex = trailLength - 1; trailIndex >= 0; trailIndex -= 1) {
         const text = columnChars[trailIndex] ?? randomMatrixChar();
         const trailY = y - fontSize * MATRIX_TRAIL_STEP * trailIndex;
@@ -164,13 +155,20 @@ const MatrixBackground: React.FC = () => {
           ? fontSize * (0.04 + glowStrength * 0.22) * glowVariant
           : fontSize * (0.08 + glowStrength * 0.42) * glowVariant;
 
+        // Flip each character 180° (mirror + upside-down) around its own centre.
+        // ctx.transform(-1,0,0,-1, 2px, 2py) is self-inverse, so applying it
+        // twice restores the transform without needing save/restore.
+        const flipX = 2 * (x + fontSize * 0.28);
+        const flipY = 2 * (trailY - fontSize * 0.33);
+        ctx.transform(-1, 0, 0, -1, flipX, flipY);
+
         ctx.fillStyle = matrixColorsRef.current.char;
         ctx.globalAlpha = Math.min(fillAlpha, 0.96);
         ctx.shadowBlur = blurStrength;
         ctx.shadowColor = matrixColorsRef.current.glow;
         ctx.fillText(text, x, trailY);
 
-        if (trailIndex === effectiveHeadIndex) {
+        if (trailIndex === 0) {
           ctx.fillStyle = "#c8ffd8";
           ctx.globalAlpha = 1;
           ctx.shadowBlur = fontSize * 0.55 * glowVariant;
@@ -178,6 +176,8 @@ const MatrixBackground: React.FC = () => {
           ctx.fillText(text, x, trailY);
           ctx.fillStyle = matrixColorsRef.current.char;
         }
+
+        ctx.transform(-1, 0, 0, -1, flipX, flipY); // undo flip (self-inverse)
       }
 
       ctx.globalAlpha = 1;
@@ -222,8 +222,15 @@ const MatrixBackground: React.FC = () => {
     const height = window.innerHeight;
     const heightDelta = Math.abs(height - lastHeightRef.current);
 
-    if (restart && lastWidthRef.current === width && heightDelta > 0 && heightDelta < 120) {
-      return;
+    if (restart && lastWidthRef.current === width) {
+      // On mobile, the browser chrome shows/hides as the user scrolls, firing
+      // resize events. Ignore any resize that is purely a height change —
+      // the canvas already covers the full viewport via CSS and the existing
+      // drops look fine at any height. Only a width change (e.g. orientation
+      // flip) or a first-time init should re-seed the columns.
+      if (heightDelta > 0) {
+        return;
+      }
     }
 
     const devicePixelRatio = window.devicePixelRatio || 1;
