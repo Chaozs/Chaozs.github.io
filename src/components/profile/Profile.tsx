@@ -63,10 +63,6 @@ const coverImageStyle: React.CSSProperties = {
   marginLeft: "0",
 };
 
-const textStyle: React.CSSProperties = {
-  color: "var(--text-primary)",
-};
-
 const Profile: React.FC = () => {
   const [accessState, setAccessState] = useState<"sealed" | "unlocking" | "unlocked">("sealed");
   const [expandedHeight, setExpandedHeight] = useState<number>(980);
@@ -200,7 +196,7 @@ const Profile: React.FC = () => {
                     <div className="profile-nameplate__edu-name">{edu.institution}</div>
                     {edu.degrees.map((d) => (
                       <div key={`${d.degree}-${d.date}`} className="profile-cred-card__degree-row">
-                        <span style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem" }}>
+                        <span className="profile-cred-card__degree-title">
                           <span className="profile-cred-card__sub">{d.degree} &mdash; {d.field}</span>
                           {d.thesisUrl && (
                             <a
@@ -241,7 +237,6 @@ const Profile: React.FC = () => {
                   <p
                     className="lead about-reveal-item about-reveal-item--paragraph"
                     key={content.id}
-                    style={textStyle}
                     dangerouslySetInnerHTML={{ __html: content.content }}
                   ></p>
                 ))}
@@ -276,7 +271,6 @@ const Profile: React.FC = () => {
                 </div>
                 <p
                   className="lead about-reveal-item about-reveal-item--footer"
-                  style={textStyle}
                   dangerouslySetInnerHTML={{ __html: aboutFooterContent }}
                 ></p>
                 <div className="about-reveal-item about-reveal-item--social contact-relay-links profile-relay-links">

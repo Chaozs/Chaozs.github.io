@@ -118,14 +118,8 @@ const Contact: React.FC = () => {
       className="sect-pt4 contact-section"
       containerPadding="35px"
     >
-      <div className="row">
-        <div className="col-sm-12">
-          <SectionHeader command="open comms relay" />
-        </div>
-      </div>
-      <div className="contact-dossier contact-dossier--open">
-        <div className="contact-dossier__content">
-          <SurfaceCard className="contact-dossier__card" padding="15px">
+      <SectionHeader command="open comms relay" />
+      <SurfaceCard className="contact-dossier__card" padding="15px">
             <div className="contact-dossier__body">
               <section className="contact-form-panel">
                 <div className="contact-panel-heading">
@@ -253,9 +247,7 @@ const Contact: React.FC = () => {
                 </div>
               </section>
             </div>
-          </SurfaceCard>
-        </div>
-      </div>
+      </SurfaceCard>
     </SectionShell>
   );
 };

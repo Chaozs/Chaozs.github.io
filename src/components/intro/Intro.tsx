@@ -286,10 +286,8 @@ const Intro: React.FC = () => {
     <div
       id="home"
       className="intro bg-image"
-      style={{ backgroundColor: "var(--section-bg)", position: "relative" }}
     >
-      <div className="intro-content display-table" style={{ position: "relative", zIndex: 1 }}>
-        <div className="table-cell">
+      <div className="intro-content">
           <div className="container intro-stagger">
             <h1 className="intro-title mb-4 intro-stagger-item">
               <span className="intro-title__text" aria-label={FINAL_NAME}>
@@ -455,7 +453,6 @@ const Intro: React.FC = () => {
               </form>
             </div>
           </div>
-        </div>
       </div>
     </div>
   );

@@ -31,11 +31,7 @@ const EmulatorSection: React.FC = () => {
 
   return (
     <SectionShell id="emulator" className="sect-pt4">
-      <div className="row">
-        <div className="col-sm-12">
-          <SectionHeader command="initialize mission select" />
-        </div>
-      </div>
+      <SectionHeader command="initialize mission select" />
       <SurfaceCard padding="16px">
         <div className="emulator-roster-label">Mission Roster</div>
         <div className="emulator-game-toggle">

@@ -8,11 +8,7 @@ import { personalProjects } from "../../content";
 
 const ProjectsSection: React.FC = () => (
   <SectionShell id="projects" className="sect-pt4">
-    <div className="row">
-      <div className="col-sm-12">
-        <SectionHeader command="load project files" />
-      </div>
-    </div>
+    <SectionHeader command="load project files" />
     <div className="row">
       {personalProjects.map((project) => (
         <WorkBox key={project.title} {...project} />

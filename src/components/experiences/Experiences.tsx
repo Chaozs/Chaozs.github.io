@@ -7,11 +7,7 @@ import SectionHeader from "../shared/SectionHeader";
 const Experiences: React.FC = () => {
   return (
     <SectionShell id="work" className="sect-pt4">
-      <div className="row">
-        <div className="col-sm-12">
-          <SectionHeader command="load experience dossier" />
-        </div>
-      </div>
+      <SectionHeader command="load experience dossier" />
       <div className="row">
         {workExperiences.map((experience) => (
           <WorkBox

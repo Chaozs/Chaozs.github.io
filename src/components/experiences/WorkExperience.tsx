@@ -224,7 +224,7 @@ const WorkBox: React.FC<WorkBoxProps> = ({
   };
 
   return (
-    <article className="col-md-12 experience-entry">
+    <article className="experience-entry">
       <div
         className={`work-box ${showMore ? "is-expanded" : "is-collapsed"}`}
         onClick={handleCardClick}
@@ -478,33 +478,27 @@ const WorkBox: React.FC<WorkBoxProps> = ({
             </div>
             {demoUrl && !logo && (
               <>
-                <div className="row work-dossier__demo-row">
-                  <div className="col-12">
-                    <div className="work-dossier__demo work-dossier__demo--banner">
-                      <img
-                        src={demoUrl}
-                        alt={`${title} demo`}
-                        className="work-dossier__demo-gif"
-                      />
-                    </div>
+                <div className="work-dossier__demo-row">
+                  <div className="work-dossier__demo work-dossier__demo--banner">
+                    <img
+                      src={demoUrl}
+                      alt={`${title} demo`}
+                      className="work-dossier__demo-gif"
+                    />
                   </div>
                 </div>
-                <div className="row">
-                  <div className="col-12">
-                    <div className="work-dossier__footer work-dossier__footer--fullwidth work-detail-item" style={getDelayStyle(Math.min(embedDelay + 80, 1480))}>
-                      <button
-                        type="button"
-                        className="work-dossier__toggle work-dossier__toggle--footer"
-                        onClick={handleToggleClick}
-                        aria-label={`Collapse ${title} dossier`}
-                      >
-                        <span className="work-dossier__toggle-label">Seal File</span>
-                        <span className="work-dossier__toggle-icon is-open" aria-hidden="true">
-                          <AppIcon name="chevron-down" />
-                        </span>
-                      </button>
-                    </div>
-                  </div>
+                <div className="work-dossier__footer work-dossier__footer--fullwidth work-detail-item" style={getDelayStyle(Math.min(embedDelay + 80, 1480))}>
+                  <button
+                    type="button"
+                    className="work-dossier__toggle work-dossier__toggle--footer"
+                    onClick={handleToggleClick}
+                    aria-label={`Collapse ${title} dossier`}
+                  >
+                    <span className="work-dossier__toggle-label">Seal File</span>
+                    <span className="work-dossier__toggle-icon is-open" aria-hidden="true">
+                      <AppIcon name="chevron-down" />
+                    </span>
+                  </button>
                 </div>
               </>
             )}

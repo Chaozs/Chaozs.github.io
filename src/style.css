@@ -274,17 +274,6 @@ a:hover {
   background-position: center center;
 }
 
-.display-table {
-  width: 100%;
-  height: 100%;
-  display: table;
-}
-
-.table-cell {
-  display: table-cell;
-  vertical-align: middle;
-}
-
 /* Sections */
 
 .sect-pt4 {
@@ -797,11 +786,16 @@ INTRO
   height: 100vh;
   position: relative;
   color: var(--text-primary);
+  background-color: var(--section-bg);
 }
 
 .intro .intro-content {
-  text-align: center;
   position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .intro .overlay-intro {
@@ -1060,6 +1054,11 @@ ABOUT
 
 .about-dossier__content.is-unlocked .about-reveal-item--social {
   animation-delay: 2050ms;
+}
+
+.about-reveal-item--paragraph,
+.about-reveal-item--footer {
+  color: var(--text-primary);
 }
 
 .about-reveal-item--footer {
@@ -1545,6 +1544,12 @@ ABOUT
   color: var(--accent);
 }
 
+.profile-cred-card__degree-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
 .profile-cred-card__link {
   display: inline-flex;
   align-items: center;
@@ -1670,6 +1675,7 @@ PORTFOLIO
 */
 
 .experience-entry {
+  width: 100%;
   margin-bottom: 24px;
 }
 
@@ -2615,17 +2621,8 @@ PORTFOLIO
 CONTACT
 */
 
-.contact-dossier {
-  position: relative;
-  min-height: 0;
-}
-
 .contact-section {
   padding-bottom: clamp(8rem, 18vh, 12rem);
-}
-
-.contact-dossier__content {
-  transition: none;
 }
 
 .contact-dossier__card {
@@ -4439,7 +4436,6 @@ BUTTON
   .about-dossier__lock-core,
   .about-dossier__lock-ring,
   .about-dossier__progress-bar,
-  .contact-dossier__content,
   .skill-icon,
   .skill-icon img,
   .skill-icon::after,
