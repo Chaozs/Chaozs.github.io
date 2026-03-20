@@ -4286,7 +4286,7 @@ BUTTON
     border: 1px solid var(--action-border);
     background: var(--action-surface);
     color: var(--text-heading);
-    animation: none;
+    animation: none !important;
     box-shadow: var(--shadow-s);
     pointer-events: auto;
     z-index: 3;
