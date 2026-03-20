@@ -174,7 +174,15 @@ const Navbar: React.FC = () => {
         <div className="navbar-utility-spacer" aria-hidden="true">
           <div className="navbar-brand-block">
             <div className="navbar-brand-block__eyebrow">Node</div>
-            <div className="navbar-brand-block__title">THN://PORTFOLIO</div>
+            <a
+              className="navbar-brand-block__title navbar-brand-block__title--link"
+              href="https://github.com/Chaozs/Chaozs.github.io"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Chaozs/Chaozs.github.io ↗
+            </a>
+            <div className="navbar-brand-block__updated">Updated: Mar 19, 2026</div>
           </div>
         </div>
 
@@ -212,7 +220,6 @@ const Navbar: React.FC = () => {
                   </span>
                   <span className="nav-mobile-action__label">Resume</span>
                 </a>
-                <VersionPicker variant="mobile" onNavigate={() => setIsMobileStatusOpen(false)} />
                 <div className="system-status__utility-actions">
                   <button
                     type="button"

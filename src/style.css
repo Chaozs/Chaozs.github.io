@@ -777,6 +777,28 @@ NAVBAR
   white-space: nowrap;
 }
 
+.navbar-brand-block__title--link {
+  text-decoration: none;
+  transition: opacity 150ms ease;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.navbar-brand-block__title--link:hover {
+  opacity: 0.75;
+}
+
+.navbar-brand-block__updated {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  font-weight: 500;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  line-height: 1;
+  opacity: 0.7;
+}
+
 .navbar-status-slot {
   flex: 0 1 1080px;
   min-width: 0;

@@ -13,6 +13,6 @@ export type ArchiveVersion = {
  * Add entries here once public/archive/<id>/ exists in the repo.
  */
 export const ARCHIVE_VERSIONS: ArchiveVersion[] = [
-  { id: "v1", label: "Classic",       date: "Jan 2025" },
-  { id: "v2", label: "Pre-Redesign",  date: "Mar 2026" },
+  { id: "v1", label: "Original Build", date: "Jan 2025" },
+  { id: "v2", label: "Initial Matrix Theme", date: "Feb 2026" },
 ];
