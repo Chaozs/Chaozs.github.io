@@ -182,7 +182,7 @@ const Navbar: React.FC = () => {
             >
               Chaozs/Chaozs.github.io ↗
             </a>
-            <div className="navbar-brand-block__updated">Updated: Mar 19, 2026</div>
+            <div className="navbar-brand-block__updated">Updated: {__BUILD_DATE__}</div>
           </div>
         </div>
 
