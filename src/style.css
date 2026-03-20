@@ -1867,8 +1867,8 @@ ABOUT
 
 .skill-grid {
   display: grid;
-  grid-template-columns: repeat(var(--skill-cols, 3), minmax(0, 1fr));
-  gap: 6px;
+  grid-template-columns: repeat(var(--skill-cols, 3), 1fr);
+  gap: 6px 0;
   align-items: center;
   justify-items: center;
   width: 100%;
@@ -4937,7 +4937,7 @@ BUTTON
 .emulator-game-button:hover,
 .emulator-game-button:focus-visible,
 .emulator-game-button.is-active {
-  animation: none;
+  box-shadow: var(--shadow-s) !important;
 }
 
 @media (prefers-reduced-motion: reduce) {

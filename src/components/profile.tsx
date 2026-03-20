@@ -12,9 +12,12 @@ import dotNetLogo from "../img/skillIcons/netLogo.webp";
 import playcanvasLogo from "../img/skillIcons/playcanvasLogo.webp";
 import reactLogo from "../img/skillIcons/reactLogo.webp";
 import scrumLogo from "../img/skillIcons/scrumLogo.webp";
+import sqlLogo from "../img/skillIcons/sqlLogo.webp";
 import typeScriptLogo from "../img/skillIcons/TypeScript.svg";
 import unityLogo from "../img/skillIcons/unityLogo.webp";
 import vueJsLogo from "../img/skillIcons/vueJSLogo.webp";
+import claudeLogo from "../img/skillIcons/claudeLogo.svg";
+import codexLogo from "../img/skillIcons/codexLogo.svg";
 import ImageWithSkeleton from "./ImageWithSkeleton";
 import AppIcon from "./shared/AppIcon";
 import SectionHeader from "./shared/SectionHeader";
@@ -37,6 +40,9 @@ const skills: Skill[] = [
   { icon: linuxLogo, alt: "Linux" },
   { icon: jiraLogo, alt: "Jira" },
   { icon: scrumLogo, alt: "Scrum" },
+  { icon: sqlLogo, alt: "SQL" },
+  { icon: claudeLogo, alt: "Claude" },
+  { icon: codexLogo, alt: "Codex" },
 ];
 
 const fillFrameStyle: React.CSSProperties = {
@@ -163,7 +169,7 @@ const Profile: React.FC = () => {
             className={`row about-layout about-dossier__content${accessState === "unlocked" ? " is-unlocked" : ""}`}
             aria-hidden={accessState !== "unlocked"}
           >
-            <div className="col-md-5 about-top-photo-col about-dossier__panel">
+            <div className="col-md-6 about-top-photo-col about-dossier__panel">
               <div className="about-reveal-item about-reveal-item--name">
                 <div className="profile-nameplate">
                   <div className="profile-nameplate__eyebrow">Profile Subject</div>
@@ -183,9 +189,9 @@ const Profile: React.FC = () => {
                 />
               </div>
             </div>
-            <div className="col-md-7 about-top-skills-col about-dossier__panel">
+            <div className="col-md-6 about-top-skills-col about-dossier__panel">
               <div className="about-reveal-item about-reveal-item--skills">
-                <SkillGrid skills={skills} columns={4} iconSize={76} />
+                <SkillGrid skills={skills} columns={5} iconSize={70} />
               </div>
               <div className="about-reveal-item about-reveal-item--credentials">
                 {educationContent.map((edu) => (
