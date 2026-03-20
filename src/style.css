@@ -88,19 +88,19 @@ GENERAL STYLING
 
 html[data-theme="light"] {
   color-scheme: light;
-  --page-bg: #f5f7fb;
-  --section-bg: rgba(248, 250, 252, 0.92);
-  --intro-bg: rgba(255, 255, 255, 0.9);
-  --surface-1: #ffffff;
-  --surface-2: #f7f9fc;
-  --surface-3: #edf2f8;
-  --surface-hover: #e4ebf4;
-  --text-primary: #1c2430;
-  --text-heading: #0f172a;
-  --text-muted: #586579;
-  --text-subtle: #748196;
+  --page-bg: #f5f0e8;
+  --section-bg: rgba(250, 246, 240, 0.92);
+  --intro-bg: rgba(253, 250, 245, 0.9);
+  --surface-1: #faf7f2;
+  --surface-2: #f4efe6;
+  --surface-3: #ede8df;
+  --surface-hover: #e4ddd2;
+  --text-primary: #2a1f14;
+  --text-heading: #1a1008;
+  --text-muted: #6b5c4a;
+  --text-subtle: #8a7563;
   --text-inverse: #ffffff;
-  --link-color: #0f172a;
+  --link-color: #1a1008;
   --accent: #2563eb;
   --accent-strong: #1e40af;
   --accent-soft: #dbeafe;
@@ -113,51 +113,51 @@ html[data-theme="light"] {
   --warning-surface: rgba(146, 64, 14, 0.12);
   --meta-chip-bg: color-mix(in srgb, var(--surface-3) 82%, transparent);
   --meta-chip-border: color-mix(in srgb, var(--border-color) 88%, transparent);
-  --meta-chip-text: #5b6679;
+  --meta-chip-text: #6b5c4a;
   --meta-card-bg:
     linear-gradient(180deg, color-mix(in srgb, var(--surface-2) 84%, transparent), color-mix(in srgb, var(--surface-3) 90%, transparent));
   --action-surface:
-    linear-gradient(180deg, color-mix(in srgb, #ffffff 94%, transparent), color-mix(in srgb, var(--surface-2) 92%, transparent)),
+    linear-gradient(180deg, color-mix(in srgb, var(--surface-1) 94%, transparent), color-mix(in srgb, var(--surface-2) 92%, transparent)),
     radial-gradient(circle at left center, color-mix(in srgb, var(--action-accent) 12%, transparent), transparent 56%);
   --action-surface-hover:
-    linear-gradient(180deg, color-mix(in srgb, #ffffff 98%, transparent), color-mix(in srgb, var(--surface-2) 94%, transparent)),
+    linear-gradient(180deg, color-mix(in srgb, var(--surface-1) 98%, transparent), color-mix(in srgb, var(--surface-2) 94%, transparent)),
     radial-gradient(circle at left center, color-mix(in srgb, var(--action-accent) 18%, transparent), transparent 58%);
   --action-border: color-mix(in srgb, var(--action-accent) 52%, var(--border-color));
   --action-border-strong: color-mix(in srgb, var(--action-accent) 76%, var(--border-color));
   --action-icon-bg: color-mix(in srgb, var(--action-accent) 14%, var(--surface-3));
-  --tooltip-bg: rgba(255, 255, 255, 0.96);
-  --tooltip-text: #0f172a;
+  --tooltip-bg: rgba(250, 247, 242, 0.96);
+  --tooltip-text: #1a1008;
   --tooltip-border: rgba(37, 99, 235, 0.24);
-  --border-color: #d6deea;
-  --button-bg: #f8fbff;
+  --border-color: #d4cbbf;
+  --button-bg: #f4efe6;
   --button-border: #2563eb;
   --button-text: #2563eb;
   --button-bg-strong: #2563eb;
   --button-bg-hover: #1d4ed8;
   --button-text-hover: #ffffff;
-  --input-bg: #ffffff;
-  --input-text: #1c2430;
-  --input-border: #cfd9e6;
-  --input-placeholder: #7b8798;
-  --input-focus-bg: #ffffff;
-  --matrix-bg: #f5f8fc;
-  --matrix-trail: rgba(255, 255, 255, 0.56);
+  --input-bg: #faf7f2;
+  --input-text: #2a1f14;
+  --input-border: #ccc3b5;
+  --input-placeholder: #8a7563;
+  --input-focus-bg: #faf7f2;
+  --matrix-bg: #f5f0e8;
+  --matrix-trail: rgba(245, 240, 232, 0.56);
   --matrix-char: rgba(37, 99, 235, 0.18);
   --matrix-glow: rgba(96, 165, 250, 0.78);
   --matrix-opacity: 0.24;
   --skeleton-bg: rgba(0, 0, 0, 0.06);
-  --skeleton-border: rgba(28, 36, 48, 0.18);
-  --nav-bg: #ffffff;
-  --nav-reduce-bg: #f4f7fb;
-  --nav-link-trans: #1c2430;
-  --nav-link-reduce: #1c2430;
+  --skeleton-border: rgba(42, 31, 20, 0.18);
+  --nav-bg: #f4efe6;
+  --nav-reduce-bg: #ede8df;
+  --nav-link-trans: #2a1f14;
+  --nav-link-reduce: #2a1f14;
   --nav-highlight-bg: rgba(37, 99, 235, 0.08);
   --radius-sm: 10px;
   --radius-md: 16px;
   --radius-lg: 24px;
-  --shadow-s: 0 8px 20px rgba(15, 20, 25, 0.12);
-  --shadow-m: 0 16px 40px rgba(15, 20, 25, 0.16);
-  --shadow-l: 0 28px 64px rgba(15, 20, 25, 0.18);
+  --shadow-s: 0 8px 20px rgba(42, 20, 8, 0.10);
+  --shadow-m: 0 16px 40px rgba(42, 20, 8, 0.13);
+  --shadow-l: 0 28px 64px rgba(42, 20, 8, 0.15);
   --focus-ring: 0 0 0 4px rgba(37, 99, 235, 0.16);
 }
 
