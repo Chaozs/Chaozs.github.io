@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { ARCHIVE_VERSIONS } from "../archiveVersions";
-import AppIcon from "./shared/AppIcon";
+import { ARCHIVE_VERSIONS } from "../../archiveVersions";
+import AppIcon from "../shared/AppIcon";
 
 type Props = {
   variant?: "desktop" | "mobile";

@@ -1,7 +1,7 @@
 import React from "react";
 import SectionShell from "../shared/SectionShell";
 import SectionHeader from "../shared/SectionHeader";
-import WorkBox from "../WorkExperience";
+import WorkBox from "../experiences/WorkExperience";
 import { personalProjects } from "../../content";
 
 // ─── Section ──────────────────────────────────────────────────────────────────

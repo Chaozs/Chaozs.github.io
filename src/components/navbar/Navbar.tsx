@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import resumePdf from "../ThienTrandinhResume.pdf";
-import AppIcon from "./shared/AppIcon";
+import resumePdf from "../../ThienTrandinhResume.pdf";
+import AppIcon from "../shared/AppIcon";
 import SystemStatusBar from "./SystemStatusBar";
 import VersionPicker from "./VersionPicker";
 

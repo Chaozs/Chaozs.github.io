@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Typed from "typed.js";
-import AppIcon from "./shared/AppIcon";
+import AppIcon from "../shared/AppIcon";
 
 const FINAL_NAME = "Thien Trandinh";
 const SCRAMBLE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*";

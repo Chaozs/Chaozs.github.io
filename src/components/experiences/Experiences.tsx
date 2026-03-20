@@ -1,8 +1,8 @@
 import React from "react";
 import WorkBox from "./WorkExperience";
-import { workExperiences } from "../content";
-import SectionShell from "./shared/SectionShell";
-import SectionHeader from "./shared/SectionHeader";
+import { workExperiences } from "../../content";
+import SectionShell from "../shared/SectionShell";
+import SectionHeader from "../shared/SectionHeader";
 
 const Experiences: React.FC = () => {
   return (

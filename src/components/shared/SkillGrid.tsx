@@ -1,5 +1,5 @@
 import React from "react";
-import ImageWithSkeleton from "../ImageWithSkeleton";
+import ImageWithSkeleton from "./ImageWithSkeleton";
 import SurfaceCard from "./SurfaceCard";
 
 type SkillItem = {

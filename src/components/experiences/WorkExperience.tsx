@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import ImageWithSkeleton from "./ImageWithSkeleton";
-import AppIcon from "./shared/AppIcon";
-import SurfaceCard from "./shared/SurfaceCard";
+import ImageWithSkeleton from "../shared/ImageWithSkeleton";
+import AppIcon from "../shared/AppIcon";
+import SurfaceCard from "../shared/SurfaceCard";
 
 const DECRYPT_HEADER_TEXT = "Decrypted Notes";
 const SUMMARY_REVEAL_DURATION = 360;

@@ -3,20 +3,19 @@ import ReactDOM from 'react-dom/client';
 
 //import css in order
 import 'normalize.css';
-import './animate.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import './style.css';
 
 //import components
-import Navbar from './components/navbar';
-import MatrixBackground from './components/matrix-background';
-import Intro from './components/intro';
-import Profile from './components/profile';
-import Experiences from './components/experiences';
+import Navbar from './components/navbar/Navbar';
+import MatrixBackground from './components/background/MatrixBackground';
+import Intro from './components/intro/Intro';
+import Profile from './components/profile/Profile';
+import Experiences from './components/experiences/Experiences';
 import ProjectsSection from './components/projects/ProjectsSection';
 import EmulatorSection from './components/emulator/EmulatorSection';
-import Contact from './components/contact';
-import LazySection from './components/LazySection';
+import Contact from './components/contact/Contact';
+import LazySection from './components/shared/LazySection';
 
 const App: React.FC = () => {
     const [showMatrixBackground, setShowMatrixBackground] = useState(false);

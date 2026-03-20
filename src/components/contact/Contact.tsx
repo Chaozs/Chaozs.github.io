@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import AppIcon from "./shared/AppIcon";
-import SectionShell from "./shared/SectionShell";
-import { ContactInput, ContactTextarea } from "./shared/ContactField";
-import SectionHeader from "./shared/SectionHeader";
-import SurfaceCard from "./shared/SurfaceCard";
+import AppIcon from "../shared/AppIcon";
+import SectionShell from "../shared/SectionShell";
+import { ContactInput, ContactTextarea } from "../shared/ContactField";
+import SectionHeader from "../shared/SectionHeader";
+import SurfaceCard from "../shared/SurfaceCard";
 
 type ContactFormValues = {
   name: string;
