@@ -8,6 +8,7 @@
     "jsnes": "^2.0.0",
     "normalize.css": "^8.0.1",
     "popper.js": "^1.15.0",
+    "portfolio": "file:",
     "react": "^19.2.0",
     "react-content-loader": "^7.1.1",
     "react-dom": "^19.2.0",
