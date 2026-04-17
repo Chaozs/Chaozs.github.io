@@ -63,8 +63,10 @@ const coverImageStyle: React.CSSProperties = {
   marginLeft: "0",
 };
 
+const lockForceDisabled = true;
+
 const Profile: React.FC = () => {
-  const [accessState, setAccessState] = useState<"sealed" | "unlocking" | "unlocked">("sealed");
+  const [accessState, setAccessState] = useState<"sealed" | "unlocking" | "unlocked">(lockForceDisabled ? "unlocked" : "sealed");
   const [expandedHeight, setExpandedHeight] = useState<number>(980);
   const unlockTimerRef = useRef<number | null>(null);
   const contentRef = useRef<HTMLDivElement | null>(null);

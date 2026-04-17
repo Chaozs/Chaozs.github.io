@@ -290,8 +290,15 @@ const Intro: React.FC = () => {
       <div className="intro-content">
           <div className="container intro-stagger">
             <h1 className="intro-title mb-4 intro-stagger-item">
-              <span className="intro-title__text" aria-label={FINAL_NAME}>
-                {displayName || FINAL_NAME}
+              <span className="intro-title__text" aria-label={FINAL_NAME} style={{ position: "relative", display: "inline-block" }}>
+                {/* Reserve layout space with the final name, always invisible */}
+                <span aria-hidden="true" style={{ visibility: "hidden", whiteSpace: "pre-wrap" }}>
+                  {FINAL_NAME}
+                </span>
+                {/* Scrambled name overlaid absolutely so it never affects layout */}
+                <span aria-hidden="true" style={{ position: "absolute", inset: 0, whiteSpace: "pre-wrap" }}>
+                  {displayName || FINAL_NAME}
+                </span>
               </span>
               <span className={`intro-title__cursor${isNameResolved ? " is-hidden" : ""}`} aria-hidden="true">
                 _

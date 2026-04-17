@@ -1,4 +1,5 @@
 ﻿import type { CSSProperties } from "react";
+import AvanadeLogo from "./img/AvanadeLogo.webp";
 import gatarnLogo from "./img/gglogo.webp";
 import prodigyLogo from "./img/ProdigyLogo.webp";
 import imagineLogo from "./img/ImagineLogo.webp";
@@ -119,6 +120,16 @@ export const personalProjects: WorkExperience[] = [
 ];
 
 export const workExperiences: WorkExperience[] = [
+  {
+    title: "Avanade",
+    logo: AvanadeLogo,
+    logoStyle: { width: "300px", maxWidth: "300px", marginLeft: "-25px" },
+    date: "April 2025 - Present",
+    role: "Full Stack Developer",
+    categories: "Software Consultant",
+    skills: "C#, TypesScript",
+    details: ["TBD"],
+  },
   {
     title: "Prodigy Education",
     logo: prodigyLogo,
