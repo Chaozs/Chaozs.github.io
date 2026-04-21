@@ -94,10 +94,16 @@ export const educationContent: Education[] = [
 
 export const certifications: Certification[] = [
   {
-    name: "Microsoft Azure Fundamentals",
+    name: "Azure Fundamentals AZ-900",
     issuer: "Microsoft",
-    date: "2024",
+    date: "September 2024",
     credentialId: "A2FEN4-CD9AFE",
+  },
+  {
+    name: "GitHub Copilot GH-300",
+    issuer: "Microsoft",
+    date: "April 2026",
+    credentialId: "4C3F3E-CBAH38",
   },
 ];
 
